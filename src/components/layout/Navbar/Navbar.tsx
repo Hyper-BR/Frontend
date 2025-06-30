@@ -21,7 +21,7 @@ const Navbar = () => {
             ) : (
               <button
                 className={styles.loginButton}
-                onClick={() => navigate('/become-artist')}
+                onClick={() => navigate('/becomeArtist')}
               >
                 Virar artista
               </button>

@@ -8,8 +8,6 @@ import {
 import { translateMessage } from '../utils/errorMessages';
 import { parseCookies } from 'nookies';
 
-const { token } = parseCookies();
-
 const api = axios.create({
   baseURL: process.env.API_URL,
   withCredentials: false,
@@ -17,6 +15,16 @@ const api = axios.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+});
+
+api.interceptors.request.use((config) => {
+  const { token } = parseCookies();
+
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token.toString()}`;
+  }
+
+  return config;
 });
 
 api.interceptors.response.use(

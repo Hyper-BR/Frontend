@@ -5,11 +5,7 @@ import {
   refreshToken,
   getCustomerByEmail,
 } from '../services/customer';
-import {
-  CustomerDTO,
-  LoginCredentialsDTO,
-  LoginDTO,
-} from '../services/customer/types';
+import { CustomerDTO, LoginCredentialsDTO } from '../services/customer/types';
 
 interface AuthContextType {
   user: CustomerDTO | null;
@@ -17,6 +13,7 @@ interface AuthContextType {
   isArtist: boolean;
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
   signOut(): void;
+  refreshSession(): Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>(
@@ -95,6 +92,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isArtist,
         signIn,
         signOut,
+        refreshSession,
       }}
     >
       {children}
