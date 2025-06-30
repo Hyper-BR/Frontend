@@ -1,0 +1,26 @@
+@use '../../styles/theme.scss' as *;
+
+.wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: inherit;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  flex: 1;
+  height: calc(100vh - 144px);
+  gap: $spacing-md;
+  padding: $spacing-md;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.content {
+  background-color: $color-gray;
+  border-radius: $radius;
+  padding: $spacing-lg;
+  overflow-y: auto;
+}

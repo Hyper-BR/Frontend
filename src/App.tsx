@@ -1,17 +1,14 @@
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import Sidebar from './components/Sidebar/Sidebar';
-import styles from './App.module.scss';
+import { AppShell } from './components/layout/AppShell';
 
 export const App = () => {
   return (
     <AuthProvider>
-      <div className={styles.appContainer}>
-        <Sidebar />
-        <main className={styles.mainContent}>
-          <Outlet />
-        </main>
-      </div>
+      <AppShell>
+        <Outlet />
+      </AppShell>
     </AuthProvider>
   );
 };
