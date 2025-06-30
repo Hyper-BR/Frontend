@@ -1,0 +1,66 @@
+@use '../../styles/theme' as *;
+
+.loginWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $background-gradient;
+  height: 100vh;
+  color: $color-white;
+}
+
+.form {
+  background-color: rgba(28, 28, 28, 0.85);
+  padding: 2rem 3rem;
+  border-radius: $radius;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 400px;
+
+  h2 {
+    margin-bottom: 1rem;
+    color: $color-primary;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font-size: $font-size-md;
+    gap: 0.25rem;
+
+    input {
+      background-color: #121212;
+      border: 1px solid #333;
+      border-radius: $radius;
+      padding: 0.75rem;
+      color: $color-white;
+
+      &::placeholder {
+        color: $color-muted;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: $color-primary;
+        box-shadow: 0 0 0 1px $color-primary;
+      }
+    }
+  }
+
+  button {
+    background-color: $color-primary;
+    color: $color-white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: $radius;
+    cursor: pointer;
+    font-weight: $font-weight-bold;
+    transition: background-color $transition;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+}

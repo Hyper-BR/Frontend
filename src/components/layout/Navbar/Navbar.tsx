@@ -1,19 +1,42 @@
+import UploadButton from '../../commons/Buttons/UploadButton/UploadButton';
 import styles from './Navbar.module.scss';
+import { AuthContext } from '../../../context/AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../src/hooks/useAuth';
 
 const Navbar = () => {
+  const { user, userSigned, signOut } = useAuth();
+  const navigate = useNavigate();
+
   return (
     <header className={styles.navbar}>
       <div className={styles.searchBox}>
         <input type="text" placeholder="Buscar" />
       </div>
-      <div className={styles.userSection}>
-        <img
-          src="https://i.pravatar.cc/32"
-          alt="avatar"
-          className={styles.avatar}
-        />
-        <span>Gustavo</span>
+
+      <div>
+        <UploadButton />
       </div>
+
+      {userSigned ? (
+        <div className={styles.userSection}>
+          <img
+            src="https://i.pravatar.cc/40?u="
+            alt="avatar"
+            className={styles.avatar}
+          />
+          <span>{user?.name}</span>
+          <button onClick={signOut}>Sair</button>
+        </div>
+      ) : (
+        <button
+          className={styles.loginButton}
+          onClick={() => navigate('/login')}
+        >
+          Login
+        </button>
+      )}
     </header>
   );
 };

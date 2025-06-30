@@ -10,7 +10,7 @@ export const createCustomer = (
   return post(`/customer`, data);
 };
 
-export const logInCustomer = (login: LoginDTO): AxiosPromise<LoginDTO> => {
+export const logInCustomer = (login: LoginDTO): AxiosPromise<CustomerDTO> => {
   const { post } = useService();
 
   return post(`/customer/login`, login);

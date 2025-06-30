@@ -1,0 +1,20 @@
+@use '../../../../styles/theme.scss' as *;
+
+.upload {
+  display: inline-block;
+  padding: $spacing-sm $spacing-md;
+  background-color: $color-primary;
+  color: $color-white;
+  font-weight: bold;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background-color $transition;
+
+  &:hover {
+    background-color: $color-primary-dark;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+}
