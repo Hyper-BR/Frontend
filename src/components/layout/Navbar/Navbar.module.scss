@@ -1,3 +1,5 @@
+@use '../../../styles/theme.scss' as *;
+
 .navbar {
   background-color: #1a1a1a;
   padding: 1rem 2rem;
@@ -58,5 +60,22 @@
     &:hover {
       color: red;
     }
+  }
+}
+
+.uploadButton {
+  background-color: $color-primary-dark;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  &:hover {
+    background-color: $color-primary-dark;
   }
 }

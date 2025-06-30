@@ -1,7 +1,6 @@
 import { AxiosPromise } from 'axios';
 import { useService } from '../hook/useService';
 import { TrackDTO, TrackPageDTO } from './types';
-
 export const getTracks = (): AxiosPromise<TrackPageDTO> => {
   const { get } = useService();
 
@@ -16,10 +15,12 @@ export const getTracksByArtistUsername = (
   return get(`/artist/${username}`, '', '');
 };
 
-export const saveTracks = (data: any): AxiosPromise<any> => {
+export const saveTracks = (data: any, artistId: string): AxiosPromise<any> => {
   const { post } = useService();
 
-  return post(`/track?artistId=${data.artistId}`, data);
+  console.log('---' + data.name);
+
+  return post(`/track?artistId=${artistId}`, data);
 };
 
 export const getFileTrackById = (id: number): AxiosPromise<string> => {

@@ -14,6 +14,8 @@ interface AuthContextType {
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
   signOut(): void;
   refreshSession(): Promise<void>;
+  currentArtistId: number | null;
+  setCurrentArtistId: (id: number | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>(
@@ -23,6 +25,7 @@ export const AuthContext = createContext<AuthContextType>(
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<CustomerDTO | null>(null);
   const [userSigned, setUserSigned] = useState(false);
+  const [currentArtistId, setCurrentArtistId] = useState<number | null>(null);
 
   const isArtist = user?.artistProfiles?.length > 0;
 
@@ -72,6 +75,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }
 
   useEffect(() => {
+    if (user?.artistProfiles?.length) {
+      setCurrentArtistId(user.artistProfiles[0].id);
+    } else {
+      setCurrentArtistId(null);
+    }
+
     const { token, user: userEmail } = parseCookies();
     if (token && token !== 'null' && userEmail && userEmail !== 'null') {
       loadUser(userEmail);
@@ -93,6 +102,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         signOut,
         refreshSession,
+        currentArtistId,
+        setCurrentArtistId,
       }}
     >
       {children}
