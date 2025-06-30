@@ -5,11 +5,6 @@ export const Routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    children: [
-      {
-        path: '/',
-        element: <>lala</>,
-      },
-    ],
+    children: [],
   },
 ]);

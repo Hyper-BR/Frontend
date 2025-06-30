@@ -1,14 +1,17 @@
 import { Outlet } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import Sidebar from './components/Sidebar/Sidebar';
+import styles from './App.module.scss';
 
 export const App = () => {
   return (
     <AuthProvider>
-      <main className="dark">
-        <div className="flex app_root_container">
+      <div className={styles.appContainer}>
+        <Sidebar />
+        <main className={styles.mainContent}>
           <Outlet />
-        </div>
-      </main>
+        </main>
+      </div>
     </AuthProvider>
   );
 };
