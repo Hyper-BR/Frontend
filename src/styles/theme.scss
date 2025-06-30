@@ -1,11 +1,33 @@
+// 🎯 Paleta de Cores
+$color-primary: #dd111b;
+$color-primary-dark: rgb(205, 24, 24);
 $color-black: #0f0f0f;
-$color-dark-red: #1a0000;
-$color-red: #e50914;
-$color-gray: #1c1c1c;
+$color-gray-dark: #1c1c1c;
 $color-muted: #b3b3b3;
 $color-white: #ffffff;
 
-$radius: 8px;
+// 🌌 Gradientes e fundos
+$background-gradient: radial-gradient(
+  circle at 20% 20%,
+  $color-primary-dark 0%,
+  $color-gray-dark 50%,
+  $color-black 100%
+);
+
+// 🧱 Espaçamento
+$spacing-xs: 0.25rem;
 $spacing-sm: 0.5rem;
 $spacing-md: 1rem;
 $spacing-lg: 2rem;
+$spacing-xl: 4rem;
+
+// 🔤 Tipografia
+$font-size-sm: 0.875rem;
+$font-size-md: 1rem;
+$font-size-lg: 1.25rem;
+$font-weight-regular: 400;
+$font-weight-bold: 600;
+
+// 🧩 Estética geral
+$radius: 8px;
+$transition: 0.3s ease;

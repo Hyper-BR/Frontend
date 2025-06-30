@@ -1,3 +1,5 @@
+@use '../../../styles/theme.scss' as *;
+
 .player {
   background-color: #282828;
   height: 80px;
@@ -55,7 +57,7 @@
 
   .progress {
     width: 100%;
-    accent-color: #1db954;
+    accent-color: $color-primary;
   }
 }
 
@@ -68,6 +70,6 @@
 
   input[type='range'] {
     width: 100px;
-    accent-color: #1db954;
+    accent-color: $color-primary;
   }
 }
