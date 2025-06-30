@@ -37,8 +37,8 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
   }, []);
 
   return (
-    <div className="flex items-center gap-4">
-      <Dropdown className="dark">
+    <div>
+      <Dropdown>
         <DropdownTrigger>
           <Avatar
             isBordered
@@ -58,7 +58,7 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
                   textValue={item.username}
                   onClick={() => handleSelectArtist(item.id)}
                 >
-                  <div className="w-full flex justify-between gap-2">
+                  <div>
                     <User
                       avatarProps={{
                         size: 'md',
@@ -67,9 +67,7 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
                       description={'Credits: ' + item.credits}
                       name={item.username}
                     />
-                    <div className="flex flex-col items-end gap-1">
-                      {artist.id === item.id && <Chip>Ativo</Chip>}
-                    </div>
+                    <div>{artist.id === item.id && <Chip>Ativo</Chip>}</div>
                   </div>
                 </DropdownItem>
               ))}
@@ -77,16 +75,12 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
 
           <DropdownSection aria-label="Profile Actions" showDivider>
             <DropdownItem key="artist_profile" textValue="Seja um artista!">
-              <Link color="foreground" href={'/artist/register'}>
-                Criar perfil de artista
-              </Link>
+              <Link href={'/artist/register'}>Criar perfil de artista</Link>
             </DropdownItem>
           </DropdownSection>
           <DropdownSection aria-label="Profile Actions">
             <DropdownItem key="profile" textValue="Perfil">
-              <Link color="foreground" href={'/profile'}>
-                Perfil
-              </Link>
+              <Link href={'/profile'}>Perfil</Link>
             </DropdownItem>
             <DropdownItem key="settings" textValue="Configurações">
               Configurações

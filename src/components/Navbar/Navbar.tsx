@@ -66,13 +66,13 @@ export const Navbar = () => {
         <div className="div_nav_avatar">
           {/* {signed ? ( */}
           <div className="flex">
-            {artists !== null && (
-              <div className="upload_button">
-                <Button color="default" type="button" variant="ghost">
-                  <Link href={'/upload'}>Upload</Link>
-                </Button>
-              </div>
-            )}
+            {/* {artists !== null && ( */}
+            <div className="upload_button">
+              <Button color="default" type="button" variant="ghost">
+                <Link href={'/upload'}>Upload</Link>
+              </Button>
+            </div>
+            {/* )} */}
             <div className="avatar_dropdown_nav">
               <Avatar.Root>
                 <Avatar.Dropdown image="" />
