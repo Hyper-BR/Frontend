@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 import { useService } from '../hook/useService';
-import { CustomerDTO, LoginDTO, TokenDTO } from './types';
+import { CustomerDTO, LoginCredentialsDTO, LoginDTO, TokenDTO } from './types';
 
 export const createCustomer = (
   data: CustomerDTO,
@@ -10,7 +10,9 @@ export const createCustomer = (
   return post(`/customer`, data);
 };
 
-export const logInCustomer = (login: LoginDTO): AxiosPromise<CustomerDTO> => {
+export const logInCustomer = (
+  login: LoginCredentialsDTO,
+): AxiosPromise<LoginDTO> => {
   const { post } = useService();
 
   return post(`/customer/login`, login);

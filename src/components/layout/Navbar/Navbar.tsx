@@ -1,7 +1,5 @@
 import UploadButton from '../../commons/Buttons/UploadButton/UploadButton';
 import styles from './Navbar.module.scss';
-import { AuthContext } from '../../../context/AuthContext';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../src/hooks/useAuth';
 
@@ -15,20 +13,31 @@ const Navbar = () => {
         <input type="text" placeholder="Buscar" />
       </div>
 
-      <div>
-        <UploadButton />
-      </div>
-
       {userSigned ? (
-        <div className={styles.userSection}>
-          <img
-            src="https://i.pravatar.cc/40?u="
-            alt="avatar"
-            className={styles.avatar}
-          />
-          <span>{user?.name}</span>
-          <button onClick={signOut}>Sair</button>
-        </div>
+        <>
+          <div>
+            {false ? (
+              <UploadButton />
+            ) : (
+              <button
+                className={styles.loginButton}
+                onClick={() => navigate('/become-artist')}
+              >
+                Virar artista
+              </button>
+            )}
+          </div>
+
+          <div className={styles.userSection}>
+            <img
+              src={`https://i.pravatar.cc/40?u=${user?.email}`}
+              alt="avatar"
+              className={styles.avatar}
+            />
+            <span>{user?.name}</span>
+            <button onClick={signOut}>Sair</button>
+          </div>
+        </>
       ) : (
         <button
           className={styles.loginButton}

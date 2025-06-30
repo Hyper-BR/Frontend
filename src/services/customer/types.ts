@@ -13,6 +13,11 @@ export type CustomerDTO = {
 };
 
 export type LoginDTO = {
+  customer: CustomerDTO;
+  token: TokenDTO;
+};
+
+export type LoginCredentialsDTO = {
   email: string;
   password: string;
 };
