@@ -19,10 +19,6 @@ const api = axios.create({
   },
 });
 
-if (token !== 'null') {
-  api.defaults.headers['Authorization'] = `Bearer ${token}`;
-}
-
 api.interceptors.response.use(
   (response) => {
     return Promise.resolve(response);

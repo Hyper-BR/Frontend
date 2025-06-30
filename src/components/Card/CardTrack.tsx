@@ -72,18 +72,12 @@ export const CardTrack = ({ data, height, width }: cardTrackProps) => {
                   </Button>
                   <div className="card_info">
                     <div>
-                      {/* <Link color="foreground" href={'/'}> */}
-                      {item.name}
-                      {/* </Link> */}
+                      <Link href={'/'}>{item.name}</Link>
                     </div>
                     <div>
-                      {/* <Link */}
-                      {/* size="sm"
-                        color="danger"
-                        href={`/artist/${item.artist.username}`}
-                      > */}
-                      {item.artist.username}
-                      {/* </Link> */}
+                      <Link href={`/artist/${item.artist.username}`}>
+                        {item.artist.username}
+                      </Link>
                     </div>
                   </div>
                 </div>

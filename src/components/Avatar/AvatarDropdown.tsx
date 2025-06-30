@@ -8,7 +8,7 @@ import {
   Avatar,
   DropdownSection,
   User,
-  // Link,
+  Link,
   Button,
   Chip,
 } from '@nextui-org/react';
@@ -77,16 +77,16 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
 
           <DropdownSection aria-label="Profile Actions" showDivider>
             <DropdownItem key="artist_profile" textValue="Seja um artista!">
-              {/* <Link color="foreground" href={'/artist/register'}> */}
-              Criar perfil de artista
-              {/* </Link> */}
+              <Link color="foreground" href={'/artist/register'}>
+                Criar perfil de artista
+              </Link>
             </DropdownItem>
           </DropdownSection>
           <DropdownSection aria-label="Profile Actions">
             <DropdownItem key="profile" textValue="Perfil">
-              {/* <Link color="foreground" href={'/profile'}> */}
-              Perfil
-              {/* </Link> */}
+              <Link color="foreground" href={'/profile'}>
+                Perfil
+              </Link>
             </DropdownItem>
             <DropdownItem key="settings" textValue="Configurações">
               Configurações

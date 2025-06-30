@@ -34,25 +34,17 @@ export const Navbar = () => {
 
       <div className="div_navbar_root">
         <div className="div_nav_logo">
-          {/* <Link color="foreground" href={'/'}> */}
-          Logo
-          {/* </Link> */}
+          <Link href={'/'}>Logo</Link>
         </div>
         <div className="div_navbar_items flex">
           <div className="div_nav_item">
-            {/* <Link color="foreground" href={'/'}> */}
-            Gêneros
-            {/* </Link> */}
+            <Link href={'/'}>Gêneros</Link>
           </div>
           <div className="div_nav_item">
-            {/* <Link color="foreground" href={'/'}> */}
-            Músicas
-            {/* </Link> */}
+            <Link href={'/'}>Músicas</Link>
           </div>
           <div className="div_nav_item">
-            {/* <Link color="foreground" href={'/'}> */}
-            Artistas
-            {/* </Link> */}
+            <Link href={'/'}>Artistas</Link>
           </div>
         </div>
         <div className="div_nav_search">
@@ -72,35 +64,33 @@ export const Navbar = () => {
           ></Input>
         </div>
         <div className="div_nav_avatar">
-          {signed ? (
-            <div className="flex">
-              {artists !== null && (
-                <div className="upload_button">
-                  <Button color="default" type="button" variant="ghost">
-                    {/* <Link color="foreground" href={'/upload'}>
-                      Upload
-                    </Link> */}
-                  </Button>
-                </div>
-              )}
-              <div className="avatar_dropdown_nav">
-                <Avatar.Root>
-                  <Avatar.Dropdown image="" />
-                </Avatar.Root>
+          {/* {signed ? ( */}
+          <div className="flex">
+            {artists !== null && (
+              <div className="upload_button">
+                <Button color="default" type="button" variant="ghost">
+                  <Link href={'/upload'}>Upload</Link>
+                </Button>
               </div>
+            )}
+            <div className="avatar_dropdown_nav">
+              <Avatar.Root>
+                <Avatar.Dropdown image="" />
+              </Avatar.Root>
             </div>
-          ) : (
-            <>
-              <Button
-                color="default"
-                type="button"
-                variant="ghost"
-                onPress={onOpen}
-              >
-                Entrar
-              </Button>
-            </>
-          )}
+          </div>
+          {/* ) : ( */}
+          <>
+            <Button
+              color="default"
+              type="button"
+              variant="ghost"
+              onPress={onOpen}
+            >
+              Entrar
+            </Button>
+          </>
+          {/* )} */}
         </div>
       </div>
     </>
