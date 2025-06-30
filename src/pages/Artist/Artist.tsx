@@ -26,7 +26,7 @@ export const Artist = () => {
   }, []);
   return (
     <div className="profile_page">
-      <Card className="profile_banner" radius="none">
+      <Card className="profile_banner">
         <Image
           className="profile_image"
           width={150}

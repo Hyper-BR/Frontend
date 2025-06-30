@@ -1,11 +1,11 @@
-@import './../../theme/theme.scss';
+@use './../../theme/theme.scss' as *;
 
 .sidebar {
-    position: static;
-    background-color: $secondary-color;
-    left: 0;
-    padding: 1rem;
-    width: 15%;
-    height: 100vh;
-    max-height: auto;
+  position: static;
+  background-color: $secondary-color;
+  left: 0;
+  padding: 1rem;
+  width: 15%;
+  height: 100vh;
+  max-height: auto;
 }

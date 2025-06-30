@@ -38,17 +38,16 @@ export const Login = ({ onOpenChange }: LoginProps) => {
         </Button>
 
         <div className="flex py-2 px-1 justify-between">
-          <Checkbox
+          {/* <Checkbox
             classNames={{
               label: 'text-small',
             }}
-          >
-            Relembrar
-          </Checkbox>
-
-          <Link color="primary" href="#" size="sm">
-            Esqueceu a senha?
-          </Link>
+          > */}
+          Relembrar
+          {/* </Checkbox> */}
+          {/* <Link color="primary" href="#" size="sm"> */}
+          Esqueceu a senha?
+          {/* </Link> */}
         </div>
       </form>
     </>

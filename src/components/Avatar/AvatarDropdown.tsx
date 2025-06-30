@@ -8,7 +8,7 @@ import {
   Avatar,
   DropdownSection,
   User,
-  Link,
+  // Link,
   Button,
   Chip,
 } from '@nextui-org/react';
@@ -38,7 +38,7 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
 
   return (
     <div className="flex items-center gap-4">
-      <Dropdown placement="bottom-end" className="dark">
+      <Dropdown className="dark">
         <DropdownTrigger>
           <Avatar
             isBordered
@@ -49,7 +49,7 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
           />
         </DropdownTrigger>
 
-        <DropdownMenu aria-label="Artist Actions" variant="flat">
+        <DropdownMenu>
           <DropdownSection aria-label="Artist Profiles" showDivider>
             {artists !== null &&
               artists.map((item: ArtistDTO) => (
@@ -68,11 +68,7 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
                       name={item.username}
                     />
                     <div className="flex flex-col items-end gap-1">
-                      {artist.id === item.id && (
-                        <Chip color="success" size="sm" variant="flat">
-                          Ativo
-                        </Chip>
-                      )}
+                      {artist.id === item.id && <Chip>Ativo</Chip>}
                     </div>
                   </div>
                 </DropdownItem>
@@ -81,16 +77,16 @@ export function AvatarDropdown({ image }: AvatarDropdownProps) {
 
           <DropdownSection aria-label="Profile Actions" showDivider>
             <DropdownItem key="artist_profile" textValue="Seja um artista!">
-              <Link color="foreground" href={'/artist/register'}>
-                Criar perfil de artista
-              </Link>
+              {/* <Link color="foreground" href={'/artist/register'}> */}
+              Criar perfil de artista
+              {/* </Link> */}
             </DropdownItem>
           </DropdownSection>
           <DropdownSection aria-label="Profile Actions">
             <DropdownItem key="profile" textValue="Perfil">
-              <Link color="foreground" href={'/profile'}>
-                Perfil
-              </Link>
+              {/* <Link color="foreground" href={'/profile'}> */}
+              Perfil
+              {/* </Link> */}
             </DropdownItem>
             <DropdownItem key="settings" textValue="Configurações">
               Configurações

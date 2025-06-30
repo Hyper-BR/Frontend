@@ -41,7 +41,7 @@ export const CardTrack = ({ data, height, width }: cardTrackProps) => {
     <div className="card_track">
       {data !== null
         ? data.tracks.map((item: TrackDTO) => (
-            <Card radius="none">
+            <Card>
               <CardBody>
                 <div className="card_track_body flex">
                   <Image
@@ -72,18 +72,18 @@ export const CardTrack = ({ data, height, width }: cardTrackProps) => {
                   </Button>
                   <div className="card_info">
                     <div>
-                      <Link color="foreground" href={'/'}>
-                        {item.name}
-                      </Link>
+                      {/* <Link color="foreground" href={'/'}> */}
+                      {item.name}
+                      {/* </Link> */}
                     </div>
                     <div>
-                      <Link
-                        size="sm"
+                      {/* <Link */}
+                      {/* size="sm"
                         color="danger"
                         href={`/artist/${item.artist.username}`}
-                      >
-                        {item.artist.username}
-                      </Link>
+                      > */}
+                      {item.artist.username}
+                      {/* </Link> */}
                     </div>
                   </div>
                 </div>

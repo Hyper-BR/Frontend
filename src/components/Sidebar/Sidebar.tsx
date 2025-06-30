@@ -4,11 +4,11 @@ import './styles.scss';
 export const Sidebar = () => {
   return (
     <div className="sidebar flex">
-      <Listbox>
+      {/* <Listbox>
         <ListboxItem key="collections">Collections</ListboxItem>
         <ListboxItem key="playlists">Playlists</ListboxItem>
         <ListboxItem key="likes">Curtidas</ListboxItem>
-      </Listbox>
+      </Listbox> */}
     </div>
   );
 };

@@ -9,10 +9,12 @@ interface PlaylistItemsProps {
 
 export function PlaylistItem({ id, text }: PlaylistItemsProps) {
   return (
-    <div className="div_playlist_item">
-      <Listbox>
+    // <div className="div_playlist_item">
+    {
+      /* <Listbox>
         <ListboxItem key={id}>{text}</ListboxItem>
-      </Listbox>
-    </div>
+      </Listbox> */
+    }
+    // </div>
   );
 }

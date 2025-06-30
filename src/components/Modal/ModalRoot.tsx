@@ -16,9 +16,9 @@ export const ModalRoot = ({
 }: ModalRootProps) => {
   return (
     <div className="modal_root">
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      {/* <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>{children}</ModalContent>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

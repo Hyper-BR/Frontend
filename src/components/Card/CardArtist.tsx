@@ -13,7 +13,7 @@ export const CardArtist = ({ data }: cardArtistProps) => {
     <div className="card_artist">
       {data !== null
         ? data.artists.map((item: ArtistDTO) => (
-            <Card radius="none">
+            <Card>
               <CardBody className="flex aspect-square items-center justify-center">
                 <Avatar.Root>
                   <Avatar.User key={item.id} />

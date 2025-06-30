@@ -1,14 +1,14 @@
-@import './../../theme/theme.scss';
+@use './../../theme/theme.scss' as *;
 
 .div_navbar_root {
-    top: 0;
-    position: static;
-    background-color: $primary-color;
-    border-radius: 0rem 0rem 0.5rem 0rem;
-    padding: 0.25rem 0.25rem;
-    margin: auto;
-    align-items: center;
-    display: flex;
+  top: 0;
+  position: static;
+  background-color: $primary-color;
+  border-radius: 0rem 0rem 0.5rem 0rem;
+  padding: 0.25rem 0.25rem;
+  margin: auto;
+  align-items: center;
+  display: flex;
 }
 
 .div_nav_logo {

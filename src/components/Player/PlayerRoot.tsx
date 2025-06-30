@@ -10,13 +10,13 @@ interface PlayerRootProps extends HTMLAttributes<HTMLDivElement> {
 export const PlayerRoot = ({ children }: PlayerRootProps) => {
   return (
     <div className="player w-full">
-      <Card
+      {/* <Card
         isBlurred
         className="border-none bg-background/60 dark:bg-default-100/50"
         shadow="sm"
       >
         {children}
-      </Card>
+      </Card> */}
     </div>
   );
 };

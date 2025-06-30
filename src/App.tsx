@@ -7,7 +7,6 @@ import { AuthProvider } from './context/AuthContext';
 import { Bounce, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import './output.scss';
 import './styles.scss';
 
 export const App = () => {
