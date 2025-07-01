@@ -18,8 +18,6 @@ export const getTracksByArtistUsername = (
 export const saveTracks = (data: any, artistId: string): AxiosPromise<any> => {
   const { post } = useService();
 
-  console.log('---' + data.name);
-
   return post(`/track?artistId=${artistId}`, data);
 };
 

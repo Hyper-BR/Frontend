@@ -19,16 +19,17 @@ const UploadModal = ({ onClose }: { onClose: () => void }) => {
     if (!file) return alert('Envie um arquivo de áudio.');
     if (!selectedArtistId) return alert('Selecione o artista responsável.');
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('genre', genre);
-    formData.append('image', image);
-    formData.append('file', file);
+    const track = {
+      name: name,
+      image: image,
+      genre: genre,
+      file: file,
+    };
 
     setLoading(true);
     try {
-      console.log(formData);
-      await saveTracks(formData, selectedArtistId.toString());
+      console.log(track);
+      await saveTracks(track, selectedArtistId.toString());
       alert('Faixa enviada com sucesso!');
       onClose();
     } catch (err) {
