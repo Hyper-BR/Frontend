@@ -5,10 +5,13 @@ import { getTracks } from '../../../src/services/track';
 import { TrackDTO } from '../../../src/services/track/types';
 import { getArtists } from '../../../src/services/artist';
 import { ArtistDTO } from '../../../src/services/artist/types';
+import { usePlayer } from '../../../src/context/PlayerContext';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
+
+  const { setTrack } = usePlayer();
 
   const fetchTracks = async () => {
     try {
@@ -41,10 +44,17 @@ const Home = () => {
           {tracks.map((track) => (
             <Card
               key={track.id}
-              image={`https://i.pravatar.cc/40?u=`}
+              image={'https://i.pravatar.cc/40?u='}
               title={track.name}
               subtitle={track.artist?.username}
-              onClick={() => console.log(`Tocar ${track.name}`)}
+              onClick={() =>
+                setTrack({
+                  id: track.id,
+                  title: track.name,
+                  artist: track.artist.username,
+                  cover: track.image,
+                })
+              }
             />
           ))}
         </div>
