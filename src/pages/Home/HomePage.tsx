@@ -11,7 +11,7 @@ const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
 
-  const { setTrack } = usePlayer();
+  const { setTrackPlayer } = usePlayer();
 
   const fetchTracks = async () => {
     try {
@@ -47,14 +47,7 @@ const Home = () => {
               image={'https://i.pravatar.cc/40?u='}
               title={track.name}
               subtitle={track.artist?.username}
-              onClick={() =>
-                setTrack({
-                  id: track.id,
-                  title: track.name,
-                  artist: track.artist.username,
-                  cover: track.image,
-                })
-              }
+              onClick={() => setTrackPlayer(track)}
             />
           ))}
         </div>

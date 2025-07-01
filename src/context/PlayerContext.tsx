@@ -6,18 +6,12 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
-
-type Track = {
-  id: number;
-  title: string;
-  artist: string;
-  cover: string;
-};
+import { TrackDTO } from '../services/track/types';
 
 type PlayerContextType = {
-  track: Track | null;
+  track: TrackDTO | null;
   isPlaying: boolean;
-  setTrack: (track: Track) => void;
+  setTrackPlayer: (track: TrackDTO) => void;
   togglePlay: () => void;
   audioRef: React.RefObject<HTMLAudioElement>;
 };
@@ -25,7 +19,7 @@ type PlayerContextType = {
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider = ({ children }: { children: ReactNode }) => {
-  const [track, setTrack] = useState<Track | null>(null);
+  const [trackPlayer, setTrackPlayer] = useState<TrackDTO | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -41,16 +35,22 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (audioRef.current && track) {
+    if (audioRef.current && trackPlayer) {
       audioRef.current.load();
       audioRef.current.play();
       setIsPlaying(true);
     }
-  }, [track]);
+  }, [trackPlayer]);
 
   return (
     <PlayerContext.Provider
-      value={{ track, isPlaying, setTrack, togglePlay, audioRef }}
+      value={{
+        track: trackPlayer,
+        isPlaying,
+        setTrackPlayer,
+        togglePlay,
+        audioRef,
+      }}
     >
       {children}
     </PlayerContext.Provider>
