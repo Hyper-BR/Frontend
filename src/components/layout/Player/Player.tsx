@@ -9,7 +9,6 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
 
-  let lala;
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;

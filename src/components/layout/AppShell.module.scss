@@ -9,8 +9,6 @@
     $color-black 100%
   );
   color: $color-white;
-
-  color: #fff;
   display: flex;
   flex-direction: column;
 }
@@ -24,6 +22,10 @@
   padding: $spacing-md;
   box-sizing: border-box;
   overflow: hidden;
+
+  &.noSidebar {
+    grid-template-columns: 1fr; // ocupa tudo quando não tem sidebar
+  }
 }
 
 .content {
