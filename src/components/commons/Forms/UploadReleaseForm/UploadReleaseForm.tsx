@@ -1,8 +1,16 @@
 import { useState } from 'react';
-import styles from './UploadModal.module.scss';
+import styles from './UploadReleaseForm.module.scss';
 import { createRelease } from '../../../../services/release';
 
-const UploadModal = () => {
+interface UploadReleaseFormProps {
+  onClose: () => void;
+  onUploadSuccess: () => void;
+}
+
+const UploadReleaseForm = ({
+  onClose,
+  onUploadSuccess,
+}: UploadReleaseFormProps) => {
   const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -10,10 +18,9 @@ const UploadModal = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!file) return alert('Envie um arquivo de áudio.');
 
-    const release: any = {
+    const release = {
       title,
       type: 'SINGLE',
       genre,
@@ -23,7 +30,8 @@ const UploadModal = () => {
     setLoading(true);
     try {
       await createRelease(release);
-      alert('Faixa enviada com sucesso!');
+      onUploadSuccess(); // Atualiza a lista
+      onClose(); // Fecha modal
     } catch (err) {
       console.error('Erro ao fazer upload:', err);
       alert('Erro ao enviar faixa. Tente novamente.');
@@ -33,22 +41,25 @@ const UploadModal = () => {
   };
 
   return (
-    <div>
-      <h2>Upload de nova faixa</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className={styles.uploadForm}>
+      <h2 className={styles.title}>Upload de nova faixa</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label className={styles.label}>
           Nome da música
           <input
+            className={styles.input}
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+            placeholder="Ex: Minha Canção"
           />
         </label>
 
-        <label>
+        <label className={styles.label}>
           Gênero
           <select
+            className={styles.input}
             value={genre}
             onChange={(e) => setGenre(e.target.value)}
             required
@@ -72,7 +83,11 @@ const UploadModal = () => {
           />
         </label>
 
-        <button type="submit" disabled={loading}>
+        <button
+          type="submit"
+          disabled={loading}
+          className={styles.submitButton}
+        >
           {loading ? 'Enviando...' : 'Enviar faixa'}
         </button>
       </form>
@@ -80,4 +95,4 @@ const UploadModal = () => {
   );
 };
 
-export default UploadModal;
+export default UploadReleaseForm;

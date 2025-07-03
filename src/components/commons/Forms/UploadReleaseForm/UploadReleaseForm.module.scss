@@ -4,17 +4,20 @@
 .uploadArea {
   padding: $spacing-lg;
   text-align: center;
-  border: 2px dashed color.adjust($color-muted, $lightness: -20%);
+  border: 2px dashed color.adjust($color-muted, $lightness: -10%);
   border-radius: $radius;
-  background-color: color.adjust($color-gray-dark, $lightness: -2%);
-  font-size: 0.95rem;
-  color: color.adjust($color-muted, $lightness: 10%);
+  background-color: color.adjust($color-gray-dark, $lightness: 3%);
+  font-size: $font-size-sm;
+  font-weight: $font-weight-regular;
+  color: color.adjust($color-muted, $lightness: 15%);
   cursor: pointer;
-  transition: all $transition;
+  transition: background-color $transition, border-color $transition,
+    color $transition;
 
   &:hover {
-    border-color: color.adjust($color-muted, $lightness: 20%);
-    background-color: color.adjust($color-gray-dark, $lightness: 2%);
+    border-color: $color-primary;
+    background-color: color.adjust($color-gray-dark, $lightness: 8%);
+    color: $color-white;
   }
 }
 

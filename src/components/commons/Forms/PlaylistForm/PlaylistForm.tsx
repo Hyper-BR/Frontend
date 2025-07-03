@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { PlaylistDTO } from '../../../../../src/services/playlist/types';
-import { createPlaylist } from '../../../../../src/services/playlist';
-import styles from './PlaylistModal.module.scss';
+import { PlaylistDTO } from '../../../../services/playlist/types';
+import { createPlaylist } from '../../../../services/playlist';
+import styles from './PlaylistForm.module.scss';
 
 interface PlaylistModalProps {
   onClose: () => void;

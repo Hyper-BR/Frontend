@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../src/hooks/useAuth';
-import UploadModal from '../../commons/Modals/UploadModal/UploadModal';
 import styles from './Navbar.module.scss';
-import { Modal } from '../../commons/Modals/Modal';
+import { Modal } from '../../commons/Modal/Modal';
+import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm/UploadReleaseForm';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,24 +13,18 @@ const Navbar = () => {
 
   return (
     <header className={styles.navbar}>
-      <div className={styles.searchBox}>
-        <input type="text" placeholder="Buscar" />
-      </div>
-
       {userSigned ? (
         <>
           <div className={styles.userSection}>
             {isArtist ? (
               <>
-                <button
-                  className={styles.uploadButton}
-                  onClick={() => setShowModal(true)}
-                >
-                  Upload
-                </button>
+                <button onClick={() => setShowModal(true)}>Upload</button>
                 {showModal && (
                   <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-                    <UploadModal />
+                    <UploadReleaseForm
+                      onClose={() => setShowModal(false)}
+                      onUploadSuccess={() => alert('ok')}
+                    />
                   </Modal>
                 )}
               </>
