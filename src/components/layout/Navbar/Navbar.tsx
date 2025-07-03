@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../src/hooks/useAuth';
-import UploadModal from '../../commons/Modals/UploadModal';
+import UploadModal from '../../commons/Modals/UploadModal/UploadModal';
 import styles from './Navbar.module.scss';
+import { Modal } from '../../commons/Modals/Modal';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -28,7 +29,9 @@ const Navbar = () => {
                   Upload
                 </button>
                 {showModal && (
-                  <UploadModal onClose={() => setShowModal(false)} />
+                  <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+                    <UploadModal />
+                  </Modal>
                 )}
               </>
             ) : (

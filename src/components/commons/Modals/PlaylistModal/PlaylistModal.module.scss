@@ -1,0 +1,55 @@
+@use '../../../../styles/theme.scss' as *;
+@use 'sass:color';
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.title {
+  color: $color-primary;
+  font-size: $font-size-lg;
+  margin-bottom: $spacing-sm;
+  text-align: center;
+}
+
+.input {
+  background-color: $color-gray-dark;
+  border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
+  padding: $spacing-md;
+  color: $color-white;
+  border-radius: $radius;
+  font-size: $font-size-md;
+
+  &::placeholder {
+    color: $color-muted;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-primary;
+    box-shadow: 0 0 0 1px $color-primary;
+  }
+}
+
+.submitButton {
+  background-color: $color-primary;
+  color: $color-white;
+  padding: $spacing-md;
+  border: none;
+  border-radius: $radius;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: background-color $transition;
+
+  &:hover {
+    background-color: $color-primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

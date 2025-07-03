@@ -1,0 +1,40 @@
+@use '../../../../styles/theme.scss' as *;
+@use 'sass:color';
+
+.uploadArea {
+  padding: $spacing-lg;
+  text-align: center;
+  border: 2px dashed color.adjust($color-muted, $lightness: -20%);
+  border-radius: $radius;
+  background-color: color.adjust($color-gray-dark, $lightness: -2%);
+  font-size: 0.95rem;
+  color: color.adjust($color-muted, $lightness: 10%);
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover {
+    border-color: color.adjust($color-muted, $lightness: 20%);
+    background-color: color.adjust($color-gray-dark, $lightness: 2%);
+  }
+}
+
+button[type='submit'] {
+  padding: $spacing-md $spacing-lg;
+  background-color: $color-primary;
+  border: none;
+  border-radius: $radius;
+  color: $color-white;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-md;
+  cursor: pointer;
+  transition: background $transition;
+
+  &:hover {
+    background-color: color.adjust($color-primary, $lightness: 5%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
