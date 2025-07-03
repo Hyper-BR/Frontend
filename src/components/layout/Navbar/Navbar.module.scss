@@ -79,6 +79,6 @@
   transition: background $transition;
 
   &:hover {
-    background-color: color.adjust($color-primary-dark, $lightness: 4%);
+    background-color: color.adjust($color-primary-dark, $lightness: -10%);
   }
 }

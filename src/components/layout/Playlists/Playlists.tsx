@@ -1,4 +1,3 @@
-// components/Sidebar/PlaylistList.tsx
 import { PlaylistDTO } from '../../../../src/services/playlist/types';
 import styles from './PlaylistList.module.scss';
 
@@ -10,7 +9,7 @@ interface PlaylistListProps {
 export const Playlists = ({ playlists, onSelect }: PlaylistListProps) => {
   return (
     <div className={styles.playlistList}>
-      <button className="add-playlist-button">➕ Nova Playlist</button>
+      <button className={styles.addPlaylistButton}>➕ Nova Playlist</button>
 
       {playlists.map((playlist) => (
         <div

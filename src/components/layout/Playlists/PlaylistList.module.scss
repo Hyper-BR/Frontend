@@ -6,7 +6,6 @@
   flex-direction: column;
   gap: $spacing-md;
   padding: $spacing-md;
-  background: $color-gray-dark;
   color: $color-white;
 }
 
@@ -48,18 +47,23 @@
   font-weight: $font-weight-bold;
 }
 
-.add-playlist-button {
+.addPlaylistButton {
   background-color: $color-primary;
   color: $color-white;
+  padding: $spacing-md;
   border: none;
-  border-radius: calc($radius * 2.5);
-  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius;
   font-weight: $font-weight-bold;
-  font-size: $font-size-lg;
+  font-size: $font-size-sm;
   cursor: pointer;
   transition: background-color $transition;
 
   &:hover {
-    background: color.adjust($color-gray-dark, $lightness: 5%);
+    background-color: $color-primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }

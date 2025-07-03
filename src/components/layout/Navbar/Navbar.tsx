@@ -25,7 +25,7 @@ const Navbar = () => {
                   className={styles.uploadButton}
                   onClick={() => setShowModal(true)}
                 >
-                  + Faixa
+                  Upload
                 </button>
                 {showModal && (
                   <UploadModal onClose={() => setShowModal(false)} />
