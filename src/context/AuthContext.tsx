@@ -8,7 +8,7 @@ import {
 import { CustomerDTO, LoginCredentialsDTO } from '../services/customer/types';
 
 interface AuthContextType {
-  user: CustomerDTO | null;
+  customer: CustomerDTO | null;
   userSigned: boolean;
   isArtist: boolean;
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
@@ -23,18 +23,18 @@ export const AuthContext = createContext<AuthContextType>(
 );
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<CustomerDTO | null>(null);
+  const [customer, setCustomer] = useState<CustomerDTO | null>(null);
   const [userSigned, setUserSigned] = useState(false);
   const [currentArtistId, setCurrentArtistId] = useState<number | null>(null);
 
-  const isArtist = user?.artistProfiles?.length > 0;
+  const isArtist = customer?.artistProfile != null;
 
   async function signIn(credentials: LoginCredentialsDTO) {
     try {
       const response = await logInCustomer(credentials);
       const { customer, token } = response.data;
 
-      setUser(customer);
+      setCustomer(customer);
       setUserSigned(true);
 
       setCookie(null, 'token', token.token, { path: '/' });
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   async function loadUser(email: string) {
     try {
       const response = await getCustomerByEmail(email);
-      setUser(response.data);
+      setCustomer(response.data);
       setUserSigned(true);
     } catch (err) {
       console.error('Erro ao carregar usuário:', err);
@@ -70,13 +70,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   function signOut() {
     destroyCookie(null, 'token');
     destroyCookie(null, 'user');
-    setUser(null);
+    setCustomer(null);
     setUserSigned(false);
   }
 
   useEffect(() => {
-    if (user?.artistProfiles?.length) {
-      setCurrentArtistId(user.artistProfiles[0].id);
+    if (customer?.artistProfile?.length) {
+      setCurrentArtistId(customer.artistProfile[0].id);
     } else {
       setCurrentArtistId(null);
     }
@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
+        customer,
         userSigned,
         isArtist,
         signIn,

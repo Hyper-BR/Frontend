@@ -1,35 +1,29 @@
 import { useState } from 'react';
-import { saveTracks } from '../../../../src/services/track';
 import styles from './UploadModal.module.scss';
-import { useAuth } from '../../../../src/hooks/useAuth';
+import { createRelease } from '../../../../src/services/release';
+import { ReleaseDTO } from '../../../../src/services/release/types';
 
 const UploadModal = ({ onClose }: { onClose: () => void }) => {
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [genre, setGenre] = useState('');
-  const [image, setImage] = useState('');
   const [file, setFile] = useState<File | null>(null);
-  const [selectedArtistId, setSelectedArtistId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const { user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!file) return alert('Envie um arquivo de áudio.');
-    if (!selectedArtistId) return alert('Selecione o artista responsável.');
 
-    const track = {
-      name: name,
-      image: image,
-      genre: genre,
-      file: file,
+    const release: any = {
+      title,
+      type: 'SINGLE',
+      genre,
+      file,
     };
 
     setLoading(true);
     try {
-      console.log(track);
-      await saveTracks(track, selectedArtistId.toString());
+      await createRelease(release);
       alert('Faixa enviada com sucesso!');
       onClose();
     } catch (err) {
@@ -48,30 +42,12 @@ const UploadModal = ({ onClose }: { onClose: () => void }) => {
         </button>
         <h2>Upload de nova faixa</h2>
         <form onSubmit={handleSubmit}>
-          {user.artistProfiles.length > 0 && (
-            <label>
-              Projeto artista
-              <select
-                value={selectedArtistId ?? ''}
-                onChange={(e) => setSelectedArtistId(Number(e.target.value))}
-                required
-              >
-                <option value="">Selecione</option>
-                {user.artistProfiles.map((artist) => (
-                  <option key={artist.id} value={artist.id}>
-                    {artist.username}
-                  </option>
-                ))}
-              </select>
-            </label>
-          )}
-
           <label>
             Nome da música
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               required
             />
           </label>
@@ -90,16 +66,6 @@ const UploadModal = ({ onClose }: { onClose: () => void }) => {
               <option value="MPB">MPB</option>
               <option value="ELETRONICA">Eletrônica</option>
             </select>
-          </label>
-
-          <label>
-            Capa da faixa (URL)
-            <input
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="https://..."
-            />
           </label>
 
           <label className={styles.uploadArea}>

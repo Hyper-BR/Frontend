@@ -1,6 +1,6 @@
 import { ArtistDTO } from '../artist/types';
 
-export type TrackPageDTO = {
+export type ReleasePageDTO = {
   last: boolean;
   first: boolean;
   totalElements: number;
@@ -8,15 +8,16 @@ export type TrackPageDTO = {
   size: number;
   numberOfElements: number;
   page: number;
-  content: TrackDTO[];
+  content: ReleaseDTO[];
 };
 
-export type TrackDTO = {
+export type ReleaseDTO = {
   id: number;
   title: string;
-  duration: number;
-  coverUrl: string;
+  type: string;
+  image: string;
   genre: string;
-  artists: string[];
-  file: File;
+  artist: ArtistDTO;
+  coverUrl: string;
+  file?: File;
 };

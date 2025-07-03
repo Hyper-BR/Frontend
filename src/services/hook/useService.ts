@@ -1,8 +1,6 @@
 import { AxiosPromise } from 'axios';
 import api from '../axiosConfig';
-import { parseCookies } from 'nookies';
-
-const { token } = parseCookies();
+import { hasFile } from '../../../src/utils/fileUtils';
 
 export function useService() {
   function get(url: string, data: any, query: string): AxiosPromise {
@@ -12,29 +10,29 @@ export function useService() {
   }
 
   function post(url: string, data: any): AxiosPromise {
-    const header = url.includes('/track?artistId')
+    const contentType = hasFile(data)
       ? 'multipart/form-data'
       : 'application/json';
-    console.log(header);
-    return api.post(`${url}`, data, {
-      headers: { 'Content-Type': header },
+
+    return api.post(url, data, {
+      headers: { 'Content-Type': contentType },
     });
   }
 
   function put(url: string, data: any): AxiosPromise {
-    return api.put(`${url}`, data, {
+    return api.put(url, data, {
       headers: {},
     });
   }
 
   function patch(url: string, data: any): AxiosPromise {
-    return api.patch(`${url}`, data, {
+    return api.patch(url, data, {
       headers: {},
     });
   }
 
   function remove(url: string, data: any) {
-    return api.delete(`${url}`, {
+    return api.delete(url, {
       headers: {},
       ...data,
     });

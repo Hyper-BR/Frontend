@@ -55,14 +55,14 @@ const Player = () => {
 
       <div className={styles.songInfo}>
         <img
-          src={track.image || 'https://i.pravatar.cc/40?u='}
+          src={track.coverUrl || 'https://i.pravatar.cc/40?u='}
           alt="image"
           className={styles.image}
         />
         <div>
-          <p className={styles.title}>{track.name}</p>
+          <p className={styles.title}>{track.title}</p>
           <p className={styles.artist}>
-            {track.artist.username || 'Artista desconhecido'}
+            {track.artists || 'Artista desconhecido'}
           </p>
         </div>
       </div>

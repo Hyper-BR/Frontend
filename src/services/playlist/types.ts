@@ -6,7 +6,7 @@ export type PlaylistPageDTO = {
   size: number;
   numberOfElements: number;
   page: number;
-  playlists: PlaylistDTO[];
+  content: PlaylistDTO[];
 };
 
 export type PlaylistDTO = {

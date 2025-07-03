@@ -3,7 +3,7 @@ import styles from './Card.module.scss';
 type CardProps = {
   image: string;
   title: string;
-  subtitle?: string;
+  subtitle?: string[];
   onClick?: () => void;
 };
 

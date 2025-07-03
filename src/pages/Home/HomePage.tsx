@@ -16,7 +16,7 @@ const Home = () => {
   const fetchTracks = async () => {
     try {
       const response = await getTracks();
-      setTracks(response.data.tracks);
+      setTracks(response.data.content);
     } catch (error) {
       console.error('Erro ao buscar faixas:', error);
     }
@@ -25,9 +25,9 @@ const Home = () => {
   const fetchArtists = async () => {
     try {
       const response = await getArtists();
-      setArtists(response.data.artists);
+      setArtists(response.data.content);
     } catch (error) {
-      console.error('Erro ao buscar faixas:', error);
+      console.error('Erro ao buscar artistas:', error);
     }
   };
 
@@ -45,8 +45,8 @@ const Home = () => {
             <Card
               key={track.id}
               image={'https://i.pravatar.cc/40?u='}
-              title={track.name}
-              subtitle={track.artist?.username}
+              title={track.title}
+              subtitle={track.artists}
               onClick={() => setTrackPlayer(track)}
             />
           ))}

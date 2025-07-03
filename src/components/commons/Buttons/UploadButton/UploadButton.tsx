@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './UploadButton.module.scss';
-import { saveTracks } from '@/src/services/track';
 
 const UploadButton = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

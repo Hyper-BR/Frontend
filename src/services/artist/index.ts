@@ -5,11 +5,11 @@ import { ArtistDTO, ArtistPageDTO } from './types';
 export const createArtist = (data: any): AxiosPromise<ArtistDTO> => {
   const { post } = useService();
 
-  return post(`/artist`, data);
+  return post(`/artists`, data);
 };
 
 export const getArtists = (): AxiosPromise<ArtistPageDTO> => {
   const { get } = useService();
 
-  return get(`/artist`, '', '');
+  return get(`/artists`, '', '');
 };

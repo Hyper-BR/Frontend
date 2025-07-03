@@ -6,9 +6,8 @@ import { createArtist } from '../../services/artist';
 import { ArtistDTO } from '@/src/services/artist/types';
 
 const BecomeArtistPage = () => {
-  const [projectName, setProjectName] = useState('');
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
-  const { user, refreshSession } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -16,12 +15,11 @@ const BecomeArtistPage = () => {
     setLoading(true);
 
     const artistData: Partial<ArtistDTO> = {
-      username: projectName,
+      username,
     };
 
     try {
       await createArtist(artistData);
-      await refreshSession();
       navigate('/');
     } catch (err) {
       console.error('Erro ao criar artista:', err);
@@ -39,9 +37,9 @@ const BecomeArtistPage = () => {
           Nome do projeto
           <input
             type="text"
-            value={projectName}
+            value={username}
             required
-            onChange={(e) => setProjectName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="Ex: Gustavo & Os Bits"
           />
         </label>

@@ -6,7 +6,7 @@ export type ArtistPageDTO = {
   size: number;
   numberOfElements: number;
   page: number;
-  artists: ArtistDTO[];
+  content: ArtistDTO[];
 };
 
 export type ArtistDTO = {

@@ -8,8 +8,8 @@ export type CustomerDTO = {
   country: string;
   birthDate: string;
   subscription: number;
-  avatar: string;
-  artistProfiles: ArtistDTO[];
+  avatarUrl: string;
+  artistProfile: ArtistDTO[];
 };
 
 export type LoginDTO = {

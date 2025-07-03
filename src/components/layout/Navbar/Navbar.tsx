@@ -8,7 +8,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
-  const { user, userSigned, signOut, isArtist } = useAuth();
+  const { customer: user, userSigned, signOut, isArtist } = useAuth();
 
   return (
     <header className={styles.navbar}>
@@ -18,17 +18,6 @@ const Navbar = () => {
 
       {userSigned ? (
         <>
-          <div>
-            {!isArtist && (
-              <button
-                className={styles.loginButton}
-                onClick={() => navigate('/becomeArtist')}
-              >
-                Virar artista
-              </button>
-            )}
-          </div>
-
           <div className={styles.userSection}>
             {isArtist ? (
               <>
@@ -43,12 +32,14 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              <button
-                className={styles.loginButton}
-                onClick={() => navigate('/becomeArtist')}
-              >
-                Virar artista
-              </button>
+              <div>
+                <button
+                  className={styles.loginButton}
+                  onClick={() => navigate('/becomeArtist')}
+                >
+                  Virar artista
+                </button>
+              </div>
             )}
 
             <img
