@@ -10,6 +10,8 @@ interface PlaylistListProps {
 export const Playlists = ({ playlists, onSelect }: PlaylistListProps) => {
   return (
     <div className={styles.playlistList}>
+      <button className="add-playlist-button">➕ Nova Playlist</button>
+
       {playlists.map((playlist) => (
         <div
           key={playlist.id}

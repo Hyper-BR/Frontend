@@ -1,3 +1,6 @@
+@use '../../../styles/theme.scss' as *;
+@use 'sass:color';
+
 .overlay {
   position: fixed;
   top: 0;
@@ -12,13 +15,13 @@
 }
 
 .modal {
-  background-color: #1e1e1e;
-  padding: 2rem;
+  background-color: color.adjust($color-gray-dark, $lightness: 4%);
+  padding: $spacing-lg;
   width: 100%;
   max-width: 480px;
-  border-radius: 12px;
+  border-radius: calc($radius * 1.5);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
-  color: #fff;
+  color: $color-white;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -32,68 +35,69 @@
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: #ccc;
+  color: $color-muted;
   cursor: pointer;
+  transition: color $transition;
 
   &:hover {
-    color: #fff;
+    color: $color-white;
   }
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: $spacing-md;
 }
 
 label {
   display: flex;
   flex-direction: column;
-  font-size: 0.9rem;
-  color: #aaa;
+  font-size: $font-size-sm;
+  color: $color-muted;
 
   input,
   select {
     margin-top: 6px;
-    padding: 10px;
-    border-radius: 6px;
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    color: #fff;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius;
+    background-color: color.adjust($color-gray-dark, $lightness: 5%);
+    border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
+    color: $color-white;
     font-size: 0.95rem;
   }
 }
 
 .uploadArea {
-  padding: 1.5rem;
+  padding: $spacing-lg;
   text-align: center;
-  border: 2px dashed #555;
-  border-radius: 8px;
-  background-color: #262626;
+  border: 2px dashed color.adjust($color-muted, $lightness: -20%);
+  border-radius: $radius;
+  background-color: color.adjust($color-gray-dark, $lightness: -2%);
   font-size: 0.95rem;
-  color: #bbb;
+  color: color.adjust($color-muted, $lightness: 10%);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all $transition;
 
   &:hover {
-    border-color: #888;
-    background-color: #2f2f2f;
+    border-color: color.adjust($color-muted, $lightness: 20%);
+    background-color: color.adjust($color-gray-dark, $lightness: 2%);
   }
 }
 
 button[type='submit'] {
-  padding: 0.75rem 1rem;
-  background-color: #ff5e57;
+  padding: $spacing-md $spacing-lg;
+  background-color: $color-primary;
   border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
+  border-radius: $radius;
+  color: $color-white;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-md;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background $transition;
 
   &:hover {
-    background-color: #ff3e3e;
+    background-color: color.adjust($color-primary, $lightness: 5%);
   }
 
   &:disabled {

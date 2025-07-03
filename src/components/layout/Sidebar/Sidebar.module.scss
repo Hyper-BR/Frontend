@@ -1,5 +1,7 @@
+@use '../../../styles/theme.scss' as *;
+
 .sidebar {
-  background-color: #1a1a1a;
-  padding: 1.5rem;
-  border-radius: 8px;
+  background-color: $color-gray-dark;
+  padding: $spacing-lg;
+  border-radius: $radius;
 }

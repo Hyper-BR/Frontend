@@ -1,11 +1,17 @@
 @use '../styles/theme.scss' as *;
+@use 'sass:color';
 
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: linear-gradient(160deg, #0f0f0f, #1c1c1c 40%, #1a0000 100%);
+  background: linear-gradient(
+    160deg,
+    $color-black,
+    $color-gray-dark 40%,
+    color.adjust($color-primary-dark, $lightness: -5%) 100%
+  );
   font-family: 'Inter', sans-serif;
   color: $color-white;
   overflow: hidden;

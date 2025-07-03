@@ -24,7 +24,7 @@
   overflow: hidden;
 
   &.noSidebar {
-    grid-template-columns: 1fr; // ocupa tudo quando não tem sidebar
+    grid-template-columns: 1fr;
   }
 }
 
