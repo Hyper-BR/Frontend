@@ -1,11 +1,9 @@
 import { createContext, useEffect, useState, ReactNode } from 'react';
 import { parseCookies, setCookie, destroyCookie } from 'nookies';
-import {
-  logInCustomer,
-  refreshToken,
-  getCustomerByEmail,
-} from '../services/customer';
-import { CustomerDTO, LoginCredentialsDTO } from '../services/customer/types';
+import { getCustomerByEmail } from '../services/customer';
+import { CustomerDTO } from '../services/customer/types';
+import { LoginCredentialsDTO } from '../services/login/types';
+import { logInCustomer, refreshToken } from '../services/login';
 
 interface AuthContextType {
   customer: CustomerDTO | null;

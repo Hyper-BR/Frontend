@@ -11,17 +11,3 @@ export type CustomerDTO = {
   avatarUrl: string;
   artistProfile: ArtistDTO[];
 };
-
-export type LoginDTO = {
-  customer: CustomerDTO;
-  token: TokenDTO;
-};
-
-export type LoginCredentialsDTO = {
-  email: string;
-  password: string;
-};
-
-export type TokenDTO = {
-  token: string;
-};

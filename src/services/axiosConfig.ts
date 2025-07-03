@@ -10,20 +10,10 @@ import { parseCookies } from 'nookies';
 
 const api = axios.create({
   baseURL: process.env.API_URL,
-  withCredentials: false,
+  withCredentials: true,
   headers: {
     Accept: 'application/json',
   },
-});
-
-api.interceptors.request.use((config) => {
-  const { token } = parseCookies();
-
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token.toString()}`;
-  }
-
-  return config;
 });
 
 api.interceptors.response.use(

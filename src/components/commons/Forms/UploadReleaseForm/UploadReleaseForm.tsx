@@ -30,8 +30,8 @@ const UploadReleaseForm = ({
     setLoading(true);
     try {
       await createRelease(release);
-      onUploadSuccess(); // Atualiza a lista
-      onClose(); // Fecha modal
+      onUploadSuccess();
+      onClose();
     } catch (err) {
       console.error('Erro ao fazer upload:', err);
       alert('Erro ao enviar faixa. Tente novamente.');

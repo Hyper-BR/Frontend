@@ -23,7 +23,7 @@ const Navbar = () => {
                   <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
                     <UploadReleaseForm
                       onClose={() => setShowModal(false)}
-                      onUploadSuccess={() => alert('ok')}
+                      onUploadSuccess={() => setShowModal(false)}
                     />
                   </Modal>
                 )}
