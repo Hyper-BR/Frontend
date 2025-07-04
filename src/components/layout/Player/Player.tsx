@@ -1,42 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Player.module.scss';
 import { usePlayer } from '../../../../src/context/PlayerContext';
+import WaveSurferPlayer from '@wavesurfer/react';
 
 const Player = () => {
-  const { track, isPlaying, togglePlay, audioRef } = usePlayer();
-
+  const { track, isPlaying, togglePlay } = usePlayer();
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
 
-  console.log('PLAYERRR');
+  const wavesurferRef = useRef<any>(null);
 
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
+  const handleReady = (ws: any) => {
+    wavesurferRef.current = ws;
+    setDuration(ws.getDuration());
+    ws.setVolume(volume);
+    if (isPlaying) ws.play();
+  };
 
-    const update = () => setCurrentTime(audio.currentTime);
-    const meta = () => setDuration(audio.duration);
-
-    audio.addEventListener('timeupdate', update);
-    audio.addEventListener('loadedmetadata', meta);
-    return () => {
-      audio.removeEventListener('timeupdate', update);
-      audio.removeEventListener('loadedmetadata', meta);
-    };
-  }, [audioRef, track]);
+  const handlePlayPause = () => {
+    if (wavesurferRef.current) {
+      wavesurferRef.current.playPause();
+      togglePlay();
+    }
+  };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = parseFloat(e.target.value);
+    const time = parseFloat(e.target.value);
+    if (wavesurferRef.current) {
+      wavesurferRef.current.setTime(time);
+      setCurrentTime(time);
     }
   };
 
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newVolume = parseFloat(e.target.value);
-    setVolume(newVolume);
-    if (audioRef.current) {
-      audioRef.current.volume = newVolume;
+    const vol = parseFloat(e.target.value);
+    setVolume(vol);
+    if (wavesurferRef.current) {
+      wavesurferRef.current.setVolume(vol);
     }
   };
 
@@ -47,19 +48,9 @@ const Player = () => {
 
   return (
     <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
-      <audio
-        ref={audioRef}
-        src={
-          track
-            ? `${process.env.API_URL}/track/download/${track.id}`
-            : undefined
-        }
-        preload="metadata"
-      />
-
       <div className={styles.songInfo}>
         <img
-          src={'https://i.pravatar.cc/50?u='}
+          src={track?.coverUrl || 'https://i.pravatar.cc/50?u='}
           alt="Cover"
           className={styles.image}
         />
@@ -73,7 +64,7 @@ const Player = () => {
 
       <div className={styles.controls}>
         <button disabled={!track}>⏮</button>
-        <button onClick={togglePlay} disabled={!track}>
+        <button onClick={handlePlayPause} disabled={!track}>
           {isPlaying ? '⏸' : '▶'}
         </button>
         <button disabled={!track}>⏭</button>
@@ -106,6 +97,17 @@ const Player = () => {
           disabled={!track}
         />
       </div>
+
+      {track && (
+        <WaveSurferPlayer
+          height={60}
+          waveColor="#888"
+          progressColor="#4f46e5"
+          url={`${process.env.API_URL}/track/play/${track.id}`}
+          onReady={handleReady}
+          onTimeupdate={(ws: any) => setCurrentTime(ws.getCurrentTime())}
+        />
+      )}
     </footer>
   );
 };
