@@ -90,12 +90,15 @@
 }
 
 .waveform {
-  min-width: 300px;
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 100%;
+  padding: 0 1rem;
   align-items: center;
   justify-content: center;
 
   canvas {
     width: 100% !important;
-    height: 100% !important;
+    height: 60px !important;
   }
 }

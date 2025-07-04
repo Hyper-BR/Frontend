@@ -74,8 +74,7 @@ const Player = () => {
         {track && (
           <WaveSurferPlayer
             height={60}
-            waveColor="#444"
-            progressColor="#00ff99"
+            progressColor="#b41414"
             barWidth={2}
             barGap={1}
             barRadius={2}
