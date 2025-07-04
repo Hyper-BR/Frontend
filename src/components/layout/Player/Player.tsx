@@ -45,8 +45,6 @@ const Player = () => {
       .toString()
       .padStart(2, '0')}`;
 
-  if (!track) return null;
-
   return (
     <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
       <audio
