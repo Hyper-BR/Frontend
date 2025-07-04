@@ -60,38 +60,42 @@
 .controls {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: $spacing-md;
-  width: 50%;
+  width: 20%;
 
   button {
     background: none;
     border: none;
-    color: $color-white;
     font-size: 1.25rem;
+    color: $color-white;
     cursor: pointer;
-    transition: color $transition;
 
     &:hover {
       color: $color-primary;
     }
   }
-
-  .progress {
-    width: 100%;
-    accent-color: $color-primary;
-  }
 }
 
 .volume {
+  width: 20%;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: $spacing-sm;
-  color: $color-white;
-  width: 25%;
 
   input[type='range'] {
     width: 100px;
     accent-color: $color-primary;
+  }
+}
+
+.waveform {
+  min-width: 300px;
+  align-items: center;
+  justify-content: center;
+
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
   }
 }

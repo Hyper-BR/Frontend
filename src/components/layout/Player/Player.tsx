@@ -68,21 +68,25 @@ const Player = () => {
           {isPlaying ? '⏸' : '▶'}
         </button>
         <button disabled={!track}>⏭</button>
+      </div>
 
-        <input
-          type="range"
-          min={0}
-          max={duration}
-          value={currentTime}
-          onChange={handleSeek}
-          disabled={!track}
-          className={styles.progress}
-        />
-        <span className={styles.timer}>
-          {track
-            ? `${format(currentTime)} / ${format(duration)}`
-            : '--:-- / --:--'}
-        </span>
+      <div className={styles.waveform}>
+        {track && (
+          <WaveSurferPlayer
+            height={60}
+            waveColor="#444"
+            progressColor="#00ff99"
+            barWidth={2}
+            barGap={1}
+            barRadius={2}
+            barHeight={1}
+            normalize={true}
+            url={`${process.env.API_URL}/track/play/${track.id}`}
+            onReady={handleReady}
+            onTimeupdate={(ws: any) => setCurrentTime(ws.getCurrentTime())}
+            onError={(e) => console.error('WaveSurfer error:', e)}
+          />
+        )}
       </div>
 
       <div className={styles.volume}>
@@ -97,17 +101,6 @@ const Player = () => {
           disabled={!track}
         />
       </div>
-
-      {track && (
-        <WaveSurferPlayer
-          height={60}
-          waveColor="#888"
-          progressColor="#4f46e5"
-          url={`${process.env.API_URL}/track/play/${track.id}`}
-          onReady={handleReady}
-          onTimeupdate={(ws: any) => setCurrentTime(ws.getCurrentTime())}
-        />
-      )}
     </footer>
   );
 };
