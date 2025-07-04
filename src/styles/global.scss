@@ -6,17 +6,21 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: linear-gradient(
-    160deg,
-    $color-black,
-    $color-gray-dark 40%,
-    color.adjust($color-primary-dark, $lightness: -5%) 100%
-  );
+  min-height: 100vh;
   font-family: 'Inter', sans-serif;
   color: $color-white;
-  overflow: hidden;
-}
+  background-color: $color-black;
+  overflow-x: hidden;
+  overflow-y: hidden;
 
-#root {
-  height: 100%;
+  background-image: radial-gradient(
+      circle at 20% 40%,
+      rgba(255, 0, 0, 0.035),
+      transparent 25%
+    ),
+    radial-gradient(circle at 80% 60%, rgba(255, 0, 0, 0.025), transparent 25%),
+    radial-gradient(circle at center, rgba(255, 0, 0, 0.015), transparent 60%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }

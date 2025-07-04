@@ -3,8 +3,8 @@
 @use 'sass:color';
 
 .navbar {
-  background-color: $color-gray-dark;
-  padding: $spacing-md $spacing-lg;
+  background-color: $color-black;
+  padding: $spacing-sm $spacing-lg;
   display: flex;
   align-items: center;
   justify-content: space-between;

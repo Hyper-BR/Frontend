@@ -20,7 +20,7 @@ export const AppShell = ({ children }: AppShellProps) => {
         className={`${styles.layout} ${!userSigned ? styles.noSidebar : ''}`}
       >
         {userSigned && <Sidebar />}
-        <main className={styles.content}>
+        <main className={styles.home}>
           <Home />
         </main>
       </div>

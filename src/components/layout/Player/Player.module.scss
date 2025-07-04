@@ -7,14 +7,19 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: $color-black;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 $spacing-lg;
   gap: $spacing-lg;
-  border-top: 1px solid color.adjust($color-black);
+
+  background-color: $color-black;
+
+  border-top: 1px solid rgba(255, 0, 0, 0.08);
+  box-shadow: 0 -4px 14px rgba(255, 0, 0, 0.05);
+  border-top-left-radius: $radius;
+  border-top-right-radius: $radius;
 }
 
 .player.disabled {
@@ -69,6 +74,7 @@
     font-size: 1.25rem;
     color: $color-white;
     cursor: pointer;
+    transition: color 0.2s ease;
 
     &:hover {
       color: $color-primary;
@@ -94,6 +100,7 @@
   width: 100%;
   max-width: 100%;
   padding: 0 1rem;
+  display: flex;
   align-items: center;
   justify-content: center;
 
