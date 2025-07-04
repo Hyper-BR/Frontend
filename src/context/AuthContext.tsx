@@ -1,19 +1,24 @@
-import { createContext, useEffect, useState, ReactNode } from 'react';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
-import { getCustomerByEmail } from '../services/customer';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react';
+import {
+  getAuthenticatedCustomer,
+  logInCustomer,
+  logoutCustomer,
+} from '../services/login';
 import { CustomerDTO } from '../services/customer/types';
 import { LoginCredentialsDTO } from '../services/login/types';
-import { logInCustomer, refreshToken } from '../services/login';
 
 interface AuthContextType {
   customer: CustomerDTO | null;
   userSigned: boolean;
   isArtist: boolean;
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
-  signOut(): void;
-  refreshSession(): Promise<void>;
-  currentArtistId: number | null;
-  setCurrentArtistId: (id: number | null) => void;
+  signOut(): Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>(
@@ -22,74 +27,46 @@ export const AuthContext = createContext<AuthContextType>(
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerDTO | null>(null);
-  const [userSigned, setUserSigned] = useState(false);
-  const [currentArtistId, setCurrentArtistId] = useState<number | null>(null);
 
-  const isArtist = customer?.artistProfile != null;
+  const userSigned = !!customer;
+  const isArtist = !!customer?.artistProfile != null;
 
-  async function signIn(credentials: LoginCredentialsDTO) {
+  const loadUser = useCallback(async () => {
     try {
-      const response = await logInCustomer(credentials);
-      const { customer, token } = response.data;
-
-      setCustomer(customer);
-      setUserSigned(true);
-
-      setCookie(null, 'token', token.token, { path: '/' });
-      setCookie(null, 'user', customer.email, { path: '/' });
+      const { data } = await getAuthenticatedCustomer();
+      setCustomer(data);
     } catch (err) {
-      console.error('Erro ao fazer login:', err);
-      signOut();
-    }
-  }
-
-  async function loadUser(email: string) {
-    try {
-      const response = await getCustomerByEmail(email);
-      setCustomer(response.data);
-      setUserSigned(true);
-    } catch (err) {
-      console.error('Erro ao carregar usuário:', err);
-      signOut();
-    }
-  }
-
-  async function refreshSession() {
-    try {
-      const response = await refreshToken();
-      const token = response.data.token;
-      setCookie(null, 'token', token, { path: '/' });
-    } catch (err) {
-      console.error('Erro ao renovar token:', err);
-      signOut();
-    }
-  }
-
-  function signOut() {
-    destroyCookie(null, 'token');
-    destroyCookie(null, 'user');
-    setCustomer(null);
-    setUserSigned(false);
-  }
-
-  useEffect(() => {
-    if (customer?.artistProfile?.length) {
-      setCurrentArtistId(customer.artistProfile[0].id);
-    } else {
-      setCurrentArtistId(null);
-    }
-
-    const { token, user: userEmail } = parseCookies();
-    if (token && token !== 'null' && userEmail && userEmail !== 'null') {
-      loadUser(userEmail);
-      refreshSession();
-
-      const interval = setInterval(refreshSession, 1000 * 60 * 10);
-      return () => clearInterval(interval);
-    } else {
-      signOut();
+      console.error('Erro ao recuperar sessão:', err);
+      setCustomer(null);
     }
   }, []);
+
+  const signIn = useCallback(
+    async (credentials: LoginCredentialsDTO) => {
+      try {
+        await logInCustomer(credentials);
+        await loadUser();
+      } catch (err) {
+        console.error('Erro ao fazer login:', err);
+        await signOut();
+      }
+    },
+    [loadUser],
+  );
+
+  const signOut = useCallback(async () => {
+    try {
+      await logoutCustomer();
+    } catch (err) {
+      console.warn('Erro ao sair:', err);
+    } finally {
+      setCustomer(null);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
 
   return (
     <AuthContext.Provider
@@ -99,9 +76,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isArtist,
         signIn,
         signOut,
-        refreshSession,
-        currentArtistId,
-        setCurrentArtistId,
       }}
     >
       {children}
