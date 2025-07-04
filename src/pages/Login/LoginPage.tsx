@@ -32,7 +32,7 @@ const LoginPage = () => {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="seu@email.com"
+            placeholder="email"
           />
         </label>
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
           />
         </label>
 
-        <button type="submit">Fazer login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

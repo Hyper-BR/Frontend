@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerDTO | null>(null);
 
   const userSigned = !!customer;
-  const isArtist = !!customer?.artistProfile != null;
+  const isArtist = customer?.artistProfile != null;
 
   const loadUser = useCallback(async () => {
     try {
