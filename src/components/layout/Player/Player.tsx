@@ -9,6 +9,8 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
 
+  console.log('PLAYERRR');
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -46,31 +48,37 @@ const Player = () => {
   if (!track) return null;
 
   return (
-    <footer className={styles.player}>
+    <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
       <audio
         ref={audioRef}
-        src={`${process.env.API_URL}/track/download/${track.id}`}
+        src={
+          track
+            ? `${process.env.API_URL}/track/download/${track.id}`
+            : undefined
+        }
         preload="metadata"
       />
 
       <div className={styles.songInfo}>
         <img
-          src={track.coverUrl || 'https://i.pravatar.cc/40?u='}
-          alt="image"
+          src={'https://i.pravatar.cc/50?u='}
+          alt="Cover"
           className={styles.image}
         />
         <div>
-          <p className={styles.title}>{track.title}</p>
-          <p className={styles.artist}>
-            {track.artists || 'Artista desconhecido'}
+          <p className={styles.title}>
+            {track?.title || 'Nenhuma faixa selecionada'}
           </p>
+          <p className={styles.artist}>{track?.artists || ''}</p>
         </div>
       </div>
 
       <div className={styles.controls}>
-        <button>⏮</button>
-        <button onClick={togglePlay}>{isPlaying ? '⏸' : '▶'}</button>
-        <button>⏭</button>
+        <button disabled={!track}>⏮</button>
+        <button onClick={togglePlay} disabled={!track}>
+          {isPlaying ? '⏸' : '▶'}
+        </button>
+        <button disabled={!track}>⏭</button>
 
         <input
           type="range"
@@ -78,10 +86,13 @@ const Player = () => {
           max={duration}
           value={currentTime}
           onChange={handleSeek}
+          disabled={!track}
           className={styles.progress}
         />
         <span className={styles.timer}>
-          {format(currentTime)} / {format(duration)}
+          {track
+            ? `${format(currentTime)} / ${format(duration)}`
+            : '--:-- / --:--'}
         </span>
       </div>
 
@@ -94,6 +105,7 @@ const Player = () => {
           step={0.01}
           value={volume}
           onChange={handleVolume}
+          disabled={!track}
         />
       </div>
     </footer>

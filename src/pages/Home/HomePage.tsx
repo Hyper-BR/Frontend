@@ -2,38 +2,32 @@ import { useEffect, useState } from 'react';
 import Card from '../../../src/components/commons/Cards/Card';
 import styles from './Home.module.scss';
 import { getTracks } from '../../../src/services/track';
-import { TrackDTO } from '../../../src/services/track/types';
 import { getArtists } from '../../../src/services/artist';
+import { TrackDTO } from '../../../src/services/track/types';
 import { ArtistDTO } from '../../../src/services/artist/types';
 import { usePlayer } from '../../../src/context/PlayerContext';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
-
   const { setTrackPlayer } = usePlayer();
 
-  const fetchTracks = async () => {
-    try {
-      const response = await getTracks();
-      setTracks(response.data.content);
-    } catch (error) {
-      console.error('Erro ao buscar faixas:', error);
-    }
-  };
-
-  const fetchArtists = async () => {
-    try {
-      const response = await getArtists();
-      setArtists(response.data.content);
-    } catch (error) {
-      console.error('Erro ao buscar artistas:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchTracks();
-    fetchArtists();
+    const fetchData = async () => {
+      try {
+        const [tracksResponse, artistsResponse] = await Promise.all([
+          getTracks(),
+          getArtists(),
+        ]);
+
+        setTracks(tracksResponse.data.content);
+        setArtists(artistsResponse.data.content);
+      } catch (error) {
+        console.error('Erro ao carregar dados iniciais:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -44,7 +38,7 @@ const Home = () => {
           {tracks.map((track) => (
             <Card
               key={track.id}
-              image={'https://i.pravatar.cc/40?u='}
+              image={'https://i.pravatar.cc/123?u='}
               title={track.title}
               subtitle={track.artists}
               onClick={() => setTrackPlayer(track)}
@@ -59,9 +53,11 @@ const Home = () => {
           {artists.map((artist) => (
             <Card
               key={artist.id}
-              image={`https://i.pravatar.cc/40?u=`}
+              image={`https://i.pravatar.cc/1579?u=`}
               title={artist.username}
-              onClick={() => console.log(`Entrar ${artist.username}`)}
+              onClick={() =>
+                console.log(`Visualizar perfil de ${artist.username}`)
+              }
             />
           ))}
         </div>

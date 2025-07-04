@@ -47,7 +47,7 @@ const Sidebar = () => {
             onClick={() => alert(playlist)}
           >
             <img
-              src={'https://i.pravatar.cc/40?u='}
+              src={'https://i.pravatar.cc/150?u='}
               alt={playlist.name}
               className={styles.cover}
             />

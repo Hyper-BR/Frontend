@@ -2,14 +2,35 @@
 @use 'sass:color';
 
 .player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background-color: $color-gray-dark;
   height: 80px;
-  padding: 0 $spacing-lg;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 $spacing-lg;
   gap: $spacing-lg;
   border-top: 1px solid color.adjust($color-black, $lightness: 10%);
+}
+
+.player.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  filter: grayscale(60%);
+  user-select: none;
+
+  .title {
+    color: $color-muted;
+  }
+
+  .progress,
+  .volume input[type='range'] {
+    opacity: 0.4;
+  }
 }
 
 .songInfo {
