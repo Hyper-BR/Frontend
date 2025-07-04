@@ -75,10 +75,6 @@ const Player = () => {
           <WaveSurferPlayer
             height={60}
             progressColor="#b41414"
-            barWidth={2}
-            barGap={1}
-            barRadius={2}
-            barHeight={1}
             normalize={true}
             url={`${process.env.API_URL}/track/play/${track.id}`}
             onReady={handleReady}
