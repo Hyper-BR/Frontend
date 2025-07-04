@@ -6,7 +6,7 @@ import {
   ConflictException,
 } from '../exceptions';
 import { translateMessage } from '../utils/errorMessages';
-import { logoutCustomer } from './login';
+import { logout } from './auth';
 
 const api = axios.create({
   baseURL: process.env.API_URL,
@@ -41,7 +41,7 @@ api.interceptors.response.use(
 
         return api(originalRequest);
       } catch (refreshError) {
-        logoutCustomer();
+        logout();
         if (refreshError.response?.status === 401) {
           return Promise.reject(
             new NetworkException('Sessão expirada', refreshError.response),

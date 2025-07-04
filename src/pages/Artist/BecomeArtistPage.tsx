@@ -10,6 +10,8 @@ const BecomeArtistPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const { loadUser } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -20,6 +22,7 @@ const BecomeArtistPage = () => {
 
     try {
       await createArtist(artistData);
+      loadUser();
       navigate('/');
     } catch (err) {
       console.error('Erro ao criar artista:', err);

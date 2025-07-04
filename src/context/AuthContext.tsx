@@ -5,13 +5,9 @@ import {
   useState,
   ReactNode,
 } from 'react';
-import {
-  getAuthenticatedCustomer,
-  logInCustomer,
-  logoutCustomer,
-} from '../services/login';
+import { getMe, login, logout } from '../services/auth';
 import { CustomerDTO } from '../services/customer/types';
-import { LoginCredentialsDTO } from '../services/login/types';
+import { LoginCredentialsDTO } from '../services/auth/types';
 
 interface AuthContextType {
   customer: CustomerDTO | null;
@@ -19,6 +15,7 @@ interface AuthContextType {
   isArtist: boolean;
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
   signOut(): Promise<void>;
+  loadUser(): Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>(
@@ -33,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loadUser = useCallback(async () => {
     try {
-      const { data } = await getAuthenticatedCustomer();
+      const { data } = await getMe();
       setCustomer(data);
     } catch (err) {
       console.error('Erro ao recuperar sessão:', err);
@@ -44,7 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signIn = useCallback(
     async (credentials: LoginCredentialsDTO) => {
       try {
-        await logInCustomer(credentials);
+        await login(credentials);
         await loadUser();
       } catch (err) {
         console.error('Erro ao fazer login:', err);
@@ -56,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = useCallback(async () => {
     try {
-      await logoutCustomer();
+      await logout();
     } catch (err) {
       console.warn('Erro ao sair:', err);
     } finally {
@@ -76,6 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isArtist,
         signIn,
         signOut,
+        loadUser,
       }}
     >
       {children}

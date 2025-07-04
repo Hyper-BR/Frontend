@@ -1,0 +1,61 @@
+@use '../../styles/theme.scss' as *;
+@use 'sass:color';
+
+.registerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+
+  background: $background-gradient;
+
+  color: $color-white;
+}
+
+.form {
+  background-color: $color-gray-dark;
+  padding: 3rem;
+  border-radius: $radius;
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.05);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  gap: $spacing-xs;
+
+  input {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: $radius;
+    background-color: $color-black;
+    color: $color-white;
+    outline: none;
+    font-size: 0.95rem;
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.3);
+    }
+  }
+}
+
+button[type='submit'] {
+  padding: 0.75rem 1.5rem;
+  background-color: $color-primary;
+  color: $color-white;
+  border: none;
+  border-radius: $radius;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background-color: $color-primary-dark;
+  }
+}

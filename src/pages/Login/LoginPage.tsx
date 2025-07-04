@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.scss';
 import { useAuth } from '../../../src/hooks/useAuth';
 
@@ -48,6 +48,9 @@ const LoginPage = () => {
         </label>
 
         <button type="submit">Login</button>
+        <p className={styles.registerLink}>
+          Ainda não tem conta? <Link to="/register">Crie uma aqui</Link>
+        </p>
       </form>
     </div>
   );

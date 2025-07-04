@@ -9,5 +9,5 @@ export type CustomerDTO = {
   birthDate: string;
   subscription: number;
   avatarUrl: string;
-  artistProfile: ArtistDTO[];
+  artistProfile?: ArtistDTO[];
 };
