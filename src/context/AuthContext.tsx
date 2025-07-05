@@ -5,9 +5,9 @@ import {
   useState,
   ReactNode,
 } from 'react';
-import { getMe, login, logout } from '../services/auth';
-import { CustomerDTO } from '../services/customer/types';
-import { LoginCredentialsDTO } from '../services/auth/types';
+import { getMe, login, logout } from '@/services/auth';
+import { CustomerDTO } from '@/services/customer/types';
+import { LoginCredentialsDTO } from '@/services/auth/types';
 
 interface AuthContextType {
   customer: CustomerDTO | null;

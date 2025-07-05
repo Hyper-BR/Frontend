@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import styles from './BecomeArtistPage.module.scss';
-import { createArtist } from '../../services/artist';
-import { ArtistDTO } from '@/src/services/artist/types';
+import { createArtist } from '@/services/artist';
+import { ArtistDTO } from '@/services/artist/types';
 
 const BecomeArtistPage = () => {
   const [username, setUsername] = useState('');

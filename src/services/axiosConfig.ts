@@ -4,8 +4,8 @@ import {
   NetworkException,
   NotFoundException,
   ConflictException,
-} from '../exceptions';
-import { translateMessage } from '../utils/errorMessages';
+} from '@/exceptions';
+import { translateMessage } from '@/utils/errorMessages';
 import { logout } from './auth';
 
 const api = axios.create({

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './RegisterPage.module.scss';
-import { register } from '../../../src/services/auth';
-import { CustomerDTO } from '../../../src/services/customer/types';
-import { useAuth } from '../../../src/hooks/useAuth';
+import { register } from '@/services/auth';
+import { CustomerDTO } from '@/services/customer/types';
+import { useAuth } from '@/hooks/useAuth';
 
 const RegisterPage = () => {
   const navigate = useNavigate();

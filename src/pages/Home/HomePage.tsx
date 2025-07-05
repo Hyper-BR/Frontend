@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import Card from '../../../src/components/commons/Cards/Card';
+import Card from '@/components/commons/Cards/Card';
 import styles from './Home.module.scss';
-import { getTracks } from '../../../src/services/track';
-import { getArtists } from '../../../src/services/artist';
-import { TrackDTO } from '../../../src/services/track/types';
-import { ArtistDTO } from '../../../src/services/artist/types';
-import { usePlayer } from '../../../src/context/PlayerContext';
+import { getTracks } from '@/services/track';
+import { getArtists } from '@/services/artist';
+import { TrackDTO } from '@/services/track/types';
+import { ArtistDTO } from '@/services/artist/types';
+import { usePlayer } from '@/context/PlayerContext';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);

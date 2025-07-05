@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { TrackDTO } from '../services/track/types';
+import { TrackDTO } from '@/services/track/types';
 
 interface useStoreProps {
   playTrack: TrackDTO;

@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
 import Player from './Player/Player';
-import Home from '../../pages/Home/HomePage';
-import { useAuth } from '../../../src/hooks/useAuth';
+import Home from '@/pages/Home/HomePage';
+import { useAuth } from '@/hooks/useAuth';
 
 import styles from './AppShell.module.scss';
 

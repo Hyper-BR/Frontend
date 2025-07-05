@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './Sidebar.module.scss';
-import { getPlaylistsCustomer } from '../../../../src/services/playlist';
-import { PlaylistDTO } from '../../../../src/services/playlist/types';
+import { getPlaylistsCustomer } from '@/services/playlist';
+import { PlaylistDTO } from '@/services/playlist/types';
 import PlaylistModal from '../../commons/Forms/PlaylistForm/PlaylistForm';
 import { Modal } from '../../commons/Modal/Modal';
-import { useAuth } from '../../../../src/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);

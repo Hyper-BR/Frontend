@@ -6,7 +6,7 @@ import {
   useEffect,
   ReactNode,
 } from 'react';
-import { TrackDTO } from '../services/track/types';
+import { TrackDTO } from '@/services/track/types';
 
 type PlayerContextType = {
   track: TrackDTO | null;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.scss';
-import { useAuth } from '../../../src/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 const LoginPage = () => {
   const { signIn } = useAuth();

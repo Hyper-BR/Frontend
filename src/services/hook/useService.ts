@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 import api from '../axiosConfig';
-import { hasFile } from '../../../src/utils/fileUtils';
+import { hasFile } from '@/utils/fileUtils';
 
 export function useService() {
   function get(url: string, data: any, query: string): AxiosPromise {

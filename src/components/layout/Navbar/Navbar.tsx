@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../../src/hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
 import { Modal } from '../../commons/Modal/Modal';
 import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm/UploadReleaseForm';
@@ -8,6 +8,7 @@ import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm/UploadRelea
 const Navbar = () => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const { customer: user, userSigned, signOut, isArtist } = useAuth();
 
@@ -39,13 +40,28 @@ const Navbar = () => {
               </div>
             )}
 
-            <img
-              src={`https://i.pravatar.cc/40?u=`}
-              alt="avatar"
-              className={styles.avatar}
-            />
-            <span>{user?.name}</span>
-            <button onClick={signOut}>Sair</button>
+            <div className={styles.avatarDropdown}>
+              <img
+                src={`https://i.pravatar.cc/40?u=`}
+                alt="avatar"
+                className={styles.avatar}
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              />
+
+              {dropdownOpen && (
+                <div className={styles.dropdownMenu}>
+                  <span
+                    className={styles.dropdownItem}
+                    onClick={() => navigate('/profile')}
+                  >
+                    Perfil
+                  </span>
+                  <span className={styles.dropdownItem} onClick={signOut}>
+                    Sair
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         </>
       ) : (

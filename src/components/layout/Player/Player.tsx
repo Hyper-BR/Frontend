@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Player.module.scss';
-import { usePlayer } from '../../../../src/context/PlayerContext';
+import { usePlayer } from '@/context/PlayerContext';
 import WaveSurferPlayer from '@wavesurfer/react';
 
 const Player = () => {

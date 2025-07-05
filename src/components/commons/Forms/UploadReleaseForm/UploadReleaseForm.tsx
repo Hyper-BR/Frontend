@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './UploadReleaseForm.module.scss';
-import { createRelease } from '../../../../services/release';
+import { createRelease } from '@/services/release';
 
 interface UploadReleaseFormProps {
   onClose: () => void;

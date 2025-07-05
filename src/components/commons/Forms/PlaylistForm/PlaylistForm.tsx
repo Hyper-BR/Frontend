@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { PlaylistDTO } from '../../../../services/playlist/types';
-import { createPlaylist } from '../../../../services/playlist';
+import { PlaylistDTO } from '@/services/playlist/types';
+import { createPlaylist } from '@/services/playlist';
 import styles from './PlaylistForm.module.scss';
 
 interface PlaylistModalProps {
