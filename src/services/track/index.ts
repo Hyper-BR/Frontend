@@ -7,3 +7,9 @@ export const getTracks = (): AxiosPromise<TrackPageDTO> => {
 
   return get(`/tracks`, '', '');
 };
+
+export const getTracksByArtist = (): AxiosPromise<TrackPageDTO> => {
+  const { get } = useService();
+
+  return get(`/tracks/artist/profile`, '', '');
+};

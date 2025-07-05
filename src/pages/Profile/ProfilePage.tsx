@@ -3,6 +3,7 @@ import styles from './ProfilePage.module.scss';
 import { useAuth } from '@/hooks/useAuth';
 import Card from '@/components/commons/Cards/Card';
 import { TrackDTO } from '@/services/track/types';
+import { getTracks, getTracksByArtist } from '@/services/track';
 
 const ProfilePage = () => {
   const { customer } = useAuth();
@@ -11,12 +12,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //   const userTracks = await getMyTracks(); // 🔁 tracks do usuário logado
-      //   setTracks(userTracks);
-      //   if (userTracks.length === 0) {
-      //     const recs = await getRecommendations(); // 🧠 sugestões se sem tracks
-      //     setRecommendations(recs);
-      //   }
+      const response = await getTracksByArtist();
+      setTracks(response.data.content);
     };
 
     fetchData();
@@ -25,7 +22,11 @@ const ProfilePage = () => {
   return (
     <section className={styles.profile}>
       <div className={styles.header}>
-        <img src={customer?.avatarUrl} alt="avatar" className={styles.avatar} />
+        <img
+          src={'https://i.pravatar.cc/40?u='}
+          alt="avatar"
+          className={styles.avatar}
+        />
         <div>
           <h2>{customer?.name}</h2>
           <p>{customer?.email}</p>

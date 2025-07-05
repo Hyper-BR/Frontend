@@ -2,9 +2,7 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar/Sidebar';
 import Player from './Player/Player';
-import Home from '@/pages/Home/HomePage';
 import { useAuth } from '@/hooks/useAuth';
-
 import styles from './AppShell.module.scss';
 
 type AppShellProps = {
@@ -20,11 +18,8 @@ export const AppShell = ({ children }: AppShellProps) => {
         className={`${styles.layout} ${!userSigned ? styles.noSidebar : ''}`}
       >
         {userSigned && <Sidebar />}
-        <main className={styles.home}>
-          <Home />
-        </main>
+        <main className={styles.home}>{children}</main>
       </div>
-
       <Player />
     </div>
   );
