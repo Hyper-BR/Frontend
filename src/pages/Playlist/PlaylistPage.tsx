@@ -39,9 +39,7 @@ const PlaylistPage = () => {
       <TrackTable
         tracks={playlist.tracks}
         playlists={[playlist]}
-        openMenuId={openMenuId}
         selectedTrackId={selectedTrackId}
-        toggleOptions={toggleOptions}
         setSelectedTrackId={setSelectedTrackId}
         handleAddToPlaylist={handleAddToPlaylist}
       />

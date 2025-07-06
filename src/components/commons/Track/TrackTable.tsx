@@ -3,13 +3,13 @@ import { Table } from '@/components/commons/Table/Table';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { usePlayer } from '@/context/PlayerContext';
+import { useRef, useState } from 'react';
+import DropdownPortal from '../Dropdown/DropdownPortal';
 
 type Props = {
   tracks: TrackDTO[];
   playlists: PlaylistDTO[];
-  openMenuId: string | null;
   selectedTrackId: string | null;
-  toggleOptions: (trackId: string) => void;
   setSelectedTrackId: (id: string | null) => void;
   handleAddToPlaylist: (trackId: string, playlistId: string) => void;
 };
@@ -17,13 +17,38 @@ type Props = {
 const TrackTable = ({
   tracks,
   playlists,
-  openMenuId,
   selectedTrackId,
-  toggleOptions,
   setSelectedTrackId,
   handleAddToPlaylist,
 }: Props) => {
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [dropdownPosition, setDropdownPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
+
   const { setTrackPlayer } = usePlayer();
+
+  const moreButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>(
+    {},
+  );
+
+  const toggleOptions = (trackId: string) => {
+    if (openMenuId === trackId) {
+      setOpenMenuId(null);
+      setDropdownPosition(null);
+    } else {
+      const button = moreButtonRefs.current[trackId];
+      if (button) {
+        const rect = button.getBoundingClientRect();
+        setDropdownPosition({
+          top: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+        });
+      }
+      setOpenMenuId(trackId);
+    }
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -75,15 +100,19 @@ const TrackTable = ({
               <Table.Cell>
                 <div className={styles.moreWrapper}>
                   <button
+                    ref={(el) => (moreButtonRefs.current[track.id] = el)}
                     className={styles.more}
                     onClick={() => toggleOptions(track.id)}
-                    aria-haspopup="true"
-                    aria-expanded={openMenuId === track.id}
                   >
                     ⋯
                   </button>
+                </div>
 
-                  {openMenuId === track.id && (
+                {openMenuId === track.id && dropdownPosition && (
+                  <DropdownPortal
+                    top={dropdownPosition.top}
+                    left={dropdownPosition.left}
+                  >
                     <div className={styles.dropdown}>
                       <div
                         className={styles.dropdownItemWrapper}
@@ -117,8 +146,8 @@ const TrackTable = ({
                         )}
                       </div>
                     </div>
-                  )}
-                </div>
+                  </DropdownPortal>
+                )}
               </Table.Cell>
             </Table.Row>
           ))}

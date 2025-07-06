@@ -14,15 +14,9 @@ const ProfilePage = () => {
   const [recommendations, setRecommendations] = useState<TrackDTO[]>([]);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
-  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
-
-  const toggleOptions = (trackId: string) => {
-    setOpenMenuId((prev) => (prev === trackId ? null : trackId));
-  };
 
   const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
     await addTrackToPlaylist(playlistId, trackId);
-    setOpenMenuId(null);
   };
 
   const fetchPlaylists = async () => {
@@ -73,9 +67,7 @@ const ProfilePage = () => {
         <TrackTable
           tracks={tracks}
           playlists={playlists}
-          openMenuId={openMenuId}
           selectedTrackId={selectedTrackId}
-          toggleOptions={toggleOptions}
           setSelectedTrackId={setSelectedTrackId}
           handleAddToPlaylist={handleAddToPlaylist}
         />
