@@ -16,10 +16,6 @@ const PlaylistPage = () => {
     setPlaylist(response.data);
   };
 
-  const toggleOptions = (trackId: string) => {
-    setOpenMenuId((prev) => (prev === trackId ? null : trackId));
-  };
-
   const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
     await addTrackToPlaylist(playlistId, trackId);
     setOpenMenuId(null);
@@ -38,7 +34,6 @@ const PlaylistPage = () => {
 
       <TrackTable
         tracks={playlist.tracks}
-        playlists={[playlist]}
         selectedTrackId={selectedTrackId}
         setSelectedTrackId={setSelectedTrackId}
         handleAddToPlaylist={handleAddToPlaylist}

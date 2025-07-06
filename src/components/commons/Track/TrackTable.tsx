@@ -3,12 +3,12 @@ import { Table } from '@/components/commons/Table/Table';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { usePlayer } from '@/context/PlayerContext';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DropdownPortal from '../Dropdown/DropdownPortal';
+import { getPlaylistsCustomer } from '@/services/playlist';
 
 type Props = {
   tracks: TrackDTO[];
-  playlists: PlaylistDTO[];
   selectedTrackId: string | null;
   setSelectedTrackId: (id: string | null) => void;
   handleAddToPlaylist: (trackId: string, playlistId: string) => void;
@@ -16,12 +16,12 @@ type Props = {
 
 const TrackTable = ({
   tracks,
-  playlists,
   selectedTrackId,
   setSelectedTrackId,
   handleAddToPlaylist,
 }: Props) => {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
     left: number;
@@ -49,6 +49,19 @@ const TrackTable = ({
       setOpenMenuId(trackId);
     }
   };
+
+  const fetchPlaylists = async () => {
+    try {
+      const response = await getPlaylistsCustomer();
+      setPlaylists(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar playlists:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaylists();
+  }, []);
 
   return (
     <div className={styles.wrapper}>

@@ -19,18 +19,7 @@ const ProfilePage = () => {
     await addTrackToPlaylist(playlistId, trackId);
   };
 
-  const fetchPlaylists = async () => {
-    try {
-      const response = await getPlaylistsCustomer();
-      setPlaylists(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar playlists:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchPlaylists();
-
     const fetchData = async () => {
       const response = await getTracksByArtist();
       setTracks(response.data.content);
@@ -66,7 +55,6 @@ const ProfilePage = () => {
       {tracks.length > 0 ? (
         <TrackTable
           tracks={tracks}
-          playlists={playlists}
           selectedTrackId={selectedTrackId}
           setSelectedTrackId={setSelectedTrackId}
           handleAddToPlaylist={handleAddToPlaylist}
