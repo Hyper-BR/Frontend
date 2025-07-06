@@ -3,8 +3,7 @@ import { useAuth } from '@/hooks/useAuth';
 import Card from '@/components/commons/Cards/Card';
 import { TrackDTO } from '@/services/track/types';
 import { getTracksByArtist } from '@/services/track';
-import { PlaylistDTO } from '@/services/playlist/types';
-import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
+import { addTrackToPlaylist } from '@/services/playlist';
 import TrackTable from '@/components/commons/Track/TrackTable';
 import styles from './ProfilePage.module.scss';
 
@@ -12,7 +11,6 @@ const ProfilePage = () => {
   const { customer } = useAuth();
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [recommendations, setRecommendations] = useState<TrackDTO[]>([]);
-  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
 
   const handleAddToPlaylist = async (trackId: string, playlistId: string) => {

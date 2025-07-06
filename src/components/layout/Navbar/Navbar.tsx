@@ -10,13 +10,28 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { customer: user, userSigned, signOut, isArtist } = useAuth();
+  const { userSigned, signOut, isArtist } = useAuth();
 
   return (
     <header className={styles.navbar}>
-      {userSigned ? (
-        <>
-          <div className={styles.userSection}>
+      <div className={styles.leftSection}>
+        <button className={styles.logoButton} onClick={() => navigate('/')}>
+          <span className={styles.logoDot} />
+          <span className={styles.logoText}>Beatify</span>
+        </button>
+      </div>
+
+      <div className={styles.centerSection}>
+        <input
+          type="text"
+          className={styles.searchInput}
+          placeholder="Buscar artistas, faixas ou playlists..."
+        />
+      </div>
+
+      <div className={styles.userSection}>
+        {userSigned ? (
+          <>
             {isArtist ? (
               <>
                 <button onClick={() => setShowModal(true)}>Upload</button>
@@ -30,14 +45,12 @@ const Navbar = () => {
                 )}
               </>
             ) : (
-              <div>
-                <button
-                  className={styles.loginButton}
-                  onClick={() => navigate('/becomeArtist')}
-                >
-                  Virar artista
-                </button>
-              </div>
+              <button
+                className={styles.loginButton}
+                onClick={() => navigate('/becomeArtist')}
+              >
+                Virar artista
+              </button>
             )}
 
             <div className={styles.avatarDropdown}>
@@ -62,16 +75,16 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-          </div>
-        </>
-      ) : (
-        <button
-          className={styles.loginButton}
-          onClick={() => navigate('/login')}
-        >
-          Login
-        </button>
-      )}
+          </>
+        ) : (
+          <button
+            className={styles.loginButton}
+            onClick={() => navigate('/login')}
+          >
+            Login
+          </button>
+        )}
+      </div>
     </header>
   );
 };
