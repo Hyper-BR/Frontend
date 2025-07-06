@@ -40,16 +40,70 @@
     h3 {
       margin-bottom: $spacing-md;
     }
+  }
+}
 
-    .tracksGrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: $spacing-md;
-    }
+.artists {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.85rem;
+}
 
-    .recommendations {
-      font-style: italic;
-      color: $color-muted;
+.artistLink {
+  color: $color-muted;
+  text-decoration: none;
+  transition: text-decoration 0.2s;
+
+  &:hover {
+    text-decoration: underline;
+    color: $color-primary;
+  }
+}
+
+.trackCell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.texts {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $color-white;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.artists {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: $color-muted;
+  margin-top: 2px;
+
+  .artist {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+      color: $color-primary;
     }
   }
 }

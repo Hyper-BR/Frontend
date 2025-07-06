@@ -38,9 +38,9 @@ const Home = () => {
           {tracks.map((track) => (
             <Card
               key={track.id}
-              image={'https://i.pravatar.cc/123?u='}
+              image={'https://i.pravatar.cc/1579?u='}
               title={track.title}
-              subtitle={track.artists}
+              subtitle={track.artists?.map((a) => a.username) || []}
               onClick={() => setTrackPlayer(track)}
             />
           ))}

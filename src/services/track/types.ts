@@ -17,6 +17,6 @@ export type TrackDTO = {
   duration: number;
   coverUrl: string;
   genre: string;
-  artists: string[];
+  artists: ArtistDTO[];
   file: File;
 };

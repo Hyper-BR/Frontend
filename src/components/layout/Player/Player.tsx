@@ -58,7 +58,14 @@ const Player = () => {
           <p className={styles.title}>
             {track?.title || 'Nenhuma faixa selecionada'}
           </p>
-          <p className={styles.artist}>{track?.artists || ''}</p>
+          <p className={styles.artist}>
+            {track?.artists.map((artist, index) => (
+              <span key={artist.id} className={styles.artistName}>
+                {artist.username}
+                {index < track.artists.length - 1 && ', '}
+              </span>
+            )) || ''}
+          </p>
         </div>
       </div>
 

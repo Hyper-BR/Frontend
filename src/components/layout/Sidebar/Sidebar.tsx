@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styles from './Sidebar.module.scss';
 import { getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
-import PlaylistModal from '../../commons/Forms/PlaylistForm/PlaylistForm';
+import PlaylistModal from '../../commons/Forms/PlaylistForm';
 import { Modal } from '../../commons/Modal/Modal';
 import { useAuth } from '@/hooks/useAuth';
 

@@ -100,12 +100,22 @@
   width: 100%;
   max-width: 100%;
   padding: 0 1rem;
-  display: flex;
   align-items: center;
   justify-content: center;
 
   canvas {
     width: 100% !important;
     height: 60px !important;
+  }
+}
+
+.artistName {
+  color: $color-muted;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: $color-primary;
   }
 }

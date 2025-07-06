@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
 import { Modal } from '../../commons/Modal/Modal';
-import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm/UploadReleaseForm';
+import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm';
 
 const Navbar = () => {
   const navigate = useNavigate();

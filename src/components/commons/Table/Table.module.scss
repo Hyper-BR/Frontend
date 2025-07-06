@@ -1,0 +1,84 @@
+@use '../../../styles/theme.scss' as *;
+
+.root {
+  width: 100%;
+  background-color: transparent;
+}
+
+.header {
+  display: flex;
+  padding: 6px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: $color-muted;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  border-bottom: 1px solid $color-gray-dark;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  padding-block: 16px;
+  padding-inline: 0;
+  gap: $spacing-md;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
+}
+
+.cell {
+  flex: 1;
+  font-size: 0.9rem;
+  color: $color-white;
+}
+
+.trackInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  cursor: pointer;
+
+  .cover {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  strong {
+    font-size: 1rem;
+    color: $color-white;
+  }
+
+  span {
+    font-size: 0.85rem;
+    color: $color-muted;
+  }
+}
+
+.more {
+  background: none;
+  border: none;
+  color: $color-muted;
+  cursor: pointer;
+  padding: 4px;
+
+  &:hover {
+    color: $color-primary;
+  }
+}
+
+.footer {
+  padding: $spacing-md $spacing-lg;
+  font-size: 0.8rem;
+  text-align: right;
+  color: $color-muted;
+}
