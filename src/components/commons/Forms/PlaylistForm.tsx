@@ -16,7 +16,7 @@ const PlaylistModal = ({ onClose, onCreate }: PlaylistModalProps) => {
       if (!name.trim()) return;
 
       const playlist: PlaylistDTO = {
-        id: 0,
+        id: null,
         name: name.trim(),
         description: 'Nova playlist',
         image: '',

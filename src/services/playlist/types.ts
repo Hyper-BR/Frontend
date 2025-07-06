@@ -10,7 +10,7 @@ export type PlaylistPageDTO = {
 };
 
 export type PlaylistDTO = {
-  id: number;
+  id: string;
   name: string;
   description: string;
   image: string;

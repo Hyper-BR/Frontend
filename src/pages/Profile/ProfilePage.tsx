@@ -6,15 +6,40 @@ import { TrackDTO } from '@/services/track/types';
 import { getTracksByArtist } from '@/services/track';
 import { Table } from '@/components/commons/Table/Table';
 import { usePlayer } from '@/context/PlayerContext';
+import { PlaylistDTO } from '@/services/playlist/types';
+import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 
 const ProfilePage = () => {
   const { customer } = useAuth();
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [recommendations, setRecommendations] = useState<TrackDTO[]>([]);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const { setTrackPlayer } = usePlayer();
 
+  const toggleOptions = (trackId: string) => {
+    setOpenMenuId((prev) => (prev === trackId ? null : trackId));
+  };
+
+  const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
+    await addTrackToPlaylist(playlistId, trackId);
+    setOpenMenuId(null);
+  };
+
+  const fetchPlaylists = async () => {
+    try {
+      const response = await getPlaylistsCustomer();
+      setPlaylists(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar playlists:', error);
+    }
+  };
+
   useEffect(() => {
+    fetchPlaylists();
+
     const fetchData = async () => {
       const response = await getTracksByArtist();
       setTracks(response.data.content);
@@ -49,7 +74,7 @@ const ProfilePage = () => {
 
       {tracks.length > 0 ? (
         <Table.Root>
-          <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', '⋯']} />
+          <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', '']} />
 
           <Table.Body>
             {tracks.map((track) => (
@@ -93,7 +118,52 @@ const ProfilePage = () => {
                 <Table.Cell>{'180'}</Table.Cell>
                 <Table.Cell>{track.duration ?? '—'}</Table.Cell>
                 <Table.Cell>
-                  <button className={styles.more}>⋯</button>
+                  <div className={styles.moreWrapper}>
+                    <button
+                      className={styles.more}
+                      onClick={() => toggleOptions(track.id)}
+                      aria-haspopup="true"
+                      aria-expanded={openMenuId === track.id}
+                    >
+                      ⋯
+                    </button>
+
+                    {openMenuId === track.id && (
+                      <div className={styles.dropdown}>
+                        <div
+                          className={styles.dropdownItemWrapper}
+                          onMouseEnter={() => setSelectedTrackId(track.id)}
+                          onMouseLeave={() => setSelectedTrackId(null)}
+                        >
+                          <div className={styles.dropdownItem}>
+                            <span>Adicionar à playlist</span>
+                            <span className={styles.arrow}>▶</span>
+                          </div>
+
+                          {selectedTrackId === track.id && (
+                            <div className={styles.submenu}>
+                              {playlists.length > 0 ? (
+                                playlists.map((playlist) => (
+                                  <button
+                                    key={playlist.id}
+                                    onClick={() =>
+                                      handleAddToPlaylist(track.id, playlist.id)
+                                    }
+                                  >
+                                    {playlist.name}
+                                  </button>
+                                ))
+                              ) : (
+                                <span className={styles.submenuEmpty}>
+                                  Nenhuma playlist encontrada
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </Table.Cell>
               </Table.Row>
             ))}

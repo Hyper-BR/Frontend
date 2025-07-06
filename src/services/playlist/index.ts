@@ -15,3 +15,12 @@ export const getPlaylistsCustomer = (): AxiosPromise<PlaylistDTO[]> => {
 
   return get(`/playlists/customer`, '', '');
 };
+
+export const addTrackToPlaylist = (
+  playlistId: string,
+  trackId: string,
+): AxiosPromise<PlaylistDTO> => {
+  const { post } = useService();
+
+  return post(`/playlists/${playlistId}/tracks/${trackId}`, '');
+};

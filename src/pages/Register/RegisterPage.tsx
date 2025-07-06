@@ -11,7 +11,7 @@ const RegisterPage = () => {
   const { loadUser } = useAuth();
 
   const [form, setForm] = useState<CustomerDTO>({
-    id: 0,
+    id: null,
     name: '',
     email: '',
     password: '',

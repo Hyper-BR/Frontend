@@ -10,7 +10,7 @@ export type ArtistPageDTO = {
 };
 
 export type ArtistDTO = {
-  id: number;
+  id: string;
   username: string;
   credits: number;
   email?: string;

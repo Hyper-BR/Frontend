@@ -1,7 +1,7 @@
 import { ArtistDTO } from '../artist/types';
 
 export type CustomerDTO = {
-  id: number;
+  id: string;
   name: string;
   email: string;
   password?: string;

@@ -12,7 +12,7 @@ export type TrackPageDTO = {
 };
 
 export type TrackDTO = {
-  id: number;
+  id: string;
   title: string;
   duration: number;
   coverUrl: string;
