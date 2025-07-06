@@ -16,6 +16,14 @@ export const getPlaylistsCustomer = (): AxiosPromise<PlaylistDTO[]> => {
   return get(`/playlists/customer`, '', '');
 };
 
+export const getTrackPlaylists = (
+  trackId: string,
+): AxiosPromise<PlaylistDTO[]> => {
+  const { get } = useService();
+
+  return get(`/playlists/track/${trackId}`, '', '');
+};
+
 export const getPlaylistById = (id: string): AxiosPromise<PlaylistDTO> => {
   const { get } = useService();
 
@@ -29,4 +37,13 @@ export const addTrackToPlaylist = (
   const { post } = useService();
 
   return post(`/playlists/${playlistId}/tracks/${trackId}`, '');
+};
+
+export const removeTrackFromPlaylist = async (
+  playlistId: string,
+  trackId: string,
+) => {
+  const { remove } = useService();
+
+  return remove(`/playlists/${playlistId}/tracks/${trackId}`, '');
 };
