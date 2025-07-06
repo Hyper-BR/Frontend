@@ -73,7 +73,26 @@ const TrackTable = ({
             <Table.Row
               key={track.id}
               draggable
-              onDragStart={(e: any) => {
+              onDragStart={(e) => {
+                const ghost = document.createElement('div');
+                ghost.innerText = track.title;
+                ghost.style.position = 'absolute';
+                ghost.style.top = '-9999px';
+                ghost.style.padding = '6px 12px';
+                ghost.style.background = '#222';
+                ghost.style.color = '#fff';
+                ghost.style.borderRadius = '4px';
+                ghost.style.fontSize = '14px';
+                ghost.style.fontWeight = '500';
+                ghost.style.pointerEvents = 'none';
+
+                document.body.appendChild(ghost);
+                e.dataTransfer.setDragImage(ghost, 0, 0);
+
+                setTimeout(() => {
+                  document.body.removeChild(ghost);
+                }, 0);
+
                 e.dataTransfer.setData('text/plain', track.id);
                 e.dataTransfer.effectAllowed = 'move';
               }}
