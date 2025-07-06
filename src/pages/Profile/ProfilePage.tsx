@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import styles from './ProfilePage.module.scss';
 import { useAuth } from '@/hooks/useAuth';
 import Card from '@/components/commons/Cards/Card';
 import { TrackDTO } from '@/services/track/types';
 import { getTracksByArtist } from '@/services/track';
-import { Table } from '@/components/commons/Table/Table';
-import { usePlayer } from '@/context/PlayerContext';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
+import TrackTable from '@/components/commons/Track/TrackTable';
+import styles from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
   const { customer } = useAuth();
@@ -16,8 +15,6 @@ const ProfilePage = () => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
-
-  const { setTrackPlayer } = usePlayer();
 
   const toggleOptions = (trackId: string) => {
     setOpenMenuId((prev) => (prev === trackId ? null : trackId));
@@ -73,104 +70,15 @@ const ProfilePage = () => {
       <h3>{tracks.length > 0 ? 'Suas faixas' : 'Nada enviado ainda 😢'}</h3>
 
       {tracks.length > 0 ? (
-        <Table.Root>
-          <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', '']} />
-
-          <Table.Body>
-            {tracks.map((track) => (
-              <Table.Row key={track.id}>
-                <Table.Cell>
-                  <div className={styles.trackCell}>
-                    <div className={styles.coverWrapper}>
-                      <img
-                        src={'https://i.pravatar.cc/40?u='}
-                        alt={track.title}
-                        className={styles.cover}
-                      />
-                      <button
-                        className={styles.playButton}
-                        onClick={() => setTrackPlayer(track)}
-                        title="Tocar faixa"
-                      >
-                        ▶
-                      </button>
-                    </div>
-
-                    <div className={styles.texts}>
-                      <strong className={styles.title}>{track.title}</strong>
-                      <div className={styles.artists}>
-                        {track.artists?.map((artist, index) => (
-                          <a
-                            key={artist.id}
-                            href={`/artist/${artist.id}`}
-                            className={styles.artist}
-                          >
-                            {artist.username}
-                            {index < track.artists.length - 1 && ', '}
-                          </a>
-                        )) || <span>Desconhecido</span>}
-                      </div>
-                    </div>
-                  </div>
-                </Table.Cell>
-
-                <Table.Cell>{'1A'}</Table.Cell>
-                <Table.Cell>{'180'}</Table.Cell>
-                <Table.Cell>{track.duration ?? '—'}</Table.Cell>
-                <Table.Cell>
-                  <div className={styles.moreWrapper}>
-                    <button
-                      className={styles.more}
-                      onClick={() => toggleOptions(track.id)}
-                      aria-haspopup="true"
-                      aria-expanded={openMenuId === track.id}
-                    >
-                      ⋯
-                    </button>
-
-                    {openMenuId === track.id && (
-                      <div className={styles.dropdown}>
-                        <div
-                          className={styles.dropdownItemWrapper}
-                          onMouseEnter={() => setSelectedTrackId(track.id)}
-                          onMouseLeave={() => setSelectedTrackId(null)}
-                        >
-                          <div className={styles.dropdownItem}>
-                            <span>Adicionar à playlist</span>
-                            <span className={styles.arrow}>▶</span>
-                          </div>
-
-                          {selectedTrackId === track.id && (
-                            <div className={styles.submenu}>
-                              {playlists.length > 0 ? (
-                                playlists.map((playlist) => (
-                                  <button
-                                    key={playlist.id}
-                                    onClick={() =>
-                                      handleAddToPlaylist(track.id, playlist.id)
-                                    }
-                                  >
-                                    {playlist.name}
-                                  </button>
-                                ))
-                              ) : (
-                                <span className={styles.submenuEmpty}>
-                                  Nenhuma playlist encontrada
-                                </span>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-
-          <Table.Footer>{tracks.length} faixas encontradas</Table.Footer>
-        </Table.Root>
+        <TrackTable
+          tracks={tracks}
+          playlists={playlists}
+          openMenuId={openMenuId}
+          selectedTrackId={selectedTrackId}
+          toggleOptions={toggleOptions}
+          setSelectedTrackId={setSelectedTrackId}
+          handleAddToPlaylist={handleAddToPlaylist}
+        />
       ) : (
         <div className={styles.recommendations}>
           <p>Descubra o que outros artistas estão enviando:</p>

@@ -1,0 +1,22 @@
+@use '@/styles/theme.scss' as *;
+
+.playlistPage {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.25rem;
+    color: $color-white;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: $color-muted;
+    margin-bottom: 1.5rem;
+  }
+}
