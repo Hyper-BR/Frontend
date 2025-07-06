@@ -1,3 +1,5 @@
+import { TrackDTO } from '../track/types';
+
 export type PlaylistPageDTO = {
   last: boolean;
   first: boolean;
@@ -14,4 +16,5 @@ export type PlaylistDTO = {
   name: string;
   description: string;
   image: string;
+  tracks: TrackDTO[];
 };

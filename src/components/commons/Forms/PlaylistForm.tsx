@@ -20,6 +20,7 @@ const PlaylistModal = ({ onClose, onCreate }: PlaylistModalProps) => {
         name: name.trim(),
         description: 'Nova playlist',
         image: '',
+        tracks: [],
       };
 
       await createPlaylist(playlist);

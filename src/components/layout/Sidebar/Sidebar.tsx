@@ -5,12 +5,14 @@ import { PlaylistDTO } from '@/services/playlist/types';
 import PlaylistModal from '../../commons/Forms/PlaylistForm';
 import { Modal } from '../../commons/Modal/Modal';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
 
   const { userSigned } = useAuth();
+  const navigate = useNavigate();
 
   const fetchPlaylists = async () => {
     try {
@@ -48,7 +50,7 @@ const Sidebar = () => {
           <div
             key={playlist.id}
             className={styles.item}
-            onClick={() => alert(playlist)}
+            onClick={() => navigate(`/playlist/${playlist.id}`)}
           >
             <img
               src={'https://i.pravatar.cc/150?u='}
