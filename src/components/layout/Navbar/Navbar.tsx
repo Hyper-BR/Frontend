@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className={styles.leftSection}>
         <button className={styles.logoButton} onClick={() => navigate('/')}>
           <span className={styles.logoDot} />
-          <span className={styles.logoText}>Beatify</span>
+          <span className={styles.logoText}>LOGO</span>
         </button>
       </div>
 

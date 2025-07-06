@@ -70,7 +70,14 @@ const TrackTable = ({
 
         <Table.Body>
           {tracks.map((track) => (
-            <Table.Row key={track.id}>
+            <Table.Row
+              key={track.id}
+              draggable
+              onDragStart={(e: any) => {
+                e.dataTransfer.setData('text/plain', track.id);
+                e.dataTransfer.effectAllowed = 'move';
+              }}
+            >
               <Table.Cell>
                 <div className={styles.trackCell}>
                   <div className={styles.coverWrapper}>

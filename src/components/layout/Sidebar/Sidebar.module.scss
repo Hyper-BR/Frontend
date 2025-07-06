@@ -31,6 +31,11 @@
   &:hover {
     background: color.adjust($color-gray-dark, $lightness: 5%);
   }
+
+  &.droppable-hover {
+    background-color: rgba(255, 0, 0, 0.08);
+    outline: 1px dashed $color-primary;
+  }
 }
 
 .cover {

@@ -1,6 +1,9 @@
 import styles from './Table.module.scss';
 import { ReactNode } from 'react';
 
+type TableRowProps = React.HTMLAttributes<HTMLTableRowElement> & {
+  children: React.ReactNode;
+};
 export const Table = {
   Root: ({ children }: { children: ReactNode }) => (
     <div className={styles.wrapper}>
@@ -22,8 +25,10 @@ export const Table = {
 
   Body: ({ children }: { children: ReactNode }) => <tbody>{children}</tbody>,
 
-  Row: ({ children }: { children: ReactNode }) => (
-    <tr className={styles.row}>{children}</tr>
+  Row: ({ children, ...rest }: TableRowProps) => (
+    <tr className={styles.row} {...rest}>
+      {children}
+    </tr>
   ),
 
   Cell: ({ children }: { children: ReactNode }) => (

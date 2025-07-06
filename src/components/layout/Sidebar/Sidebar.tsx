@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './Sidebar.module.scss';
-import { getPlaylistsCustomer } from '@/services/playlist';
+import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
 import PlaylistModal from '../../commons/Forms/PlaylistForm';
 import { Modal } from '../../commons/Modal/Modal';
@@ -10,6 +10,9 @@ import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [hoveredPlaylistId, setHoveredPlaylistId] = useState<string | null>(
+    null,
+  );
 
   const { userSigned } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +24,10 @@ const Sidebar = () => {
     } catch (error) {
       console.error('Erro ao buscar playlists:', error);
     }
+  };
+
+  const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
+    await addTrackToPlaylist(playlistId, trackId);
   };
 
   useEffect(() => {
@@ -49,7 +56,19 @@ const Sidebar = () => {
         {playlists.map((playlist) => (
           <div
             key={playlist.id}
-            className={styles.item}
+            className={`${styles.item} ${
+              hoveredPlaylistId === playlist.id ? styles['droppable-hover'] : ''
+            }`}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setHoveredPlaylistId(playlist.id);
+            }}
+            onDragLeave={() => setHoveredPlaylistId(null)}
+            onDrop={(e) => {
+              const trackId = e.dataTransfer.getData('text/plain');
+              handleAddToPlaylist(trackId, playlist.id);
+              setHoveredPlaylistId(null);
+            }}
             onClick={() => navigate(`/playlist/${playlist.id}`)}
           >
             <img
