@@ -3,32 +3,40 @@ import { ReactNode } from 'react';
 
 export const Table = {
   Root: ({ children }: { children: ReactNode }) => (
-    <div className={styles.root}>{children}</div>
-  ),
-
-  Header: ({ columns }: { columns: string[] }) => (
-    <div className={styles.header}>
-      {columns.map((col, index) => (
-        <span key={index} className={styles.cell}>
-          {col}
-        </span>
-      ))}
+    <div className={styles.wrapper}>
+      <table className={styles.table}>{children}</table>
     </div>
   ),
 
-  Body: ({ children }: { children: ReactNode }) => (
-    <ul className={styles.body}>{children}</ul>
+  Header: ({ columns }: { columns: string[] }) => (
+    <thead>
+      <tr className={styles.header}>
+        {columns.map((col, index) => (
+          <th key={index} className={styles.cell}>
+            {col}
+          </th>
+        ))}
+      </tr>
+    </thead>
   ),
 
+  Body: ({ children }: { children: ReactNode }) => <tbody>{children}</tbody>,
+
   Row: ({ children }: { children: ReactNode }) => (
-    <li className={styles.row}>{children}</li>
+    <tr className={styles.row}>{children}</tr>
   ),
 
   Cell: ({ children }: { children: ReactNode }) => (
-    <div className={styles.cell}>{children}</div>
+    <td className={styles.cell}>{children}</td>
   ),
 
   Footer: ({ children }: { children: ReactNode }) => (
-    <div className={styles.footer}>{children}</div>
+    <tfoot>
+      <tr>
+        <td colSpan={999} className={styles.footer}>
+          {children}
+        </td>
+      </tr>
+    </tfoot>
   ),
 };

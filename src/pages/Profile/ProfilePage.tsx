@@ -56,11 +56,21 @@ const ProfilePage = () => {
               <Table.Row key={track.id}>
                 <Table.Cell>
                   <div className={styles.trackCell}>
-                    <img
-                      src={'https://i.pravatar.cc/40?u='}
-                      alt={track.title}
-                      className={styles.cover}
-                    />
+                    <div className={styles.coverWrapper}>
+                      <img
+                        src={'https://i.pravatar.cc/40?u='}
+                        alt={track.title}
+                        className={styles.cover}
+                      />
+                      <button
+                        className={styles.playButton}
+                        onClick={() => setTrackPlayer(track)}
+                        title="Tocar faixa"
+                      >
+                        ▶
+                      </button>
+                    </div>
+
                     <div className={styles.texts}>
                       <strong className={styles.title}>{track.title}</strong>
                       <div className={styles.artists}>
