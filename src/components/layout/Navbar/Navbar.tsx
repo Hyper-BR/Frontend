@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
 import { Modal } from '../../commons/Modal/Modal';
 import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm';
+import Search from '@/components/commons/Search/Search';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -22,11 +23,7 @@ const Navbar = () => {
       </div>
 
       <div className={styles.centerSection}>
-        <input
-          type="text"
-          className={styles.searchInput}
-          placeholder="Buscar artistas, faixas ou playlists..."
-        />
+        <Search />
       </div>
 
       <div className={styles.userSection}>

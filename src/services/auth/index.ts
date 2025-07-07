@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { LoginCredentialsDTO } from './types';
 import { CustomerDTO } from '../customer/types';
 
@@ -18,7 +18,7 @@ export const login = (data: LoginCredentialsDTO): AxiosPromise<CustomerDTO> => {
 export const getMe = (): AxiosPromise<CustomerDTO> => {
   const { get } = useService();
 
-  return get(`/auth/me`, '', '');
+  return get(`/auth/me`);
 };
 
 export const logout = (): AxiosPromise<void> => {

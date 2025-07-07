@@ -1,0 +1,22 @@
+@use '@/styles/theme.scss' as *;
+
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background-color: $color-gray-dark;
+  border: 1px solid transparent;
+  color: $color-white;
+  font-size: 0.9rem;
+  transition: border-color 0.2s ease;
+  outline: none;
+
+  &::placeholder {
+    color: $color-muted;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}

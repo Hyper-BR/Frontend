@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { ArtistDTO, ArtistPageDTO } from './types';
 
 export const createArtist = (data: any): AxiosPromise<ArtistDTO> => {
@@ -11,11 +11,11 @@ export const createArtist = (data: any): AxiosPromise<ArtistDTO> => {
 export const getArtists = (): AxiosPromise<ArtistPageDTO> => {
   const { get } = useService();
 
-  return get(`/artists`, '', '');
+  return get(`/artists`);
 };
 
 export const getArtistById = (id: string): AxiosPromise<ArtistDTO> => {
   const { get } = useService();
 
-  return get(`/artist/${id}`, '', '');
+  return get(`/artist/${id}`);
 };

@@ -1,0 +1,67 @@
+.page {
+  padding: 24px;
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  button {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
+.section {
+  margin-bottom: 32px;
+
+  h2 {
+    margin-bottom: 16px;
+    font-size: 1.25rem;
+    color: #ddd;
+  }
+
+  .card {
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      object-fit: cover;
+    }
+
+    span {
+      display: block;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    .trackInfo {
+      padding: 16px;
+      background: #222;
+      border-radius: 8px;
+
+      .title {
+        font-weight: 600;
+      }
+
+      small {
+        color: #aaa;
+      }
+    }
+  }
+}

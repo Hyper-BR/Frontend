@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getPlaylistsCustomer, addTrackToPlaylist } from '@/services/playlist';
+import { getPlaylistsCustomer } from '@/services/playlist';
 import { getTracksByArtist } from '@/services/track';
 import ProfileLayout from '@/components/commons/Profile/ProfileLayout';
 
@@ -19,13 +19,10 @@ export default function ProfilePage() {
     getPlaylistsCustomer().then((r) => setPlaylists(r.data));
   }, [customer]);
 
-  const handleAdd = (trackId: string, plId: string) =>
-    addTrackToPlaylist(plId, trackId);
-
   return (
     <ProfileLayout
       avatarUrl={'https://i.pravatar.cc/1579?u='}
-      name={customer.name}
+      name={customer.artistProfile?.username}
       email={customer.email}
       stats={{ followers: 120, following: 87 }}
       analytics={null}

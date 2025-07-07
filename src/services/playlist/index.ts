@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { PlaylistDTO } from './types';
 
 export const createPlaylist = (
@@ -13,7 +13,7 @@ export const createPlaylist = (
 export const getPlaylistsCustomer = (): AxiosPromise<PlaylistDTO[]> => {
   const { get } = useService();
 
-  return get(`/playlists/customer`, '', '');
+  return get(`/playlists/customer`);
 };
 
 export const getTrackPlaylists = (
@@ -21,13 +21,13 @@ export const getTrackPlaylists = (
 ): AxiosPromise<PlaylistDTO[]> => {
   const { get } = useService();
 
-  return get(`/playlists/track/${trackId}`, '', '');
+  return get(`/playlists/track/${trackId}`);
 };
 
 export const getPlaylistById = (id: string): AxiosPromise<PlaylistDTO> => {
   const { get } = useService();
 
-  return get(`/playlists/${id}`, '', '');
+  return get(`/playlists/${id}`);
 };
 
 export const addTrackToPlaylist = (
@@ -45,5 +45,5 @@ export const removeTrackFromPlaylist = async (
 ) => {
   const { remove } = useService();
 
-  return remove(`/playlists/${playlistId}/tracks/${trackId}`, '');
+  return remove(`/playlists/${playlistId}/tracks/${trackId}`);
 };

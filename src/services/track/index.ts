@@ -1,11 +1,11 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { TrackPageDTO } from './types';
 
 export const getTracks = (): AxiosPromise<TrackPageDTO> => {
   const { get } = useService();
 
-  return get(`/tracks`, '', '');
+  return get(`/tracks`);
 };
 
 export const getTracksByArtist = (
@@ -13,5 +13,5 @@ export const getTracksByArtist = (
 ): AxiosPromise<TrackPageDTO> => {
   const { get } = useService();
 
-  return get(`/tracks/artist/${artistId}`, '', '');
+  return get(`/tracks/artist/${artistId}`);
 };

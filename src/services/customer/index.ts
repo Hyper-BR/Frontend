@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { CustomerDTO } from './types';
 
 export const createCustomer = (
@@ -15,5 +15,5 @@ export const getCustomerByEmail = (
 ): AxiosPromise<CustomerDTO> => {
   const { get } = useService();
 
-  return get(`/customer/${email}`, '', '');
+  return get(`/customer/${email}`);
 };

@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useService } from '../hook/useService';
+import { useService } from '../hooks/useService';
 import { ReleaseDTO } from './types';
 
 export const createRelease = (data: any): AxiosPromise<ReleaseDTO> => {
