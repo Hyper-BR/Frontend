@@ -13,3 +13,9 @@ export const getArtists = (): AxiosPromise<ArtistPageDTO> => {
 
   return get(`/artists`, '', '');
 };
+
+export const getArtistById = (id: string): AxiosPromise<ArtistDTO> => {
+  const { get } = useService();
+
+  return get(`/artist/${id}`, '', '');
+};

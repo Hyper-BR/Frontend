@@ -6,11 +6,15 @@ import { getArtists } from '@/services/artist';
 import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
 import { usePlayer } from '@/context/PlayerContext';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
+
   const { setTrackPlayer } = usePlayer();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,9 +59,10 @@ const Home = () => {
               key={artist.id}
               image={`https://i.pravatar.cc/1579?u=`}
               title={artist.username}
-              onClick={() =>
-                console.log(`Visualizar perfil de ${artist.username}`)
-              }
+              onClick={() => {
+                console.log(artist.id);
+                navigate(`/artist/${artist.id}`);
+              }}
             />
           ))}
         </div>

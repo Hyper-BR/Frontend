@@ -1,33 +1,29 @@
 import { useParams } from 'react-router-dom';
-import { getTracksByArtist } from '@/services/track';
 import { useEffect, useState } from 'react';
-import { ArtistDTO } from '@/services/artist/types';
-import { TrackDTO } from '@/services/track/types';
-import { PlaylistDTO } from '@/services/playlist/types';
-import UserProfile from '@/components/commons/UserProfile/UserProfile';
+import { getArtistById } from '@/services/artist';
+import { getTracksByArtist } from '@/services/track';
+import ProfileLayout from '@/components/commons/Profile/ProfileLayout';
 
 export default function ArtistPage() {
-  const { artistId } = useParams();
-  const [artist, setArtist] = useState<ArtistDTO>(null);
-  const [tracks, setTracks] = useState<TrackDTO[]>([]);
-  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const { id } = useParams();
+  const [artist, setArtist] = useState(null);
+  const [tracks, setTracks] = useState([]);
 
   useEffect(() => {
-    if (!artistId) return;
-    // getArtistById(artistId).then((r) => setArtist(r.data));
-    // getTracksByArtist(artistId).then((r) => setTracks(r.data.content));
-    // getPlaylistsByArtist(artistId).then((r) => setPlaylists(r.data));
-  }, [artistId]);
+    if (!id) return;
+    getArtistById(id).then((r) => setArtist(r.data));
+    getTracksByArtist(id).then((r) => setTracks(r.data.content));
+  }, [id]);
 
   if (!artist) return <div>Carregando...</div>;
 
   return (
-    <UserProfile
-      user={null}
+    <ProfileLayout
+      avatarUrl={'https://i.pravatar.cc/1579?u='}
+      stats={{ followers: 120, following: 87 }}
+      name={artist.username}
       tracks={tracks}
-      playlists={playlists}
-      isOwner={false}
-      handleAddToPlaylist={null}
+      playlists={null}
     />
   );
 }

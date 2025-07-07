@@ -1,35 +1,37 @@
 import { useAuth } from '@/hooks/useAuth';
-import { getTracksByArtist } from '@/services/track';
-import { getPlaylistsCustomer } from '@/services/playlist';
-import { useEffect, useState } from 'react';
-import UserProfile from '@/components/commons/UserProfile/UserProfile';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getPlaylistsCustomer, addTrackToPlaylist } from '@/services/playlist';
+import { getTracksByArtist } from '@/services/track';
+import ProfileLayout from '@/components/commons/Profile/ProfileLayout';
 
 export default function ProfilePage() {
   const { customer } = useAuth();
+  const navigate = useNavigate();
   const [tracks, setTracks] = useState([]);
   const [playlists, setPlaylists] = useState([]);
-  const [analytics, setAnalytics] = useState(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!customer) return;
     getTracksByArtist(customer.artistProfile?.id).then((r) =>
       setTracks(r.data.content),
     );
-    // getPlaylistsCustomer().then((r) => setPlaylists(r.data));
-    // getAnalytics(customer.id).then((r) => setAnalytics(r.data));
-  }, []);
+    getPlaylistsCustomer().then((r) => setPlaylists(r.data));
+  }, [customer]);
+
+  const handleAdd = (trackId: string, plId: string) =>
+    addTrackToPlaylist(plId, trackId);
 
   return (
-    <UserProfile
-      user={customer}
+    <ProfileLayout
+      avatarUrl={'https://i.pravatar.cc/1579?u='}
+      name={customer.name}
+      email={customer.email}
+      stats={{ followers: 120, following: 87 }}
+      analytics={null}
+      onEdit={() => navigate('/profile/edit')}
       tracks={tracks}
       playlists={playlists}
-      isOwner
-      analytics={analytics}
-      onEditProfile={() => navigate('/profile/edit')}
-      handleAddToPlaylist={null}
     />
   );
 }
