@@ -19,6 +19,7 @@ const RegisterPage = () => {
     birthDate: '',
     avatarUrl: '',
     subscription: 1,
+    bio: 'Bioooo',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

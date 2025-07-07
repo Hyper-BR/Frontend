@@ -1,0 +1,69 @@
+/* UserProfile.module.scss */
+@use '@/styles/theme.scss' as *;
+@use '@/styles/components/buttons.scss' as buttons;
+@use 'sass:color';
+
+.profile {
+  margin: 0 auto;
+  padding: $spacing-lg;
+
+  h3 {
+    margin-top: $spacing-xl;
+    font-size: 1.25rem;
+    color: $color-white;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-bottom: $spacing-lg;
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid $color-primary;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  div {
+    flex: 1;
+
+    h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: $color-white;
+    }
+
+    button {
+      margin-top: $spacing-sm;
+      @include buttons.ghostButton;
+    }
+
+    p {
+      margin: $spacing-xs 0 $spacing-sm;
+      color: $color-muted;
+      font-size: 0.9rem;
+    }
+
+    .stats {
+      display: flex;
+      gap: $spacing-lg;
+      color: $color-white;
+      font-size: 0.9rem;
+      margin-top: $spacing-sm;
+
+      span {
+        strong {
+          font-weight: 600;
+          color: $color-primary;
+        }
+      }
+    }
+  }
+}
+
+/* TrackTable já tem seu estilo, não precisamos mexer */

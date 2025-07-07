@@ -6,24 +6,18 @@ import { usePlayer } from '@/context/PlayerContext';
 import { useEffect, useRef, useState } from 'react';
 import DropdownPortal from '../Dropdown/DropdownPortal';
 import {
+  addTrackToPlaylist,
   getPlaylistsCustomer,
   removeTrackFromPlaylist,
 } from '@/services/playlist';
 
 type Props = {
   tracks: TrackDTO[];
-  selectedTrackId: string | null;
-  setSelectedTrackId: (id: string | null) => void;
-  handleAddToPlaylist: (trackId: string, playlistId: string) => void;
 };
 
-const TrackTable = ({
-  tracks,
-  selectedTrackId,
-  setSelectedTrackId,
-  handleAddToPlaylist,
-}: Props) => {
+const TrackTable = ({ tracks }: Props) => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const [dropdownPosition, setDropdownPosition] = useState<{
     top: number;
@@ -35,7 +29,10 @@ const TrackTable = ({
     {},
   );
 
-  // 1) Carrega todas as playlists do usuário (cada PlaylistDTO já inclui .tracks[])
+  const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
+    await addTrackToPlaylist(playlistId, trackId);
+  };
+
   useEffect(() => {
     const fetch = async () => {
       try {
@@ -48,7 +45,6 @@ const TrackTable = ({
     fetch();
   }, []);
 
-  // 2) Toggle dropdown e posicionamento
   const toggleOptions = (trackId: string) => {
     if (openMenuId === trackId) {
       setOpenMenuId(null);
@@ -65,7 +61,6 @@ const TrackTable = ({
     });
   };
 
-  // 3) Remove track de playlist e atualiza o estado local
   const handleRemove = async (trackId: string, playlistId: string) => {
     await removeTrackFromPlaylist(playlistId, trackId);
     setPlaylists((prev) =>
@@ -161,7 +156,6 @@ const TrackTable = ({
                             <div className={styles.submenu}>
                               {playlists.length > 0 ? (
                                 playlists.map((pl) => {
-                                  // 4) verifica se já há essa track nessa playlist
                                   const isMember = pl.tracks.some(
                                     (t) => t.id === track.id,
                                   );

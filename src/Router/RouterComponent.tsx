@@ -7,6 +7,7 @@ import ProfilePage from '@/pages/Profile/ProfilePage';
 import HomePage from '@/pages/Home/HomePage';
 import PrivateRoute from './PrivateRoute';
 import PlaylistPage from '@/pages/Playlist/PlaylistPage';
+import ArtistPage from '@/pages/Artist/ArtistPage';
 
 export const Routes = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ export const Routes = createBrowserRouter([
       {
         path: '',
         element: <HomePage />,
+      },
+      {
+        path: '/artist/:id',
+        element: <ArtistPage />,
       },
       {
         path: '/playlist/:id',
