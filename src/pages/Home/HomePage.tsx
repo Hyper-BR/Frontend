@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Card from '@/components/commons/Cards/Card';
 import styles from './Home.module.scss';
 import { getTracks } from '@/services/track';
 import { getArtists } from '@/services/artist';
@@ -7,6 +6,8 @@ import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
 import { usePlayer } from '@/context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
+import ArtistCard from '@/components/commons/Cards/ArtistCard';
+import TrackCard from '@/components/commons/Cards/TrackCard';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
@@ -40,12 +41,12 @@ const Home = () => {
         <h3>Faixas em destaque</h3>
         <div className={styles.carousel}>
           {tracks.map((track) => (
-            <Card
+            <TrackCard
               key={track.id}
               image={'https://i.pravatar.cc/1579?u='}
               title={track.title}
-              subtitle={track.artists?.map((a) => a.username) || []}
-              onClick={() => setTrackPlayer(track)}
+              artists={track.artists}
+              onPlay={() => setTrackPlayer(track)}
             />
           ))}
         </div>
@@ -55,14 +56,11 @@ const Home = () => {
         <h3>Artistas em alta</h3>
         <div className={styles.carousel}>
           {artists.map((artist) => (
-            <Card
+            <ArtistCard
               key={artist.id}
-              image={`https://i.pravatar.cc/1579?u=`}
-              title={artist.username}
-              onClick={() => {
-                console.log(artist.id);
-                navigate(`/artist/${artist.id}`);
-              }}
+              image={'https://i.pravatar.cc/1579?u='}
+              name={artist.username}
+              onClick={() => navigate(`/artist/${artist.id}`)}
             />
           ))}
         </div>
