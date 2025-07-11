@@ -35,26 +35,6 @@ export const subscriptionDetailsByType: Record<
       'Não permite publicar faixas',
     ],
   },
-  STUDENT: {
-    icon: '🎓',
-    audience: 'Ideal para estudantes apaixonados por música',
-    features: [
-      'Música sem anúncios',
-      'Desconto exclusivo',
-      'Experiência fluida de escuta',
-      'Não permite publicar faixas',
-    ],
-  },
-  FAMILY: {
-    icon: '👨‍👩‍👧‍👦',
-    audience: 'Perfeito para curtir com quem você ama',
-    features: [
-      'Até 5 contas independentes',
-      'Sem anúncios para todos',
-      'Playlist familiar compartilhada',
-      'Não permite publicar faixas',
-    ],
-  },
   ARTIST: {
     icon: '🎨',
     audience: 'Feito para criadores independentes',

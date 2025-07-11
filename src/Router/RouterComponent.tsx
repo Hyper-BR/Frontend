@@ -10,6 +10,8 @@ import PlaylistPage from '@/pages/Playlist/PlaylistPage';
 import ArtistPage from '@/pages/Artist/ArtistPage';
 import SearchPage from '@/pages/Search/SearchPage';
 import SubscriptionPage from '@/pages/Subscriptions/SubscriptionPage';
+import Cancel from '@/pages/Subscriptions/Cancel';
+import Success from '@/pages/Subscriptions/Success';
 
 export const Routes = createBrowserRouter([
   {
@@ -64,6 +66,22 @@ export const Routes = createBrowserRouter([
     element: (
       <PrivateRoute onlyArtist={false}>
         <SubscriptionPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/payment/success',
+    element: (
+      <PrivateRoute onlyArtist={false}>
+        <Success />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/payment/cancel',
+    element: (
+      <PrivateRoute onlyArtist={false}>
+        <Cancel />
       </PrivateRoute>
     ),
   },

@@ -4,11 +4,25 @@ import { getSubscripions } from '@/services/subscriptions';
 import { SubscriptionDTO } from '@/services/subscriptions/types';
 import { subscriptionDetailsByType } from '@/constants/subscriptionDetails';
 import styles from './SubscriptionPage.module.scss';
+import { upgradeSubscription } from '@/services/payment';
 
 export default function SubscriptionPage() {
   const navigate = useNavigate();
   const [plans, setPlans] = useState<SubscriptionDTO[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleUpgrade = async (subscription: SubscriptionDTO) => {
+    try {
+      const { data } = await upgradeSubscription(subscription);
+      if (data?.redirectUrl) {
+        window.location.href = data.redirectUrl;
+      } else {
+        navigate('/confirmation');
+      }
+    } catch (err) {
+      console.error('Erro ao fazer upgrade', err);
+    }
+  };
 
   useEffect(() => {
     getSubscripions()
@@ -50,9 +64,7 @@ export default function SubscriptionPage() {
                   <li key={i}>{f}</li>
                 ))}
               </ul>
-              <button onClick={() => navigate(`/signup?plan=${plan.id}`)}>
-                Assinar
-              </button>
+              <button onClick={() => handleUpgrade(plan)}>Assinar</button>
             </div>
           );
         })}
