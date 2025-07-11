@@ -4,25 +4,28 @@ import styles from './RegisterPage.module.scss';
 import { register } from '@/services/auth';
 import { CustomerDTO } from '@/services/customer/types';
 import { useAuth } from '@/hooks/useAuth';
+import { countries } from '@/Constants/Countries';
+import { getTimeZoneByCountry } from '@/utils/getTimeZoneByCountry';
+import { buildZonedDateTime } from '@/utils/buildZonedDateTime';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-
   const { loadUser } = useAuth();
 
   const [form, setForm] = useState<CustomerDTO>({
-    id: null,
     name: '',
     email: '',
     password: '',
     country: '',
     birthDate: '',
-    avatarUrl: '',
-    subscription: 1,
-    bio: 'Bioooo',
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
@@ -30,9 +33,23 @@ const RegisterPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    await register(form);
-    loadUser();
+    if (form.password !== confirmPassword) {
+      setError('As senhas não coincidem.');
+      return;
+    }
 
+    const timezone =
+      (await getTimeZoneByCountry(form.country)) || 'America/Sao_Paulo';
+
+    const zonedBirthDate = buildZonedDateTime(form.birthDate, timezone);
+
+    const payload = {
+      ...form,
+      birthDate: zonedBirthDate,
+    };
+
+    await register(payload);
+    loadUser();
     navigate('/');
   };
 
@@ -40,6 +57,8 @@ const RegisterPage = () => {
     <div className={styles.registerWrapper}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <h2>Criar conta</h2>
+
+        {error && <p className={styles.error}>{error}</p>}
 
         <label>
           Nome completo
@@ -78,15 +97,32 @@ const RegisterPage = () => {
         </label>
 
         <label>
-          País
+          Confirmar senha
           <input
-            type="text"
+            type="password"
+            name="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            placeholder="••••••••"
+          />
+        </label>
+
+        <label>
+          País
+          <select
             name="country"
             value={form.country}
             onChange={handleChange}
             required
-            placeholder="Brasil"
-          />
+          >
+            <option value="">Selecione um país</option>
+            {countries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </select>
         </label>
 
         <label>
@@ -97,17 +133,6 @@ const RegisterPage = () => {
             value={form.birthDate}
             onChange={handleChange}
             required
-          />
-        </label>
-
-        <label>
-          Avatar (URL da imagem)
-          <input
-            type="text"
-            name="avatarUrl"
-            value={form.avatarUrl}
-            onChange={handleChange}
-            placeholder="https://exemplo.com/imagem.jpg"
           />
         </label>
 
