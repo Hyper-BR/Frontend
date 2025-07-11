@@ -47,12 +47,12 @@ export default function TrackCard({
         <p className={styles.title}>{title}</p>
         <p className={styles.artists}>
           {artists.map((artist, idx) => (
-            <React.Fragment key={artist.id}>
+            <div key={artist.id}>
               <Link to={`/artist/${artist.id}`} className={styles.artistLink}>
                 {artist.username}
               </Link>
               {idx < artists.length - 1 && ', '}
-            </React.Fragment>
+            </div>
           ))}
         </p>
       </div>
