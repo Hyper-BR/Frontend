@@ -1,5 +1,4 @@
-// src/contexts/PlayerContext.tsx
-import React, {
+import {
   createContext,
   useContext,
   useState,
@@ -12,6 +11,8 @@ export type PlayerContextType = {
   track: TrackDTO | null;
   isPlaying: boolean;
   setTrackPlayer: (track: TrackDTO) => void;
+  play: () => void;
+  pause: () => void;
   togglePlay: () => void;
 };
 
@@ -21,28 +22,38 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   const [track, setTrack] = useState<TrackDTO | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  // Seleciona nova faixa e dispara play
   const setTrackPlayer = useCallback(
     (newTrack: TrackDTO) => {
-      if (track?.id === newTrack.id) {
-        // já é a mesma faixa, só garante play
-        setIsPlaying(true);
-      } else {
+      if (track?.id !== newTrack.id) {
         setTrack(newTrack);
-        setIsPlaying(true);
       }
+      setIsPlaying(true);
     },
     [track],
   );
 
-  // Alterna entre play e pause
+  const play = useCallback(() => {
+    setIsPlaying(true);
+  }, []);
+
+  const pause = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
   const togglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
   }, []);
 
   return (
     <PlayerContext.Provider
-      value={{ track, isPlaying, setTrackPlayer, togglePlay }}
+      value={{
+        track,
+        isPlaying,
+        setTrackPlayer,
+        play,
+        pause,
+        togglePlay,
+      }}
     >
       {children}
     </PlayerContext.Provider>
