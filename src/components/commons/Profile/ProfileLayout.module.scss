@@ -16,9 +16,18 @@
 
 .header {
   display: flex;
-  align-items: center;
-  gap: $spacing-lg;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: $spacing-md;
   margin-bottom: $spacing-lg;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  flex: 1;
 
   .avatar {
     width: 120px;
@@ -29,18 +38,13 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 
-  div {
+  .details {
     flex: 1;
 
     h2 {
-      margin: 0;
       font-size: 2rem;
       color: $color-white;
-    }
-
-    button {
-      margin-top: $spacing-sm;
-      @include buttons.ghostButton;
+      margin: 0;
     }
 
     p {
@@ -49,21 +53,27 @@
       font-size: 0.9rem;
     }
 
+    button {
+      @include buttons.ghostButton;
+      margin-bottom: $spacing-sm;
+    }
+
     .stats {
       display: flex;
-      gap: $spacing-lg;
-      color: $color-white;
+      gap: $spacing-md;
       font-size: 0.9rem;
-      margin-top: $spacing-sm;
+      color: $color-white;
 
-      span {
-        strong {
-          font-weight: 600;
-          color: $color-primary;
-        }
+      strong {
+        color: $color-primary;
+        font-weight: 600;
       }
     }
   }
 }
 
-/* TrackTable já tem seu estilo, não precisamos mexer */
+.planCard {
+  flex: 0 0 180px;
+  display: flex;
+  justify-content: flex-end;
+}

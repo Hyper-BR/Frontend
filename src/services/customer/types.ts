@@ -1,4 +1,5 @@
 import { ArtistDTO } from '../artist/types';
+import { SubscriptionDTO } from '../subscriptions/types';
 
 export type CustomerDTO = {
   id?: string;
@@ -7,7 +8,7 @@ export type CustomerDTO = {
   password?: string;
   country: string;
   birthDate: string;
-  subscription?: number;
+  subscription?: SubscriptionDTO;
   avatarUrl?: string;
   bio?: string;
   artistProfile?: ArtistDTO;

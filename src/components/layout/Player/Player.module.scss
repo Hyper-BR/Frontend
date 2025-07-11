@@ -18,8 +18,8 @@
 
   border-top: 1px solid rgba(255, 0, 0, 0.08);
   box-shadow: 0 -4px 14px rgba(255, 0, 0, 0.05);
-  border-top-left-radius: $radius;
-  border-top-right-radius: $radius;
+  border-top-left-radius: $radius-md;
+  border-top-right-radius: $radius-md;
 }
 
 .player.disabled {
@@ -48,7 +48,7 @@
 .image {
   width: 56px;
   height: 56px;
-  border-radius: calc($radius / 2);
+  border-radius: calc($radius-md / 2);
 }
 
 .title {

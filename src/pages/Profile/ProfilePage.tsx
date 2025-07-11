@@ -12,7 +12,7 @@ export default function ProfilePage() {
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
-    if (!customer) return;
+    if (!customer.artistProfile) return;
     getTracksByArtist(customer.artistProfile?.id).then((r) =>
       setTracks(r.data.content),
     );
@@ -27,7 +27,7 @@ export default function ProfilePage() {
       stats={{ followers: 120, following: 87 }}
       analytics={null}
       onEdit={() => navigate('/profile/edit')}
-      tracks={tracks}
+      tracks={tracks || null}
       playlists={playlists}
     />
   );

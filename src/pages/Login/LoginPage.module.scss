@@ -13,7 +13,7 @@
 .form {
   background-color: rgba(28, 28, 28, 0.85);
   padding: $spacing-lg $spacing-xl;
-  border-radius: $radius;
+  border-radius: $radius-md;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
@@ -34,7 +34,7 @@
     input {
       background-color: $color-gray-dark;
       border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
-      border-radius: $radius;
+      border-radius: $radius-md;
       padding: $spacing-md;
       color: $color-white;
 
@@ -55,7 +55,7 @@
     color: $color-white;
     padding: $spacing-md;
     border: none;
-    border-radius: $radius;
+    border-radius: $radius-md;
     cursor: pointer;
     font-weight: $font-weight-bold;
     transition: background-color $transition;

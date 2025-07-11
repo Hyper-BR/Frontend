@@ -44,9 +44,9 @@ const Navbar = () => {
             ) : (
               <button
                 className={styles.loginButton}
-                onClick={() => navigate('/becomeArtist')}
+                onClick={() => navigate('/plans')}
               >
-                Virar artista
+                Ver planos
               </button>
             )}
 

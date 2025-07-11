@@ -35,7 +35,7 @@
   padding: $spacing-sm $spacing-sm 120px;
 
   background-color: $color-gray-dark;
-  border-radius: $radius;
+  border-radius: $radius-md;
   position: relative;
 
   background-image: radial-gradient(
@@ -60,7 +60,7 @@
     color: $color-primary;
     border: 1px solid $color-primary-dark;
     padding: 0.75rem 1.5rem;
-    border-radius: $radius;
+    border-radius: $radius-md;
     transition: all 0.3s ease;
 
     &:hover {

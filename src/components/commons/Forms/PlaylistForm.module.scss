@@ -19,7 +19,7 @@
   border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
   padding: $spacing-md;
   color: $color-white;
-  border-radius: $radius;
+  border-radius: $radius-md;
   font-size: $font-size-md;
 
   &::placeholder {
@@ -38,7 +38,7 @@
   color: $color-white;
   padding: $spacing-md;
   border: none;
-  border-radius: $radius;
+  border-radius: $radius-md;
   font-weight: $font-weight-bold;
   font-size: $font-size-md;
   cursor: pointer;

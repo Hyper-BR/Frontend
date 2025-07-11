@@ -25,7 +25,7 @@
   gap: 0.75rem;
   cursor: pointer;
   padding: 0.2rem 0.4rem;
-  border-radius: $radius;
+  border-radius: $radius-md;
   transition: background $transition;
 
   &:hover {
@@ -41,7 +41,7 @@
 .cover {
   width: 40px;
   height: 40px;
-  border-radius: calc($radius / 2);
+  border-radius: calc($radius-md / 2);
   object-fit: cover;
   box-shadow: 0 0 4px $color-primary-dark;
 }
@@ -60,5 +60,5 @@
 .sidebar {
   background-color: $color-gray-dark;
   padding: $spacing-sm;
-  border-radius: $radius;
+  border-radius: $radius-md;
 }

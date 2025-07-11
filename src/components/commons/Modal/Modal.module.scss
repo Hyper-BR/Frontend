@@ -19,7 +19,7 @@
   padding: $spacing-lg;
   width: 100%;
   max-width: 480px;
-  border-radius: calc($radius * 1.5);
+  border-radius: calc($radius-md * 1.5);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   color: $color-white;
   display: flex;
@@ -60,7 +60,7 @@ label {
   select {
     margin-top: 6px;
     padding: $spacing-sm $spacing-md;
-    border-radius: $radius;
+    border-radius: $radius-md;
     background-color: color.adjust($color-gray-dark, $lightness: 5%);
     border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
     color: $color-white;

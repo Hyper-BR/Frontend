@@ -29,5 +29,9 @@ $font-weight-regular: 400 !default;
 $font-weight-bold: 600 !default;
 
 // 🧩 Estética geral
-$radius: 8px !default;
+$radius-xs: 4px !default;
+$radius-sm: 6px !default;
+$radius-md: 8px !default;
+$radius-lg: 10px !default;
+$radius-xl: 12px !default;
 $transition: 0.3s ease !default;

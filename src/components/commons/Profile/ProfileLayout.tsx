@@ -2,6 +2,7 @@ import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import TrackTable from '../Track/TrackTable';
 import styles from './ProfileLayout.module.scss';
+import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
 
 interface Props {
   avatarUrl: string;
@@ -27,12 +28,16 @@ export default function ProfileLayout({
   return (
     <section className={styles.profile}>
       <header className={styles.header}>
-        <img src={avatarUrl} alt={name} className={styles.avatar} />
-        <div>
-          <h2>{name}</h2>
-          {email && <p className={styles.email}>{email}</p>}
-          {onEdit && <button onClick={onEdit}>Editar perfil</button>}
-          {stats && (
+        <div className={styles.userInfo}>
+          <img src={avatarUrl} alt={name} className={styles.avatar} />
+          <div className={styles.details}>
+            <h2>{name}</h2>
+            {email && <p className={styles.email}>{email}</p>}
+            {onEdit && (
+              <button className={styles.editBtn} onClick={onEdit}>
+                Editar perfil
+              </button>
+            )}
             <div className={styles.stats}>
               <span>
                 <strong>{stats.followers}</strong> seguidores
@@ -41,7 +46,11 @@ export default function ProfileLayout({
                 <strong>{stats.following}</strong> seguindo
               </span>
             </div>
-          )}
+          </div>
+        </div>
+
+        <div className={styles.planSection}>
+          <CurrentPlanCard />
         </div>
       </header>
 
@@ -53,7 +62,7 @@ export default function ProfileLayout({
       )}
 
       <h3>Faixas</h3>
-      <TrackTable tracks={tracks} />
+      {tracks && <TrackTable tracks={tracks} />}
     </section>
   );
 }

@@ -11,7 +11,7 @@
   form {
     background-color: $color-black;
     padding: $spacing-lg $spacing-xl;
-    border-radius: $radius;
+    border-radius: $radius-md;
     display: flex;
     flex-direction: column;
     gap: $spacing-md;
@@ -33,7 +33,7 @@
         border: 1px solid color.adjust($color-black, $lightness: 15%);
         background-color: $color-gray-dark;
         color: $color-white;
-        border-radius: $radius;
+        border-radius: $radius-md;
 
         &::placeholder {
           color: $color-muted;
@@ -52,7 +52,7 @@
       color: $color-white;
       padding: $spacing-md;
       border: none;
-      border-radius: $radius;
+      border-radius: $radius-md;
       font-weight: $font-weight-bold;
       font-size: $font-size-md;
       cursor: pointer;

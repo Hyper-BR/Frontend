@@ -9,6 +9,7 @@ import PrivateRoute from './PrivateRoute';
 import PlaylistPage from '@/pages/Playlist/PlaylistPage';
 import ArtistPage from '@/pages/Artist/ArtistPage';
 import SearchPage from '@/pages/Search/SearchPage';
+import SubscriptionPage from '@/pages/Subscriptions/SubscriptionPage';
 
 export const Routes = createBrowserRouter([
   {
@@ -40,14 +41,6 @@ export const Routes = createBrowserRouter([
         ),
       },
       {
-        path: '/becomeArtist',
-        element: (
-          <PrivateRoute onlyArtist={false}>
-            <BecomeArtistPage />
-          </PrivateRoute>
-        ),
-      },
-      {
         path: '/release/upload',
         element: (
           <PrivateRoute onlyArtist>
@@ -57,6 +50,22 @@ export const Routes = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: '/becomeArtist',
+    element: (
+      <PrivateRoute onlyArtist={false}>
+        <BecomeArtistPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: '/plans',
+    element: (
+      <PrivateRoute onlyArtist={false}>
+        <SubscriptionPage />
+      </PrivateRoute>
+    ),
   },
   {
     path: '/login',
