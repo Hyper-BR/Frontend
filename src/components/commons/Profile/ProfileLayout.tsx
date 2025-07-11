@@ -1,8 +1,9 @@
+import { useState } from 'react';
+import styles from './ProfileLayout.module.scss';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import TrackTable from '../Track/TrackTable';
-import styles from './ProfileLayout.module.scss';
 import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
+import TrackTable from '../Track/TrackTable';
 
 interface Props {
   avatarUrl: string;
@@ -15,6 +16,14 @@ interface Props {
   playlists: PlaylistDTO[];
 }
 
+const tabs = [
+  'Faixas',
+  'Playlists',
+  'Álbuns',
+  'Artistas relacionados',
+] as const;
+type Tab = (typeof tabs)[number];
+
 export default function ProfileLayout({
   avatarUrl,
   name,
@@ -25,6 +34,8 @@ export default function ProfileLayout({
   tracks,
   playlists,
 }: Props) {
+  const [activeTab, setActiveTab] = useState<Tab>('Faixas');
+
   return (
     <section className={styles.profile}>
       <header className={styles.header}>
@@ -61,8 +72,26 @@ export default function ProfileLayout({
         </div>
       )}
 
-      <h3>Faixas</h3>
-      {tracks && <TrackTable tracks={tracks} />}
+      <nav className={styles.tabNav}>
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={tab === activeTab ? styles.activeTab : styles.tab}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </nav>
+
+      <div className={styles.tabContent}>
+        {activeTab === 'Faixas' && <TrackTable tracks={tracks} />}
+        {activeTab === 'Playlists' && <TrackTable tracks={tracks} />}
+        {activeTab === 'Álbuns' && <TrackTable tracks={tracks} />}
+        {activeTab === 'Artistas relacionados' && (
+          <TrackTable tracks={tracks} />
+        )}
+      </div>
     </section>
   );
 }

@@ -12,8 +12,7 @@ export default function SuccessPage() {
   useEffect(() => {
     async function handleConfirmPayment() {
       try {
-        const response = await confirmPayment(sessionId);
-        console.log(response);
+        await confirmPayment(sessionId);
         setStatus('🎉 Assinatura ativada com sucesso!');
         setTimeout(() => navigate('/'), 3000);
       } catch {
