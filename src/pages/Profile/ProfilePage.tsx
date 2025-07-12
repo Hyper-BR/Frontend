@@ -12,10 +12,6 @@ export default function ProfilePage() {
   const [playlists, setPlaylists] = useState([]);
 
   useEffect(() => {
-    if (!customer.artistProfile) return;
-    getTracksByArtist(customer.artistProfile?.id).then((r) =>
-      setTracks(r.data.content),
-    );
     getPlaylistsCustomer().then((r) => setPlaylists(r.data));
   }, [customer]);
 
@@ -29,6 +25,7 @@ export default function ProfilePage() {
       onEdit={() => navigate('/profile/edit')}
       tracks={tracks || null}
       playlists={playlists}
+      owner
     />
   );
 }

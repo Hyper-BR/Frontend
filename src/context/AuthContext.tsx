@@ -8,7 +8,6 @@ import {
 import { getMe, login, logout } from '@/services/auth';
 import { CustomerDTO } from '@/services/customer/types';
 import { LoginCredentialsDTO } from '@/services/auth/types';
-import { useNavigate } from 'react-router-dom';
 
 interface AuthContextType {
   customer: CustomerDTO | null;
@@ -26,8 +25,8 @@ export const AuthContext = createContext<AuthContextType>(
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerDTO | null>(null);
 
-  const isArtist = customer?.artistProfile != null;
-  const userSigned = !!customer;
+  let isArtist = customer?.artistProfile != null;
+  let userSigned = !!customer;
 
   const loadUser = useCallback(async () => {
     try {
@@ -58,6 +57,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       console.warn('Erro ao sair:', err);
     } finally {
       setCustomer(null);
+      isArtist = false;
+      userSigned = false;
     }
   }, []);
 

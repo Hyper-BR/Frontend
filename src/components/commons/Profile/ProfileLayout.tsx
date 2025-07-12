@@ -14,6 +14,7 @@ interface Props {
   onEdit?: () => void;
   tracks: TrackDTO[];
   playlists: PlaylistDTO[];
+  owner?: boolean;
 }
 
 const tabs = [
@@ -33,6 +34,7 @@ export default function ProfileLayout({
   onEdit,
   tracks,
   playlists,
+  owner,
 }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('Faixas');
 
@@ -60,9 +62,11 @@ export default function ProfileLayout({
           </div>
         </div>
 
-        <div className={styles.planSection}>
-          <CurrentPlanCard />
-        </div>
+        {owner && (
+          <div className={styles.planSection}>
+            <CurrentPlanCard />
+          </div>
+        )}
       </header>
 
       {analytics && (

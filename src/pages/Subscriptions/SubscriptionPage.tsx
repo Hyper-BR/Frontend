@@ -17,7 +17,7 @@ export default function SubscriptionPage() {
       if (data?.redirectUrl) {
         window.location.href = data.redirectUrl;
       } else {
-        navigate('/confirmation');
+        navigate('/payment/cancel');
       }
     } catch (err) {
       console.error('Erro ao fazer upgrade', err);

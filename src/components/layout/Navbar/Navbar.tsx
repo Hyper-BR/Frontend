@@ -11,7 +11,7 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const { userSigned, signOut, isArtist } = useAuth();
+  const { userSigned, signOut, isArtist, customer } = useAuth();
 
   return (
     <header className={styles.navbar}>
@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className={styles.userSection}>
         {userSigned ? (
           <>
-            {isArtist ? (
+            {isArtist && (
               <>
                 <button onClick={() => setShowModal(true)}>Upload</button>
                 {showModal && (
@@ -41,13 +41,26 @@ const Navbar = () => {
                   </Modal>
                 )}
               </>
-            ) : (
+            )}
+
+            {!isArtist && (
               <button
                 className={styles.loginButton}
                 onClick={() => navigate('/plans')}
               >
                 Ver planos
               </button>
+            )}
+
+            {customer?.artistProfile == null && (
+              <>
+                <button
+                  className={styles.loginButton}
+                  onClick={() => navigate('/becomeArtist')}
+                >
+                  Sou artista
+                </button>
+              </>
             )}
 
             <div className={styles.avatarDropdown}>

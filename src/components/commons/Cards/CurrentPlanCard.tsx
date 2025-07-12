@@ -11,7 +11,7 @@ export const CurrentPlanCard = () => {
         {plan === 'FREE_LISTENER' ? 'Gratuito (Ouvinte)' : plan}
       </p>
       <button onClick={() => window.location.assign('/plans')}>
-        Ver Benefícios
+        Fazer Upgrade
       </button>
     </div>
   );
