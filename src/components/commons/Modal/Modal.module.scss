@@ -27,6 +27,17 @@
   gap: $spacing-md;
   max-height: 90vh;
   overflow-y: auto;
+  flex-direction: column;
+  gap: $spacing-md;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    width: 96vw;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    gap: $spacing-sm;
+  }
 }
 
 .sm {
@@ -38,7 +49,10 @@
 }
 
 .lg {
-  max-width: 960px;
+  max-width: 100%;
+  width: 92vw; // ocupa quase tudo lateralmente
+  max-height: 92vh;
+  height: 85vh; // aumenta a altura
 }
 
 .close {
