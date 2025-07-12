@@ -13,11 +13,11 @@ export const getTracksByArtist = (
 ): AxiosPromise<TrackPageDTO> => {
   const { get } = useService();
 
-  return get(`/tracks/artist/${artistId}`);
+  return get<TrackPageDTO>(`/tracks/artist/${artistId}`);
 };
 
 export const getTrackById = (id: string): AxiosPromise<TrackDTO> => {
   const { get } = useService();
 
-  return get(`/track/${id}`);
+  return get<TrackDTO>(`/track/${id}`);
 };

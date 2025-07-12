@@ -13,7 +13,7 @@ export const createPlaylist = (
 export const getPlaylistsCustomer = (): AxiosPromise<PlaylistDTO[]> => {
   const { get } = useService();
 
-  return get(`/playlists/customer`);
+  return get<PlaylistDTO[]>(`/playlists/customer`);
 };
 
 export const getTrackPlaylists = (
