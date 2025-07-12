@@ -9,9 +9,10 @@ import PrivateRoute from './PrivateRoute';
 import PlaylistPage from '@/pages/Playlist/PlaylistPage';
 import ArtistPage from '@/pages/Artist/ArtistPage';
 import SearchPage from '@/pages/Search/SearchPage';
-import SubscriptionPage from '@/pages/Subscriptions/SubscriptionPage';
-import Cancel from '@/pages/Subscriptions/Cancel';
-import Success from '@/pages/Subscriptions/Success';
+import SubscriptionPage from '@/pages/Subscription/SubscriptionPage';
+import Cancel from '@/pages/Subscription/Cancel';
+import Success from '@/pages/Subscription/Success';
+import TrackPage from '@/pages/Track/TrackPage';
 
 export const Routes = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const Routes = createBrowserRouter([
       {
         path: '/artist/:id',
         element: <ArtistPage />,
+      },
+      {
+        path: '/track/:id',
+        element: <TrackPage />,
       },
       {
         path: '/playlist/:id',

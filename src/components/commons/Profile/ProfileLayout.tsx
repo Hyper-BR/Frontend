@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './ProfileLayout.module.scss';
-import { TrackDTO } from '@/services/track/types';
+import { TrackDTO, TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
 import TrackTable from '../Track/TrackTable';
@@ -12,7 +12,7 @@ interface Props {
   stats: { followers: number; following: number };
   analytics?: { plays: number; followers: number };
   onEdit?: () => void;
-  tracks: TrackDTO[];
+  tracks: TrackPageDTO;
   playlists: PlaylistDTO[];
   owner?: boolean;
 }
@@ -88,14 +88,16 @@ export default function ProfileLayout({
         ))}
       </nav>
 
-      <div className={styles.tabContent}>
-        {activeTab === 'Faixas' && <TrackTable tracks={tracks} />}
-        {activeTab === 'Playlists' && <TrackTable tracks={tracks} />}
-        {activeTab === 'Álbuns' && <TrackTable tracks={tracks} />}
-        {activeTab === 'Artistas relacionados' && (
-          <TrackTable tracks={tracks} />
-        )}
-      </div>
+      {tracks?.content && (
+        <div className={styles.tabContent}>
+          {activeTab === 'Faixas' && <TrackTable tracks={tracks.content} />}
+          {activeTab === 'Playlists' && <TrackTable tracks={tracks.content} />}
+          {activeTab === 'Álbuns' && <TrackTable tracks={tracks.content} />}
+          {activeTab === 'Artistas relacionados' && (
+            <TrackTable tracks={tracks.content} />
+          )}
+        </div>
+      )}
     </section>
   );
 }

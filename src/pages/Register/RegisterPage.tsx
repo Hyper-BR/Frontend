@@ -4,9 +4,9 @@ import styles from './RegisterPage.module.scss';
 import { register } from '@/services/auth';
 import { CustomerDTO } from '@/services/customer/types';
 import { useAuth } from '@/hooks/useAuth';
-import { countries } from '@/constants/Countries';
 import { getTimeZoneByCountry } from '@/utils/getTimeZoneByCountry';
 import { buildZonedDateTime } from '@/utils/buildZonedDateTime';
+import { countries } from '@/constants/countries';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
