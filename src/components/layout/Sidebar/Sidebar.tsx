@@ -3,7 +3,6 @@ import styles from './Sidebar.module.scss';
 import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
 import PlaylistModal from '../../commons/Forms/PlaylistForm';
-import { Modal } from '../../commons/Modal/Modal';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
@@ -38,12 +37,13 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       {showModal && (
-        <Modal isOpen={true} onClose={() => setShowModal(false)}>
-          <PlaylistModal
-            onClose={() => setShowModal(false)}
-            onCreate={fetchPlaylists}
-          />
-        </Modal>
+        <></>
+        // <Modal isOpen={true} onClose={() => setShowModal(false)}>
+        //   <PlaylistModal
+        //     onClose={() => setShowModal(false)}
+        //     onCreate={fetchPlaylists}
+        //   />
+        // </Modal>
       )}
       <div className={styles.playlistList}>
         <button

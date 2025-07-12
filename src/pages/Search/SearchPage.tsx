@@ -4,7 +4,7 @@ import { searchArtists, searchTracks } from '@/services/search';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import TrackCard from '@/components/commons/Cards/TrackCard';
 import ArtistCard from '@/components/commons/Cards/ArtistCard';
 

@@ -18,14 +18,27 @@
   background-color: color.adjust($color-gray-dark, $lightness: 4%);
   padding: $spacing-lg;
   width: 100%;
-  max-width: 480px;
   border-radius: calc($radius-md * 1.5);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   color: $color-white;
   display: flex;
   flex-direction: column;
   position: relative;
-  gap: 1.25rem;
+  gap: $spacing-md;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.sm {
+  max-width: 400px;
+}
+
+.md {
+  max-width: 640px;
+}
+
+.lg {
+  max-width: 960px;
 }
 
 .close {
@@ -44,7 +57,22 @@
   }
 }
 
-form {
+.header {
+  h2 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-xs;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $color-muted;
+    margin-bottom: $spacing-md;
+  }
+}
+
+.content {
+  margin-top: $spacing-md;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;

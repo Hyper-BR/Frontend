@@ -2,7 +2,7 @@ import styles from './TrackTable.module.scss';
 import { Table } from '@/components/commons/Table/Table';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import { useEffect, useRef, useState } from 'react';
 import DropdownPortal from '../Dropdown/DropdownPortal';
 import {

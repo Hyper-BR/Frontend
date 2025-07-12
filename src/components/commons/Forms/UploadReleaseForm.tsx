@@ -42,7 +42,6 @@ const UploadReleaseForm = ({
 
   return (
     <div className={styles.uploadForm}>
-      <h2 className={styles.title}>Upload de nova faixa</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.label}>
           Nome da música

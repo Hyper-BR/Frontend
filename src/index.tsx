@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import { Routes } from './Router/RouterComponent';
-import { AuthProvider } from './context/AuthContext';
+import { Routes } from './router/RouterComponent';
+import { AuthProvider } from './contexts/AuthContext';
 import './styles/global.scss';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

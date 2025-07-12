@@ -4,7 +4,7 @@ import { getTracks } from '@/services/track';
 import { getArtists } from '@/services/artist';
 import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import { useNavigate } from 'react-router-dom';
 import ArtistCard from '@/components/commons/Cards/ArtistCard';
 import TrackCard from '@/components/commons/Cards/TrackCard';

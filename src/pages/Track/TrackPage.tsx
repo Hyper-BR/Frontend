@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './TrackPage.module.scss';
 import { getTrackById } from '@/services/track';
 import WavesurferPlayer from '@wavesurfer/react';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
 
 export default function TrackPage() {

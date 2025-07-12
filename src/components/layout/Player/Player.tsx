@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import WavesurferPlayer from '@wavesurfer/react';
 
