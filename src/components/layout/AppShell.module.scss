@@ -3,9 +3,10 @@
 
 .wrapper {
   display: flex;
-  height: 100%;
   flex-direction: column;
-  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
+  padding-bottom: $player-height;
 }
 
 .layout {
@@ -29,12 +30,11 @@
 .home {
   flex: 1;
   overflow-y: auto;
-
+  flex: 1;
+  overflow-y: auto;
   padding: $spacing-md $spacing-md;
-
   background-color: $color-gray-dark;
   border-radius: $radius-md;
-  position: relative;
 
   background-image: radial-gradient(
       circle at 15% 30%,

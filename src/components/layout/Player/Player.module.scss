@@ -2,15 +2,14 @@
 @use 'sass:color';
 
 .player {
+  position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
+  width: 100%;
+  height: $player-height;
   z-index: 1000;
-  height: 80px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 $spacing-lg;
+  padding: 0 $spacing-md;
   gap: $spacing-lg;
 
   background-color: $color-black;
