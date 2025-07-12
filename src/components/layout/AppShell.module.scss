@@ -7,6 +7,7 @@
   height: 100%;
   box-sizing: border-box;
   padding-bottom: $player-height;
+  box-sizing: border-box;
 }
 
 .layout {
@@ -17,6 +18,7 @@
   gap: $spacing-sm;
   padding: $spacing-xs;
   box-sizing: border-box;
+  height: calc(100vh - $player-height);
 
   &.noSidebar {
     grid-template-columns: 1fr;

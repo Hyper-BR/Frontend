@@ -7,17 +7,16 @@
   left: 0;
   width: 100%;
   height: $player-height;
-  z-index: 1000;
+  z-index: 9999;
   display: flex;
   padding: 0 $spacing-md;
-  gap: $spacing-lg;
-
+  gap: $spacing-md;
   background-color: $color-black;
-
   border-top: 1px solid rgba(255, 0, 0, 0.08);
   box-shadow: 0 -4px 14px rgba(255, 0, 0, 0.05);
   border-top-left-radius: $radius-md;
   border-top-right-radius: $radius-md;
+  box-sizing: border-box;
 }
 
 .player.disabled {
