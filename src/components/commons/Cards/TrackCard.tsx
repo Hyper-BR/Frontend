@@ -1,22 +1,13 @@
-// src/components/TrackCard/TrackCard.tsx
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './TrackCard.module.scss';
-import { ArtistDTO } from '@/services/artist/types';
+import { TrackDTO } from '@/services/track/types';
 
 type TrackCardProps = {
-  image: string;
-  title: string;
-  artists: ArtistDTO[];
+  track: TrackDTO;
   onPlay?: () => void;
 };
 
-export default function TrackCard({
-  image,
-  title,
-  artists,
-  onPlay,
-}: TrackCardProps) {
+export default function TrackCard({ track, onPlay }: TrackCardProps) {
   const handlePlay = () => {
     if (onPlay) {
       onPlay();
@@ -27,7 +18,7 @@ export default function TrackCard({
     <div className={styles.card}>
       <div
         className={styles.imageWrapper}
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url('https://i.pravatar.cc/1579?u=')` }}
         onClick={handlePlay}
       >
         {onPlay && (
@@ -44,14 +35,16 @@ export default function TrackCard({
       </div>
 
       <div className={styles.info}>
-        <p className={styles.title}>{title}</p>
+        <Link to={`/track/${track.id}`} className={styles.trackLink}>
+          {track.title}
+        </Link>
         <p className={styles.artists}>
-          {artists.map((artist, idx) => (
+          {track.artists.map((artist, idx) => (
             <div key={artist.id}>
               <Link to={`/artist/${artist.id}`} className={styles.artistLink}>
                 {artist.username}
               </Link>
-              {idx < artists.length - 1 && ', '}
+              {idx < track.artists.length - 1 && ', '}
             </div>
           ))}
         </p>

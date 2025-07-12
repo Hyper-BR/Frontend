@@ -43,9 +43,7 @@ const Home = () => {
           {tracks.map((track) => (
             <TrackCard
               key={track.id}
-              image={'https://i.pravatar.cc/1579?u='}
-              title={track.title}
-              artists={track.artists}
+              track={track}
               onPlay={() => setTrackPlayer(track)}
             />
           ))}

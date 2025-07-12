@@ -1,0 +1,71 @@
+@use '@/styles/theme.scss' as *;
+
+.page {
+  min-height: 100vh;
+  padding: $spacing-xl;
+  color: $color-white;
+}
+
+.loading {
+  text-align: center;
+  color: $color-muted;
+  font-size: $font-size-sm;
+  margin-top: $spacing-xl;
+}
+
+.playerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-xl;
+  flex-wrap: wrap;
+  margin-bottom: $spacing-lg;
+}
+
+.coverContainer {
+  flex-shrink: 0;
+
+  .cover {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: $radius-md;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.waveformContainer {
+  flex: 1;
+  min-width: 300px;
+  max-width: 900px;
+}
+
+.info {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+
+  h1 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-xs;
+  }
+
+  .artist {
+    font-size: $font-size-sm;
+    color: $color-muted;
+    margin-bottom: $spacing-xs;
+  }
+
+  .meta {
+    font-size: $font-size-sm;
+    color: $color-muted;
+    margin-bottom: $spacing-md;
+  }
+
+  .description {
+    font-size: $font-size-sm;
+    color: $color-muted;
+    margin-top: $spacing-sm;
+  }
+}
