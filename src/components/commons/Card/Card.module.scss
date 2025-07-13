@@ -5,15 +5,11 @@
   display: flex;
   flex-direction: column;
   color: $color-white;
-  transition: transform 0.2s ease;
   text-align: center;
+  transition: transform 0.2s ease;
   width: 100%;
   max-width: 180px;
   min-width: 100px;
-
-  &.clickable:hover {
-    transform: scale(1.02);
-  }
 
   &.left {
     text-align: left;
@@ -31,11 +27,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
   width: 100%;
   aspect-ratio: 1 / 1;
-  min-width: 100px; // 👈 garante mínimo
-  min-height: 100px;
+  overflow: hidden;
+  cursor: pointer;
 
   &.sm {
     max-width: 100px;
@@ -55,6 +50,10 @@
 
   &.square {
     border-radius: $radius-md;
+  }
+
+  &:hover {
+    transform: scale(1.02);
   }
 }
 
@@ -76,11 +75,13 @@
 
 .title {
   font-size: 0.95rem;
+  font-weight: 600;
   color: inherit;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color $transition, text-decoration 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
@@ -94,6 +95,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.2s ease, text-decoration 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     color: $color-white;
