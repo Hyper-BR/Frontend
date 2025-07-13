@@ -21,6 +21,10 @@
 }
 
 .modal {
+  width: 100%;
+  max-height: calc(100dvh - $spacing-lg * 2);
+  overflow: hidden;
+  padding-bottom: 64px;
   background-color: color.adjust($color-gray-dark, $lightness: 4%);
   border-radius: calc($radius-md * 1.5);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
@@ -31,6 +35,7 @@
   position: relative;
   overflow-y: auto;
   box-sizing: border-box;
+  padding: $spacing-lg;
 
   @media (max-width: 768px) {
     padding: $spacing-md;
@@ -42,17 +47,17 @@
 }
 
 .sm {
-  width: 40%;
+  width: 35%;
   height: 40%;
 }
 
 .md {
-  width: 65%;
-  height: 65%;
+  width: 60%;
+  height: 75%;
 }
 
 .lg {
-  width: 100%;
+  width: 75%;
   height: 100%;
 }
 
@@ -87,10 +92,27 @@
 }
 
 .content {
-  margin-top: $spacing-md;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  padding-bottom: $spacing-lg;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 50, 50, 0.3);
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgba(255, 80, 80, 0.4);
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 }
 
 label {
@@ -112,15 +134,18 @@ label {
 }
 
 .footer {
-  position: sticky;
+  position: absolute;
   bottom: 0;
   left: 0;
+  width: 100%;
+  background-color: color.adjust($color-black, $lightness: 5%);
   padding: $spacing-sm $spacing-md;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  z-index: 50;
+  z-index: 999;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .leftActions {

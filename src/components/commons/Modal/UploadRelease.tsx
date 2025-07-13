@@ -60,8 +60,8 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
     <Modal.Root modal="upload" size="lg">
       <Modal.Header title="Upload de novas faixas" />
 
-      <Modal.Form onSubmit={handleSubmit}>
-        <Modal.Content>
+      <Modal.Content>
+        <form onSubmit={handleSubmit}>
           <div className={styles.topSection}>
             <div className={styles.coverUpload}>
               <label className={styles.coverLabel}>
@@ -123,10 +123,10 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
 
               <label className={styles.label}>
                 Descrição
-                <textarea
+                <input
+                  type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  rows={3}
                 />
               </label>
 
@@ -173,22 +173,22 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
               </div>
             ))}
           </div>
-        </Modal.Content>
+        </form>
+      </Modal.Content>
 
-        <Modal.Footer
-          leftButton={{
-            label: '+ Adicionar faixa',
-            onClick: handleStartNewTrack,
-          }}
-          cancelButton={{ label: 'Cancelar', onClick: onClose }}
-          submitButton={{
-            label: 'Upload',
-            type: 'submit',
-            loading,
-            onClick: onClose,
-          }}
-        />
-      </Modal.Form>
+      <Modal.Footer
+        leftButton={{
+          label: '+ Adicionar faixa',
+          onClick: handleStartNewTrack,
+        }}
+        cancelButton={{ label: 'Cancelar', onClick: onClose }}
+        submitButton={{
+          label: 'Upload',
+          type: 'submit',
+          loading,
+          onClick: onClose,
+        }}
+      />
     </Modal.Root>
   );
 };
