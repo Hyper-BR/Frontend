@@ -6,6 +6,8 @@ import TrackTable from '../Track/TrackTable';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
 import EditProfileModal from '@/components/ui/Forms/EditProfileModal';
+import { useNavigate } from 'react-router-dom';
+import { Plan } from '@/components/ui/Cards/Plan';
 
 interface Props {
   avatarUrl: string;
@@ -42,40 +44,42 @@ export default function ProfileLayout({
 
   return (
     <section className={styles.profile}>
-      <header className={styles.header}>
-        <div className={styles.userInfo}>
-          <img src={avatarUrl} alt={name} className={styles.avatar} />
-          <div className={styles.details}>
-            <h2>{name}</h2>
-            {email && <p className={styles.email}>{email}</p>}
-            {onEdit && (
-              <>
-                <Modal.Trigger modal="editProfile">
-                  <Button className={styles.editBtn} variant="ghost">
-                    Editar perfil
-                  </Button>
-                </Modal.Trigger>
+      <div className={styles.cover}>
+        <header className={styles.header}>
+          <div className={styles.userInfo}>
+            <img src={avatarUrl} alt={name} className={styles.avatar} />
+            <div className={styles.details}>
+              <h2>{name}</h2>
+              {email && <p className={styles.email}>{email}</p>}
+              {onEdit && (
+                <>
+                  <Modal.Trigger modal="editProfile">
+                    <Button className={styles.editBtn} variant="ghost">
+                      Editar perfil
+                    </Button>
+                  </Modal.Trigger>
 
-                <EditProfileModal />
-              </>
-            )}
-            <div className={styles.stats}>
-              <span>
-                <strong>{stats.followers}</strong> seguidores
-              </span>
-              <span>
-                <strong>{stats.following}</strong> seguindo
-              </span>
+                  <EditProfileModal />
+                </>
+              )}
+              <div className={styles.stats}>
+                <span>
+                  <strong>{stats.followers}</strong> seguidores
+                </span>
+                <span>
+                  <strong>{stats.following}</strong> seguindo
+                </span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {owner && (
-          <div className={styles.planSection}>
-            {/* <CurrentPlanCard /> */} PlanCard
-          </div>
-        )}
-      </header>
+          {owner && (
+            <div className={styles.planSection}>
+              <Plan title="Plano Premium" />
+            </div>
+          )}
+        </header>
+      </div>
 
       {analytics && (
         <div className={styles.analytics}>
