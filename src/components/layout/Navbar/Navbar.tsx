@@ -4,12 +4,11 @@ import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
 import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
-import UploadRelease from '@/components/commons/Modal/UploadRelease';
 import { Button } from '@/components/commons/Button/Button';
+import UploadRelease from '@/components/commons/Modal/Forms/UploadRelease';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const { userSigned, signOut, isArtist, customer } = useAuth();
@@ -30,21 +29,11 @@ const Navbar = () => {
       <div className={styles.userSection}>
         {userSigned ? (
           <>
-            {isArtist && (
-              <>
-                <Modal.Trigger modal="upload">
-                  <Button variant="ghost" onClick={() => setShowModal(true)}>
-                    Upload
-                  </Button>
-                </Modal.Trigger>
+            <Modal.Trigger modal="upload">
+              <Button variant="ghost">Upload</Button>
+            </Modal.Trigger>
 
-                <UploadRelease
-                  isOpen={showModal}
-                  onClose={() => setShowModal(false)}
-                  onUploadSuccess={() => setShowModal(false)}
-                />
-              </>
-            )}
+            <UploadRelease />
 
             {!isArtist && (
               <button

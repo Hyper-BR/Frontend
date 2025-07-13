@@ -2,6 +2,7 @@ import styles from './Modal.module.scss';
 import { ReactNode } from 'react';
 import { ModalSize } from './types';
 import { useModal } from '@/contexts/ModalContext';
+import { Button } from '../Button/Button';
 
 interface Props {
   children: ReactNode;
@@ -16,9 +17,9 @@ export function Root({ children, modal, size = 'md' }: Props) {
   return (
     <div className={styles.overlay}>
       <div className={`${styles.modal} ${styles[size]}`}>
-        <button className={styles.close} onClick={closeModal}>
+        <Button variant="ghost" className={styles.close} onClick={closeModal}>
           &times;
-        </button>
+        </Button>
         {children}
       </div>
     </div>

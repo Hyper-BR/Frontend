@@ -2,15 +2,10 @@ import { useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { TrackDTO } from '@/services/track/types';
 import styles from './UploadRelease.module.scss';
-import { Button } from '../Button/Button';
+import { Button } from '../../Button/Button';
+import { useModal } from '@/contexts/ModalContext';
 
-interface Props {
-  isOpen: boolean;
-  onClose: () => void;
-  onUploadSuccess: () => void;
-}
-
-const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
+const UploadRelease = () => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [genre, setGenre] = useState('');
@@ -19,8 +14,9 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
   const [privacy, setPrivacy] = useState('PUBLIC');
   const [coverImage, setCoverImage] = useState<File | null>(null);
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
-  const [showTrackForm, setShowTrackForm] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { closeModal } = useModal();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,8 +24,7 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
 
     try {
       console.log('Enviando lançamento...');
-      onUploadSuccess();
-      onClose();
+      closeModal();
     } catch (err) {
       alert('Erro ao enviar. Tente novamente.');
     } finally {
@@ -54,8 +49,6 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
 
     setTracks((prev) => [...prev, newTrack]);
   };
-
-  if (!isOpen) return null;
 
   return (
     <Modal.Root modal="upload" size="lg">
@@ -184,12 +177,12 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
           </Button>
         }
         cancelButton={
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="ghost" onClick={closeModal}>
             Cancelar
           </Button>
         }
         submitButton={
-          <Button type="submit" loading={loading} onClick={onClose}>
+          <Button type="submit" loading={loading} onClick={closeModal}>
             Upload
           </Button>
         }

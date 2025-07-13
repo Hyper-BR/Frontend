@@ -16,5 +16,5 @@ export type PlaylistDTO = {
   name: string;
   description: string;
   image: string;
-  tracks: TrackDTO[];
+  tracks?: TrackDTO[];
 };

@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import styles from './Sidebar.module.scss';
 import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
-import PlaylistModal from '../../commons/Forms/PlaylistForm';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/commons/Button/Button';
+import { Modal } from '@/components/commons/Modal';
+import CreatePlaylist from '@/components/commons/Modal/Forms/CreatePlaylist';
 
 const Sidebar = () => {
-  const [showModal, setShowModal] = useState(false);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [hoveredPlaylistId, setHoveredPlaylistId] = useState<string | null>(
     null,
@@ -37,19 +37,12 @@ const Sidebar = () => {
   if (!userSigned) return;
   return (
     <aside className={styles.sidebar}>
-      {showModal && (
-        <></>
-        // <Modal isOpen={true} onClose={() => setShowModal(false)}>
-        //   <PlaylistModal
-        //     onClose={() => setShowModal(false)}
-        //     onCreate={fetchPlaylists}
-        //   />
-        // </Modal>
-      )}
       <div className={styles.playlistList}>
-        <Button variant="ghost" size="md" onClick={() => setShowModal(true)}>
-          Nova Playlist
-        </Button>
+        <Modal.Trigger modal="createPlaylist">
+          <Button variant="ghost">Nova Playlist</Button>
+        </Modal.Trigger>
+
+        <CreatePlaylist />
 
         {playlists.map((playlist) => (
           <div
