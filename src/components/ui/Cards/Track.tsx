@@ -3,29 +3,23 @@ import { Button } from '@/components/commons/Button/Button';
 import { Title } from '@/components/commons/Card/Title';
 import { Subtitle } from '@/components/commons/Card/Subtitle';
 import styles from './Track.module.scss';
+import { usePlayer } from '@/contexts/PlayerContext';
+import { TrackDTO } from '@/services/track/types';
 
 interface Props {
-  name: string;
-  artists: string;
-  imageUrl: string;
-  onClick?: () => void;
+  track: TrackDTO;
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function Track({
-  name,
-  artists,
-  imageUrl,
-  onClick,
-  size = 'md',
-}: Props) {
+export function Track({ track, size = 'md' }: Props) {
+  const { setTrackPlayer } = usePlayer();
   return (
     <Root
-      imageUrl={imageUrl}
+      imageUrl={'https://i.pravatar.cc/1579?u='}
       shape="square"
       size={size}
       clickable
-      onClick={onClick}
+      onClick={() => setTrackPlayer(track)}
       align="center"
     >
       <div className={styles.imageWrapper}>
@@ -37,12 +31,17 @@ export function Track({
               <path d="M8 5v14l11-7z" />
             </svg>
           }
-          onClick={onClick}
+          onClick={() => setTrackPlayer(track)}
         />
       </div>
 
-      <Title text={name} />
-      <Subtitle text={artists} />
+      <Title text={track.title} href={`/track/${track.id}`} />
+      <Subtitle
+        items={track.artists.map((a) => ({
+          text: a.username,
+          href: `/artist/${a.id}`,
+        }))}
+      />
     </Root>
   );
 }

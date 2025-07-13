@@ -69,14 +69,7 @@ export default function SearchPage() {
             {tracks.length ? (
               <>
                 {tracks.map((track) => (
-                  <Track
-                    key={track.id}
-                    name={track.title}
-                    artists={track.artists.map((a) => a.username).join(', ')}
-                    imageUrl="https://i.pravatar.cc/1579?u="
-                    onClick={() => setTrackPlayer(track)}
-                    size="md"
-                  />
+                  <Track key={track.id} track={track} size="md" />
                 ))}
               </>
             ) : (

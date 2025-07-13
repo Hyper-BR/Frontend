@@ -75,26 +75,28 @@
 
 .title {
   font-size: 0.95rem;
-  font-weight: 600;
   color: inherit;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
   transition: color $transition, text-decoration 0.2s ease;
   cursor: pointer;
 
   &:hover {
+    color: $color-white;
     text-decoration: underline;
   }
 }
 
-.subtitle {
+.subtitleLink {
   font-size: 0.85rem;
   color: $color-muted;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  transition: color 0.2s ease, text-decoration 0.2s ease;
+  text-decoration: none;
+  transition: color $transition, text-decoration 0.2s ease;
   cursor: pointer;
 
   &:hover {

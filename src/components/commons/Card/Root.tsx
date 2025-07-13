@@ -36,7 +36,6 @@ export function Root({
           className={styles.image}
           style={{ backgroundImage: `url(${imageUrl})` }}
         />
-        {children}
       </div>
 
       <div className={styles.info}>{children}</div>

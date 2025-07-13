@@ -1,14 +1,33 @@
+import { Link } from 'react-router-dom';
 import styles from './Card.module.scss';
 
 interface Props {
-  text: string;
-  onClick?: () => void;
+  items: {
+    text: string;
+    href: string;
+    onClick?: () => void;
+  }[];
 }
 
-export function Subtitle({ text, onClick }: Props) {
+export function Subtitle({ items }: Props) {
   return (
-    <span className={styles.subtitle} onClick={onClick}>
-      {text}
-    </span>
+    <div className={styles.subtitle}>
+      {items.map((item, index) => (
+        <span key={item.href + index}>
+          <Link
+            to={item.href}
+            className={styles.subtitleLink}
+            onClick={(e) => {
+              e.stopPropagation();
+              item.onClick?.();
+            }}
+          >
+            {item.text}
+          </Link>
+
+          {index < items.length - 1 && ', '}
+        </span>
+      ))}
+    </div>
   );
 }
