@@ -6,7 +6,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.85);
   z-index: 1000;
   display: flex;
@@ -22,7 +22,6 @@
 
 .modal {
   background-color: color.adjust($color-gray-dark, $lightness: 4%);
-  padding: $spacing-lg;
   border-radius: calc($radius-md * 1.5);
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   color: $color-white;
@@ -116,8 +115,6 @@ label {
   position: sticky;
   bottom: 0;
   left: 0;
-  width: 100%;
-  background-color: $color-gray-dark;
   padding: $spacing-sm $spacing-md;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 50;

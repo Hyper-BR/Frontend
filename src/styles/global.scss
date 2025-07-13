@@ -13,6 +13,26 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: $color-primary-dark transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-gray-dark;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: $color-black;
+    }
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 }
 
 #root {

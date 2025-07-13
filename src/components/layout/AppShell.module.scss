@@ -55,30 +55,6 @@
     color: color.adjust($color-white, $lightness: 10%);
   }
 
-  .button-red {
-    background: transparent;
-    color: $color-primary;
-    border: 1px solid $color-primary-dark;
-    padding: 0.75rem 1.5rem;
-    border-radius: $radius-md;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: rgba(255, 0, 0, 0.1);
-      color: $color-white;
-      border-color: $color-primary-dark;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 0, 0, 0.15);
-    border-radius: 3px;
-  }
-
   @media (max-width: 768px) {
     padding: $spacing-xs $spacing-xs 112px;
   }
