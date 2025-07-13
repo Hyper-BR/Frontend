@@ -13,22 +13,3 @@
   margin-bottom: $spacing-sm;
   text-align: center;
 }
-
-.input {
-  background-color: $color-gray-dark;
-  border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
-  padding: $spacing-md;
-  color: $color-white;
-  border-radius: $radius-md;
-  font-size: $font-size-md;
-
-  &::placeholder {
-    color: $color-muted;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: $color-primary;
-    box-shadow: 0 0 0 1px $color-primary;
-  }
-}

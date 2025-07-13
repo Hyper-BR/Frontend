@@ -5,6 +5,7 @@ import styles from './CreatePlaylist.module.scss';
 import { Button } from '../../Button/Button';
 import { Modal } from '..';
 import { useModal } from '@/contexts/ModalContext';
+import { Input } from '../../Input/Input';
 
 const CreatePlaylist = () => {
   const [name, setName] = useState('');
@@ -36,8 +37,7 @@ const CreatePlaylist = () => {
 
       <Modal.Content>
         <div className={styles.formContainer}>
-          <input
-            className={styles.input}
+          <Input
             type="text"
             placeholder="Digite o nome da playlist"
             value={name}

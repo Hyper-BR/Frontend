@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import WavesurferPlayer from '@wavesurfer/react';
+import { Input } from '@/components/commons/Input/Input';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -92,7 +93,7 @@ const Player = () => {
 
           <div className={styles.volume}>
             🔊
-            <input
+            <Input
               type="range"
               min={0}
               max={1}

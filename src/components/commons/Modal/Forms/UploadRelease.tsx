@@ -4,6 +4,7 @@ import { TrackDTO } from '@/services/track/types';
 import styles from './UploadRelease.module.scss';
 import { Button } from '../../Button/Button';
 import { useModal } from '@/contexts/ModalContext';
+import { Input } from '../../Input/Input';
 
 const UploadRelease = () => {
   const [title, setTitle] = useState('');
@@ -68,7 +69,7 @@ const UploadRelease = () => {
                 ) : (
                   <span>🖼️ Capa do lançamento</span>
                 )}
-                <input
+                <Input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setCoverImage(e.target.files?.[0] || null)}
@@ -80,7 +81,7 @@ const UploadRelease = () => {
             <div className={styles.metadata}>
               <label className={styles.label}>
                 Título
-                <input
+                <Input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -90,7 +91,7 @@ const UploadRelease = () => {
 
               <label className={styles.label}>
                 Artista(s)
-                <input
+                <Input
                   type="text"
                   value={artist}
                   onChange={(e) => setArtist(e.target.value)}
@@ -99,7 +100,7 @@ const UploadRelease = () => {
 
               <label className={styles.label}>
                 Gênero
-                <input
+                <Input
                   type="text"
                   value={genre}
                   onChange={(e) => setGenre(e.target.value)}
@@ -108,7 +109,7 @@ const UploadRelease = () => {
 
               <label className={styles.label}>
                 Tags
-                <input
+                <Input
                   type="text"
                   value={tags}
                   onChange={(e) => setTags(e.target.value)}
@@ -117,7 +118,7 @@ const UploadRelease = () => {
 
               <label className={styles.label}>
                 Descrição
-                <input
+                <Input
                   type="text"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
@@ -127,7 +128,7 @@ const UploadRelease = () => {
               <div className={styles.privacy}>
                 <p>Privacidade</p>
                 <label>
-                  <input
+                  <Input
                     type="radio"
                     value="PUBLIC"
                     checked={privacy === 'PUBLIC'}
@@ -136,7 +137,7 @@ const UploadRelease = () => {
                   Público
                 </label>
                 <label>
-                  <input
+                  <Input
                     type="radio"
                     value="UNLISTED"
                     checked={privacy === 'UNLISTED'}
@@ -145,7 +146,7 @@ const UploadRelease = () => {
                   Não listado
                 </label>
                 <label>
-                  <input
+                  <Input
                     type="radio"
                     value="PRIVATE"
                     checked={privacy === 'PRIVATE'}

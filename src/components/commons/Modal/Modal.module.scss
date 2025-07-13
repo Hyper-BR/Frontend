@@ -121,17 +121,6 @@ label {
   flex-direction: column;
   font-size: $font-size-sm;
   color: $color-muted;
-
-  input,
-  select {
-    margin-top: 6px;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $radius-md;
-    background-color: color.adjust($color-gray-dark, $lightness: 5%);
-    border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
-    color: $color-white;
-    font-size: 0.95rem;
-  }
 }
 
 .footer {

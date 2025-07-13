@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getTimeZoneByCountry } from '@/utils/getTimeZoneByCountry';
 import { buildZonedDateTime } from '@/utils/buildZonedDateTime';
 import { countries } from '@/constants/countries';
+import { Input } from '@/components/commons/Input/Input';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ const RegisterPage = () => {
 
         <label>
           Nome completo
-          <input
+          <Input
             type="text"
             name="name"
             value={form.name}
@@ -74,7 +75,7 @@ const RegisterPage = () => {
 
         <label>
           E-mail
-          <input
+          <Input
             type="email"
             name="email"
             value={form.email}
@@ -86,7 +87,7 @@ const RegisterPage = () => {
 
         <label>
           Senha
-          <input
+          <Input
             type="password"
             name="password"
             value={form.password}
@@ -98,7 +99,7 @@ const RegisterPage = () => {
 
         <label>
           Confirmar senha
-          <input
+          <Input
             type="password"
             name="confirmPassword"
             value={confirmPassword}
@@ -127,7 +128,7 @@ const RegisterPage = () => {
 
         <label>
           Data de nascimento
-          <input
+          <Input
             type="date"
             name="birthDate"
             value={form.birthDate}

@@ -30,24 +30,6 @@
     flex-direction: column;
     font-size: $font-size-md;
     gap: $spacing-xs;
-
-    input {
-      background-color: $color-gray-dark;
-      border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
-      border-radius: $radius-md;
-      padding: $spacing-md;
-      color: $color-white;
-
-      &::placeholder {
-        color: $color-muted;
-      }
-
-      &:focus {
-        outline: none;
-        border-color: $color-primary;
-        box-shadow: 0 0 0 1px $color-primary;
-      }
-    }
   }
 }
 

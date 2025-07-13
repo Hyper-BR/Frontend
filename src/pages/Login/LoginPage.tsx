@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.scss';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/commons/Button/Button';
+import { Input } from '@/components/commons/Input/Input';
 
 const LoginPage = () => {
   const { signIn } = useAuth();
@@ -28,7 +29,7 @@ const LoginPage = () => {
 
         <label>
           E-mail
-          <input
+          <Input
             type="email"
             required
             value={email}
@@ -39,7 +40,7 @@ const LoginPage = () => {
 
         <label>
           Senha
-          <input
+          <Input
             type="password"
             required
             value={password}

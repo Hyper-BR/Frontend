@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import styles from './BecomeArtistPage.module.scss';
 import { createArtist } from '@/services/artist';
 import { ArtistDTO } from '@/services/artist/types';
+import { Input } from '@/components/commons/Input/Input';
 
 const BecomeArtistPage = () => {
   const [username, setUsername] = useState('');
@@ -38,7 +39,7 @@ const BecomeArtistPage = () => {
         <h2>Crie seu projeto artístico</h2>
         <label>
           Nome do projeto
-          <input
+          <Input
             type="text"
             value={username}
             required
