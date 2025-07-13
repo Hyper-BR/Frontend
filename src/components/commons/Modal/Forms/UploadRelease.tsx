@@ -161,9 +161,9 @@ const UploadRelease = () => {
             {tracks.map((track, index) => (
               <div key={index} className={styles.trackItem}>
                 <span>{track.title}</span>
-                <button type="button" onClick={() => handleRemoveTrack(index)}>
+                <Button type="button" onClick={() => handleRemoveTrack(index)}>
                   Remover
-                </button>
+                </Button>
               </div>
             ))}
           </div>

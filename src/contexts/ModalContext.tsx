@@ -18,7 +18,6 @@ const ModalContext = createContext<ModalContextType>({
 
 export function ModalProvider({ children }: { children: ReactNode }) {
   const [current, setCurrent] = useState<ModalId>(null);
-  console.log(current);
   const openModal = (id: string) => setCurrent(id);
   const closeModal = () => setCurrent(null);
   const isOpen = (id: string) => current === id;

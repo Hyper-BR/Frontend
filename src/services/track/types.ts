@@ -1,3 +1,4 @@
+import { create } from 'zustand';
 import { ArtistDTO } from '../artist/types';
 
 export type TrackPageDTO = {
@@ -19,4 +20,5 @@ export type TrackDTO = {
   genre: string;
   artists: ArtistDTO[];
   file: File;
+  createdDate?: string;
 };

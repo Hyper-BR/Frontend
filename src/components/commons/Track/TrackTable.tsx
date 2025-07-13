@@ -10,6 +10,7 @@ import {
   getPlaylistsCustomer,
   removeTrackFromPlaylist,
 } from '@/services/playlist';
+import { Button } from '../Button/Button';
 
 type Props = {
   tracks: TrackDTO[];
@@ -78,7 +79,9 @@ const TrackTable = ({ tracks }: Props) => {
   return (
     <div className={styles.wrapper}>
       <Table.Root>
-        <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', '']} />
+        <Table.Header
+          columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']}
+        />
         <Table.Body>
           {tracks.map((track) => {
             const isOpen = openMenuId === track.id;
@@ -96,13 +99,13 @@ const TrackTable = ({ tracks }: Props) => {
                         alt={track.title}
                         className={styles.cover}
                       />
-                      <button
+                      <Button
                         className={styles.playButton}
                         onClick={() => setTrackPlayer(track)}
                         title="Tocar faixa"
                       >
                         ▶
-                      </button>
+                      </Button>
                     </div>
 
                     <div className={styles.texts}>
@@ -125,15 +128,17 @@ const TrackTable = ({ tracks }: Props) => {
                 <Table.Cell>1A</Table.Cell>
                 <Table.Cell>180</Table.Cell>
                 <Table.Cell>{track.duration ?? '—'}</Table.Cell>
+                <Table.Cell>{track.createdDate ?? '—'}</Table.Cell>
                 <Table.Cell>
                   <div className={styles.moreWrapper}>
-                    <button
+                    <Button
                       ref={(el) => (moreButtonRefs.current[track.id] = el)}
                       className={styles.more}
                       onClick={() => toggleOptions(track.id)}
+                      variant="transparent"
                     >
                       ⋯
-                    </button>
+                    </Button>
                   </div>
 
                   {isOpen && dropdownPosition && (
@@ -160,7 +165,7 @@ const TrackTable = ({ tracks }: Props) => {
                                     (t) => t.id === track.id,
                                   );
                                   return (
-                                    <button
+                                    <Button
                                       key={pl.id}
                                       className={
                                         isMember ? styles.inPlaylist : ''
@@ -175,7 +180,7 @@ const TrackTable = ({ tracks }: Props) => {
                                       <span className={styles.icon}>
                                         {isMember ? '✓' : '+'}
                                       </span>
-                                    </button>
+                                    </Button>
                                   );
                                 })
                               ) : (

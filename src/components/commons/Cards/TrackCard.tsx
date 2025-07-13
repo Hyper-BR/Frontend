@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './TrackCard.module.scss';
 import { TrackDTO } from '@/services/track/types';
+import { Button } from '../Button/Button';
 
 type TrackCardProps = {
   track: TrackDTO;
@@ -22,7 +23,8 @@ export default function TrackCard({ track, onPlay }: TrackCardProps) {
         onClick={handlePlay}
       >
         {onPlay && (
-          <button
+          <Button
+            variant="transparent"
             className={styles.playButton}
             onClick={(e) => {
               e.stopPropagation();
@@ -30,7 +32,7 @@ export default function TrackCard({ track, onPlay }: TrackCardProps) {
             }}
           >
             ▶
-          </button>
+          </Button>
         )}
       </div>
 

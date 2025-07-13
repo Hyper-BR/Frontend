@@ -23,20 +23,42 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-size: 1rem;
+  background-color: rgba($color-black, 0.7);
+  color: $color-white;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
   cursor: pointer;
+  z-index: 2;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.85);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($color-primary, 0.4);
+  }
+
+  svg {
+    pointer-events: none;
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .imageWrapper:hover .playButton {
+  visibility: visible;
   opacity: 1;
+  transition-delay: 0s;
 }
 
 .info {
