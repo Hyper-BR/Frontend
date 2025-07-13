@@ -5,8 +5,8 @@ import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
-import TrackCard from '@/components/commons/Cards/TrackCard';
-import ArtistCard from '@/components/commons/Cards/ArtistCard';
+import { Track } from '@/components/ui/Cards/Track';
+import { Artist } from '@/components/ui/Cards/Artist';
 
 function useQuery() {
   const { search } = useLocation();
@@ -50,10 +50,11 @@ export default function SearchPage() {
             {artists.length ? (
               <>
                 {artists.map((artist) => (
-                  <ArtistCard
-                    key={artist.id}
-                    image={'https://i.pravatar.cc/1579?u='}
+                  <Artist
                     name={artist.username}
+                    size="lg"
+                    key={artist.id}
+                    imageUrl="https://i.pravatar.cc/1579?u="
                     onClick={() => navigate(`/artist/${artist.id}`)}
                   />
                 ))}
@@ -68,10 +69,13 @@ export default function SearchPage() {
             {tracks.length ? (
               <>
                 {tracks.map((track) => (
-                  <TrackCard
+                  <Track
                     key={track.id}
-                    track={track}
-                    onPlay={() => setTrackPlayer(track)}
+                    name={track.title}
+                    artists={track.artists.map((a) => a.username).join(', ')}
+                    imageUrl="https://i.pravatar.cc/1579?u="
+                    onClick={() => setTrackPlayer(track)}
+                    size="md"
                   />
                 ))}
               </>

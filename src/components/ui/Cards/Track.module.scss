@@ -1,0 +1,35 @@
+@use '@/styles/theme.scss' as *;
+
+.playButton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); // ❗ garante centralização
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: $color-gray-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    color: $color-white;
+    transition: color 0.2s ease;
+    pointer-events: none;
+  }
+
+  &:hover svg {
+    color: $color-primary;
+  }
+}
+
+.imageWrapper:hover .playButton {
+  opacity: 1;
+}

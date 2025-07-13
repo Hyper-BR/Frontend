@@ -1,0 +1,102 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  color: $color-white;
+  transition: transform 0.2s ease;
+  text-align: center;
+  width: 100%;
+  max-width: 180px;
+  min-width: 100px;
+
+  &.clickable:hover {
+    transform: scale(1.02);
+  }
+
+  &.left {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  &.center {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 100px; // 👈 garante mínimo
+  min-height: 100px;
+
+  &.sm {
+    max-width: 100px;
+  }
+
+  &.md {
+    max-width: 140px;
+  }
+
+  &.lg {
+    max-width: 180px;
+  }
+
+  &.round {
+    border-radius: 50%;
+  }
+
+  &.square {
+    border-radius: $radius-md;
+  }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.info {
+  margin-top: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.title {
+  font-size: 0.95rem;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color $transition, text-decoration 0.2s ease;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: $color-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+
+  &:hover {
+    color: $color-white;
+    text-decoration: underline;
+  }
+}

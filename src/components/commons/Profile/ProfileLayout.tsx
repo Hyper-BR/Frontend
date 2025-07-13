@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styles from './ProfileLayout.module.scss';
 import { TrackDTO, TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
 import TrackTable from '../Track/TrackTable';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
@@ -73,7 +72,7 @@ export default function ProfileLayout({
 
         {owner && (
           <div className={styles.planSection}>
-            <CurrentPlanCard />
+            {/* <CurrentPlanCard /> */} PlanCard
           </div>
         )}
       </header>
