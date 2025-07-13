@@ -47,15 +47,6 @@ export const Routes = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: '/release/upload',
-        element: (
-          <PrivateRoute onlyArtist>
-            UploadPage
-            {/* <UploadReleasePage /> */}
-          </PrivateRoute>
-        ),
-      },
     ],
   },
   {

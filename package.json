@@ -19,6 +19,7 @@
     "@dnd-kit/sortable": "^10.0.0",
     "@wavesurfer/react": "^1.0.11",
     "axios": "^1.6.7",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "nookies": "^2.5.2",
     "react": "^18.2.0",

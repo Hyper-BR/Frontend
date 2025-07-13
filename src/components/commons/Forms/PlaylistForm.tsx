@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { createPlaylist } from '@/services/playlist';
 import styles from './PlaylistForm.module.scss';
+import { Button } from '../Button/Button';
 
 interface PlaylistModalProps {
   onClose: () => void;
@@ -42,13 +43,13 @@ const PlaylistModal = ({ onClose, onCreate }: PlaylistModalProps) => {
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <button
+      <Button
         className={styles.submitButton}
-        onClick={addNewPlaylist}
+        onClick={() => addNewPlaylist}
         disabled={!name.trim()}
       >
         Criar
-      </button>
+      </Button>
     </div>
   );
 };

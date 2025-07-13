@@ -4,6 +4,7 @@ import { TrackDTO, TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
 import TrackTable from '../Track/TrackTable';
+import { Button } from '../Button/Button';
 
 interface Props {
   avatarUrl: string;
@@ -47,9 +48,13 @@ export default function ProfileLayout({
             <h2>{name}</h2>
             {email && <p className={styles.email}>{email}</p>}
             {onEdit && (
-              <button className={styles.editBtn} onClick={onEdit}>
+              <Button
+                className={styles.editBtn}
+                variant="ghost"
+                onClick={onEdit}
+              >
                 Editar perfil
-              </button>
+              </Button>
             )}
             <div className={styles.stats}>
               <span>
@@ -78,13 +83,13 @@ export default function ProfileLayout({
 
       <nav className={styles.tabNav}>
         {tabs.map((tab) => (
-          <button
-            key={tab}
-            className={tab === activeTab ? styles.activeTab : styles.tab}
+          <Button
+            variant="transparent"
             onClick={() => setActiveTab(tab)}
+            className={tab === activeTab ? styles.activeTab : styles.tab}
           >
             {tab}
-          </button>
+          </Button>
         ))}
       </nav>
 

@@ -5,6 +5,7 @@ import styles from './Navbar.module.scss';
 import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
 import UploadRelease from '@/components/commons/Modal/UploadRelease';
+import { Button } from '@/components/commons/Button/Button';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -32,7 +33,9 @@ const Navbar = () => {
             {isArtist && (
               <>
                 <Modal.Trigger modal="upload">
-                  <button onClick={() => setShowModal(true)}>Upload</button>
+                  <Button variant="ghost" onClick={() => setShowModal(true)}>
+                    Upload
+                  </Button>
                 </Modal.Trigger>
 
                 <UploadRelease
@@ -54,12 +57,12 @@ const Navbar = () => {
 
             {customer?.artistProfile == null && (
               <>
-                <button
+                <Button
                   className={styles.loginButton}
                   onClick={() => navigate('/becomeArtist')}
                 >
                   Sou artista
-                </button>
+                </Button>
               </>
             )}
 
@@ -87,12 +90,13 @@ const Navbar = () => {
             </div>
           </>
         ) : (
-          <button
+          <Button
+            variant="ghost"
             className={styles.loginButton}
             onClick={() => navigate('/login')}
           >
             Login
-          </button>
+          </Button>
         )}
       </div>
     </header>

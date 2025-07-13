@@ -5,6 +5,7 @@ import { PlaylistDTO } from '@/services/playlist/types';
 import PlaylistModal from '../../commons/Forms/PlaylistForm';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/commons/Button/Button';
 
 const Sidebar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -46,12 +47,9 @@ const Sidebar = () => {
         // </Modal>
       )}
       <div className={styles.playlistList}>
-        <button
-          className={styles.addPlaylistButton}
-          onClick={() => setShowModal(true)}
-        >
-          ➕ Nova Playlist
-        </button>
+        <Button variant="ghost" size="md" onClick={() => setShowModal(true)}>
+          Nova Playlist
+        </Button>
 
         {playlists.map((playlist) => (
           <div

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { TrackDTO } from '@/services/track/types';
 import styles from './UploadRelease.module.scss';
+import { Button } from '../Button/Button';
 
 interface Props {
   isOpen: boolean;
@@ -177,17 +178,21 @@ const UploadRelease = ({ isOpen, onClose, onUploadSuccess }: Props) => {
       </Modal.Content>
 
       <Modal.Footer
-        leftButton={{
-          label: '+ Adicionar faixa',
-          onClick: handleStartNewTrack,
-        }}
-        cancelButton={{ label: 'Cancelar', onClick: onClose }}
-        submitButton={{
-          label: 'Upload',
-          type: 'submit',
-          loading,
-          onClick: onClose,
-        }}
+        leftButton={
+          <Button variant="ghost" onClick={handleStartNewTrack}>
+            + Adicionar faixa
+          </Button>
+        }
+        cancelButton={
+          <Button variant="ghost" onClick={onClose}>
+            Cancelar
+          </Button>
+        }
+        submitButton={
+          <Button type="submit" loading={loading} onClick={onClose}>
+            Upload
+          </Button>
+        }
       />
     </Modal.Root>
   );

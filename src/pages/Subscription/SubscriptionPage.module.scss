@@ -94,21 +94,6 @@
       font-size: 0.75rem;
     }
   }
-
-  button {
-    margin-top: $spacing-sm;
-    padding: 0.5rem 0.8rem;
-    font-size: 0.8rem;
-    border-radius: $radius-sm;
-    background-color: $color-primary;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-
-    &:hover {
-      background-color: color.adjust($color-primary, $lightness: -10%);
-    }
-  }
 }
 
 @media (max-width: 768px) {

@@ -49,21 +49,6 @@
       }
     }
   }
-
-  button {
-    background-color: $color-primary;
-    color: $color-white;
-    padding: $spacing-md;
-    border: none;
-    border-radius: $radius-md;
-    cursor: pointer;
-    font-weight: $font-weight-bold;
-    transition: background-color $transition;
-
-    &:hover {
-      background-color: $color-primary-dark;
-    }
-  }
 }
 
 .registerLink {

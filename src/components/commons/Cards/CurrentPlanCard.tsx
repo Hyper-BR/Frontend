@@ -1,3 +1,4 @@
+import { Button } from '../Button/Button';
 import styles from './CurrentPlanCard.module.scss';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -10,9 +11,9 @@ export const CurrentPlanCard = () => {
       <p className={styles.planName}>
         {plan === 'FREE_LISTENER' ? 'Gratuito (Ouvinte)' : plan}
       </p>
-      <button onClick={() => window.location.assign('/plans')}>
+      <Button onClick={() => window.location.assign('/plans')}>
         Fazer Upgrade
-      </button>
+      </Button>
     </div>
   );
 };

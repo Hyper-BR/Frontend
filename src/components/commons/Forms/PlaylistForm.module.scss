@@ -32,24 +32,3 @@
     box-shadow: 0 0 0 1px $color-primary;
   }
 }
-
-.submitButton {
-  background-color: $color-primary;
-  color: $color-white;
-  padding: $spacing-md;
-  border: none;
-  border-radius: $radius-md;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-md;
-  cursor: pointer;
-  transition: background-color $transition;
-
-  &:hover {
-    background-color: $color-primary-dark;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-}

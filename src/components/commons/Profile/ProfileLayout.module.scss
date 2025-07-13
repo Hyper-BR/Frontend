@@ -1,5 +1,4 @@
 @use '@/styles/theme.scss' as *;
-@use '@/styles/components/buttons.scss' as buttons;
 @use 'sass:color';
 
 .profile {
@@ -54,11 +53,6 @@
       font-size: $font-size-sm;
     }
 
-    button {
-      @include buttons.ghostButton;
-      margin-bottom: $spacing-sm;
-    }
-
     .stats {
       display: flex;
       gap: $spacing-md;
@@ -79,38 +73,23 @@
   justify-content: flex-end;
 }
 
+.tab {
+  margin-top: $spacing-md;
+}
+
 .tabNav {
   display: flex;
   width: 100%;
   gap: $spacing-lg;
-  background: transparent;
   border: none;
-}
-
-.tab {
-  width: 100%;
-  background: transparent;
-  border: none;
-  font-size: $font-size-sm;
-  color: $color-muted;
-  font-weight: $font-weight-regular;
-  cursor: pointer;
-  transition: color $transition, font-size $transition;
-
-  &:hover {
-    color: $color-white;
-  }
 }
 
 .activeTab {
-  width: 100%;
-  border: none;
-  font-size: $font-size-md;
+  font-size: $font-size-sm;
   color: $color-white;
-  background: transparent;
   font-weight: $font-weight-bold;
 }
 
 .tabContent {
-  margin-top: $spacing-md;
+  margin-top: $spacing-lg;
 }

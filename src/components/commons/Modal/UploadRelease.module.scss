@@ -101,7 +101,6 @@
 
 .privacy {
   display: flex;
-  flex-direction: row; // 🔁 em linha
   gap: $spacing-lg;
   margin-top: $spacing-md;
   align-items: center;
@@ -136,56 +135,12 @@
   box-shadow: 0 0 4px rgba(255, 0, 0, 0.05);
   color: $color-white;
   font-size: 0.9rem;
-
-  button {
-    background: none;
-    border: none;
-    color: $color-primary;
-    font-size: 0.85rem;
-    cursor: pointer;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 .trackForm {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-
-  button {
-    align-self: flex-start;
-    background: none;
-    color: $color-muted;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    padding: $spacing-xs $spacing-sm;
-    border-radius: $radius-sm;
-    cursor: pointer;
-
-    &:hover {
-      color: $color-white;
-      border-color: $color-white;
-    }
-  }
-}
-
-.addTrackButton {
-  align-self: flex-start;
-  margin-top: $spacing-sm;
-  padding: $spacing-sm $spacing-md;
-  border: 1px dashed $color-primary;
-  background: none;
-  color: $color-primary;
-  border-radius: $radius-md;
-  font-size: $font-size-sm;
-  cursor: pointer;
-  transition: all $transition;
-
-  &:hover {
-    background-color: rgba(255, 0, 0, 0.05);
-  }
 }
 
 .footerActions {
@@ -207,25 +162,5 @@
   &:hover {
     color: $color-white;
     border-color: $color-white;
-  }
-}
-
-.uploadButton {
-  background-color: $color-primary;
-  border: none;
-  color: $color-white;
-  font-size: $font-size-sm;
-  padding: $spacing-sm $spacing-md;
-  border-radius: $radius-md;
-  font-weight: $font-weight-bold;
-  cursor: pointer;
-
-  &:hover {
-    background-color: color.adjust($color-primary, $lightness: 5%);
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
   }
 }
