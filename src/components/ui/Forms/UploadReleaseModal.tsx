@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { TrackDTO } from '@/services/track/types';
-import styles from './UploadRelease.module.scss';
-import { Button } from '../../Button/Button';
 import { useModal } from '@/contexts/ModalContext';
-import { Input } from '../../Input/Input';
+import { Input } from '@/components/commons/Input/Input';
+import { Button } from '@/components/commons/Button/Button';
+import styles from './UploadReleaseModal.module.scss';
 
-const UploadRelease = () => {
+const UploadReleaseModal = () => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [genre, setGenre] = useState('');
@@ -192,4 +192,4 @@ const UploadRelease = () => {
   );
 };
 
-export default UploadRelease;
+export default UploadReleaseModal;

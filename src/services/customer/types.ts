@@ -9,7 +9,7 @@ export type CustomerDTO = {
   country: string;
   birthDate: string;
   subscription?: SubscriptionDTO;
-  avatarUrl?: string;
+  avatar?: File;
   bio?: string;
   artistProfile?: ArtistDTO;
 };

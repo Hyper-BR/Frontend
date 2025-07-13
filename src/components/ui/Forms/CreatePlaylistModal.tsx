@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { createPlaylist } from '@/services/playlist';
-import styles from './CreatePlaylist.module.scss';
-import { Button } from '../../Button/Button';
-import { Modal } from '..';
 import { useModal } from '@/contexts/ModalContext';
-import { Input } from '../../Input/Input';
+import { Modal } from '@/components/commons/Modal';
+import { Input } from '@/components/commons/Input/Input';
+import { Button } from '@/components/commons/Button/Button';
+import styles from './CreatePlaylistModal.module.scss';
 
-const CreatePlaylist = () => {
+const CreatePlaylistModal = () => {
   const [name, setName] = useState('');
 
   const { closeModal } = useModal();
@@ -67,4 +67,4 @@ const CreatePlaylist = () => {
   );
 };
 
-export default CreatePlaylist;
+export default CreatePlaylistModal;

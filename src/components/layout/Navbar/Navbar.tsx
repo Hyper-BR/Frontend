@@ -5,7 +5,7 @@ import styles from './Navbar.module.scss';
 import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
-import UploadRelease from '@/components/commons/Modal/Forms/UploadRelease';
+import UploadReleaseModal from '@/components/ui/Forms/UploadReleaseModal';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Navbar = () => {
               <Button variant="ghost">Upload</Button>
             </Modal.Trigger>
 
-            <UploadRelease />
+            <UploadReleaseModal />
 
             {!isArtist && (
               <button

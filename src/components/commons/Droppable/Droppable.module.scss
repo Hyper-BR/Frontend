@@ -1,0 +1,57 @@
+@use '@/styles/theme.scss' as *;
+
+.wrapper {
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.04);
+  color: $color-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: border-color $transition, background-color $transition;
+  overflow: hidden;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.5);
+    background-color: rgba($color-primary, 0.08);
+    color: $color-white;
+  }
+}
+
+.hover {
+  border-color: $color-primary;
+  background-color: rgba($color-primary, 0.12);
+  color: $color-white;
+}
+
+.label {
+  padding: $spacing-sm;
+  pointer-events: none;
+}
+
+/* 🟦 Formatos */
+.square {
+  border-radius: $radius-md;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+/* 📏 Tamanhos */
+.sm {
+  width: 120px;
+  height: 120px;
+}
+
+.md {
+  width: 180px;
+  height: 180px;
+}
+
+.lg {
+  width: 240px;
+  height: 240px;
+}

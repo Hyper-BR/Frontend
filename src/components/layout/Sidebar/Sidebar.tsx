@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/commons/Button/Button';
 import { Modal } from '@/components/commons/Modal';
-import CreatePlaylist from '@/components/commons/Modal/Forms/CreatePlaylist';
+import CreatePlaylistModal from '@/components/ui/Forms/CreatePlaylistModal';
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
@@ -42,7 +42,7 @@ const Sidebar = () => {
           <Button variant="ghost">Nova Playlist</Button>
         </Modal.Trigger>
 
-        <CreatePlaylist />
+        <CreatePlaylistModal />
 
         {playlists.map((playlist) => (
           <div

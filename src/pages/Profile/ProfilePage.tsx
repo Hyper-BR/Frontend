@@ -37,7 +37,7 @@ export default function ProfilePage() {
       email={customer.email}
       stats={{ followers: 120, following: 87 }}
       analytics={null}
-      onEdit={() => navigate('/profile/edit')}
+      onEdit
       tracks={tracks}
       playlists={playlists}
       owner

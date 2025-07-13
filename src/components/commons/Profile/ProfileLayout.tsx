@@ -5,6 +5,8 @@ import { PlaylistDTO } from '@/services/playlist/types';
 import { CurrentPlanCard } from '../Cards/CurrentPlanCard';
 import TrackTable from '../Track/TrackTable';
 import { Button } from '../Button/Button';
+import { Modal } from '../Modal';
+import EditProfileModal from '@/components/ui/Forms/EditProfileModal';
 
 interface Props {
   avatarUrl: string;
@@ -12,7 +14,7 @@ interface Props {
   email?: string;
   stats: { followers: number; following: number };
   analytics?: { plays: number; followers: number };
-  onEdit?: () => void;
+  onEdit?: boolean;
   tracks: TrackPageDTO;
   playlists: PlaylistDTO[];
   owner?: boolean;
@@ -48,13 +50,15 @@ export default function ProfileLayout({
             <h2>{name}</h2>
             {email && <p className={styles.email}>{email}</p>}
             {onEdit && (
-              <Button
-                className={styles.editBtn}
-                variant="ghost"
-                onClick={onEdit}
-              >
-                Editar perfil
-              </Button>
+              <>
+                <Modal.Trigger modal="editProfile">
+                  <Button className={styles.editBtn} variant="ghost">
+                    Editar perfil
+                  </Button>
+                </Modal.Trigger>
+
+                <EditProfileModal />
+              </>
             )}
             <div className={styles.stats}>
               <span>
