@@ -1,36 +1,204 @@
 @use '@/styles/theme.scss' as *;
 @use 'sass:color';
 
-.uploadArea {
-  padding: $spacing-lg;
-  text-align: center;
-  border: 2px dashed color.adjust($color-muted, $lightness: -10%);
-  border-radius: $radius-md;
-  background-color: color.adjust($color-gray-dark, $lightness: 3%);
-  font-size: $font-size-sm;
-  font-weight: $font-weight-regular;
-  color: color.adjust($color-muted, $lightness: 15%);
-  cursor: pointer;
-  transition: background-color $transition, border-color $transition,
-    color $transition;
+.uploadForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: $spacing-lg;
+}
 
-  &:hover {
-    border-color: $color-primary;
-    background-color: color.adjust($color-gray-dark, $lightness: 8%);
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.topSection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xl;
+  align-items: flex-start;
+}
+
+.coverUpload {
+  width: 240px;
+  height: 240px;
+  background-color: $color-black;
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: $radius-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.coverLabel {
+  width: 100%;
+  height: 100%;
+  font-size: 0.95rem;
+  color: $color-muted;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: $radius-lg;
+}
+
+.metadata {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-sm;
+  color: $color-muted;
+
+  input,
+  select,
+  textarea {
+    margin-top: 6px;
+    padding: $spacing-sm $spacing-md;
+    background-color: $color-black;
+    border-radius: $radius-md;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     color: $color-white;
+    font-size: 0.95rem;
+    resize: vertical;
   }
 }
 
-button[type='submit'] {
-  padding: $spacing-md $spacing-lg;
+.privacy {
+  display: flex;
+  flex-direction: row; // 🔁 em linha
+  gap: $spacing-lg;
+  margin-top: $spacing-md;
+  align-items: center;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    font-size: $font-size-sm;
+    color: $color-muted;
+
+    input[type='radio'] {
+      accent-color: $color-primary;
+    }
+  }
+}
+
+.trackBar {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  margin-top: $spacing-md;
+}
+
+.trackItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $color-black;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-sm;
+  box-shadow: 0 0 4px rgba(255, 0, 0, 0.05);
+  color: $color-white;
+  font-size: 0.9rem;
+
+  button {
+    background: none;
+    border: none;
+    color: $color-primary;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.trackForm {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  button {
+    align-self: flex-start;
+    background: none;
+    color: $color-muted;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-white;
+      border-color: $color-white;
+    }
+  }
+}
+
+.addTrackButton {
+  align-self: flex-start;
+  margin-top: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  border: 1px dashed $color-primary;
+  background: none;
+  color: $color-primary;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover {
+    background-color: rgba(255, 0, 0, 0.05);
+  }
+}
+
+.footerActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.cancelGhost {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: $color-muted;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  font-size: $font-size-sm;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-white;
+    border-color: $color-white;
+  }
+}
+
+.uploadButton {
   background-color: $color-primary;
   border: none;
-  border-radius: $radius-md;
   color: $color-white;
+  font-size: $font-size-sm;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
   font-weight: $font-weight-bold;
-  font-size: $font-size-md;
   cursor: pointer;
-  transition: background $transition;
 
   &:hover {
     background-color: color.adjust($color-primary, $lightness: 5%);
