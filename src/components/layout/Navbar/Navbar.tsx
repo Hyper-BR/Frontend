@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
-import UploadReleaseForm from '../../commons/Forms/UploadReleaseForm';
 import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
+import UploadRelease from '@/components/commons/Modal/UploadRelease';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -35,17 +35,11 @@ const Navbar = () => {
                   <button onClick={() => setShowModal(true)}>Upload</button>
                 </Modal.Trigger>
 
-                {showModal && (
-                  <Modal.Root modal="upload" size="lg">
-                    <Modal.Header title="Upload de novas faixas" />
-                    <Modal.Content>
-                      <UploadReleaseForm
-                        onClose={() => setShowModal(false)}
-                        onUploadSuccess={() => setShowModal(false)}
-                      />
-                    </Modal.Content>
-                  </Modal.Root>
-                )}
+                <UploadRelease
+                  isOpen={showModal}
+                  onClose={() => setShowModal(false)}
+                  onUploadSuccess={() => setShowModal(false)}
+                />
               </>
             )}
 
