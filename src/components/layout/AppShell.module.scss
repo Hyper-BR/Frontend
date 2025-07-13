@@ -15,7 +15,7 @@
   flex-direction: row;
   overflow: hidden;
   gap: $spacing-sm;
-  padding: $spacing-xs;
+  padding: 0 $spacing-xs;
   box-sizing: border-box;
 
   &.noSidebar {
@@ -30,6 +30,7 @@
 .home {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   background-color: $color-gray-dark;
   border-radius: $radius-md;
 
