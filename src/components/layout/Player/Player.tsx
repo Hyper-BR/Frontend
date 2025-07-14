@@ -3,6 +3,13 @@ import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import WavesurferPlayer from '@wavesurfer/react';
 import { Input } from '@/components/commons/Input/Input';
+import {
+  PauseIcon,
+  PlayIcon,
+  SkipBackIcon,
+  SkipForwardIcon,
+  VolumeIcon,
+} from 'lucide-react';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -69,11 +76,15 @@ const Player = () => {
       {track && (
         <>
           <div className={styles.controls}>
-            <button disabled={!track}>⏮</button>
-            <button onClick={togglePlay} disabled={!track}>
-              {isPlaying ? '⏸' : '▶'}
+            <button disabled={!track}>
+              <SkipBackIcon />
             </button>
-            <button disabled={!track}>⏭</button>
+            <button onClick={togglePlay} disabled={!track}>
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </button>
+            <button disabled={!track}>
+              <SkipForwardIcon />
+            </button>
           </div>
           <div className={styles.waveform}>
             <WavesurferPlayer
@@ -92,7 +103,7 @@ const Player = () => {
           </div>
 
           <div className={styles.volume}>
-            🔊
+            <VolumeIcon />
             <Input
               type="range"
               min={0}

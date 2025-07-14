@@ -11,6 +11,7 @@ import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
+import { Icon } from '@/components/icons';
 
 type Props = {
   tracks: TrackDTO[];
@@ -86,7 +87,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                       onClick={() => setTrackPlayer(track)}
                       title="Tocar faixa"
                     >
-                      ▶
+                      <Icon.Play />
                     </Button>
                   </div>
                   <div className={styles.texts}>
