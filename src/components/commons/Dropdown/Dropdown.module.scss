@@ -10,6 +10,21 @@
   min-width: 180px;
   z-index: 99999 !important;
   animation: fadeIn 0.15s ease-out;
+
+  &.sm {
+    min-width: 140px;
+    font-size: 0.75rem;
+  }
+
+  &.md {
+    min-width: 180px;
+    font-size: 0.85rem;
+  }
+
+  &.lg {
+    min-width: 240px;
+    font-size: 0.95rem;
+  }
 }
 
 .submenu {
@@ -40,16 +55,13 @@
   &[data-disabled] {
     cursor: not-allowed;
     opacity: 0.5;
+    pointer-events: none;
   }
 }
 
 .icon {
   margin-left: 8px;
   font-size: 0.75rem;
-  color: $color-primary;
-}
-
-.inPlaylist {
   color: $color-primary;
 }
 

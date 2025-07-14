@@ -9,8 +9,6 @@ import {
 } from '@/services/playlist';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
 
@@ -124,7 +122,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                     <Button variant="transparent" icon="⋯" />
                   </Dropdown.Trigger>
 
-                  <Dropdown.Content>
+                  <Dropdown.Content size="md">
                     <Dropdown.Item label="Editar" onSelect={() => {}} />
                     <Dropdown.Item label="Compartilhar" onSelect={() => {}} />
 

@@ -66,7 +66,7 @@ const Navbar = () => {
                     />
                   </Dropdown.Trigger>
 
-                  <Dropdown.Content>
+                  <Dropdown.Content size="sm">
                     <Dropdown.Item
                       label="Perfil"
                       onSelect={() => navigate('/profile')}

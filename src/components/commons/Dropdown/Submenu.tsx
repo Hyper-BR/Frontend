@@ -4,19 +4,19 @@ import styles from './Dropdown.module.scss';
 interface Props {
   label: string;
   children: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export function Submenu({ label, children }: Props) {
+export function Submenu({ label, children, size = 'md' }: Props) {
   return (
     <DropdownMenu.Sub>
-      <DropdownMenu.SubTrigger className={styles.item}>
+      <DropdownMenu.SubTrigger className={`${styles.item}`}>
         {label}
-        ...
       </DropdownMenu.SubTrigger>
 
       <DropdownMenu.Portal>
         <DropdownMenu.SubContent
-          className={styles.submenu}
+          className={`${styles.submenu} ${styles[size]}`}
           sideOffset={4}
           alignOffset={-5}
         >
