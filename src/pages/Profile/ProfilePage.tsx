@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getPlaylistsCustomer } from '@/services/playlist';
 import { getTracksByArtist } from '@/services/track';
-import ProfileLayout from '@/components/commons/Profile/ProfileLayout';
+import ProfileLayout from '@/components/ui/Profile/ProfileLayout';
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 
