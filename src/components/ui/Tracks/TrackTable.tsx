@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TrackTable.module.scss';
-import { Table } from '@/components/commons/Table/Table';
 import { Button } from '@/components/commons/Button/Button';
 import { usePlayer } from '@/contexts/PlayerContext';
 import {
@@ -12,6 +11,7 @@ import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { Table } from '@/components/commons/Table';
 
 type Props = {
   tracks: TrackDTO[];

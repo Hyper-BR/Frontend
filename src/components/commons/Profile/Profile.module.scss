@@ -89,9 +89,9 @@
 
 .tabNav {
   display: flex;
-  width: 100%;
   gap: $spacing-lg;
-  border: none;
+  border-bottom: 1px solid rgba($color-white, 0.1); // 👈 linha de separação
+  padding-bottom: $spacing-sm; // 👈 espaçamento entre botões e linha
 }
 
 .activeTab {
