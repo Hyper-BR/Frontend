@@ -1,4 +1,3 @@
-import { create } from 'zustand';
 import { ArtistDTO } from '../artist/types';
 
 export type TrackPageDTO = {
@@ -13,16 +12,14 @@ export type TrackPageDTO = {
 };
 
 export type TrackDTO = {
-  id: string;
+  id?: string;
   title: string;
   duration?: number;
-  cover: string;
   genre: string;
-  artists: ArtistDTO[];
-  file: File;
+  tags: string[];
+  privacy: string;
   createdDate?: string;
   bpm?: string;
-  tags?: string[];
-  description?: string;
-  privacy?: string;
+  file: File;
+  artists: ArtistDTO[];
 };

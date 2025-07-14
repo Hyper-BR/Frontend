@@ -7,23 +7,21 @@ import { Button } from '@/components/commons/Button/Button';
 import styles from './UploadReleaseModal.module.scss';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
 import { ArtistDTO } from '@/services/artist/types';
+import { createRelease } from '@/services/release';
+import { ReleaseDTO } from '@/services/release/types';
 
 const UploadReleaseModal = () => {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
-  const [options, setOptions] = useState<ArtistDTO[]>([]);
-  const [selectedArtists, setSelectedArtists] = useState<ArtistDTO[]>([]);
 
-  const [form, setForm] = useState<TrackDTO>({
-    id: null,
+  const [form, setForm] = useState({
     title: '',
-    artists: [],
     genre: '',
-    tags: [],
     description: '',
-    privacy: '',
-    cover: '',
-    file: null,
+    tags: [] as string[],
+    privacy: 'PUBLIC',
+    image: null as File | null,
+    tracks: [] as TrackDTO[],
   });
 
   const { closeModal } = useModal();
@@ -34,24 +32,26 @@ const UploadReleaseModal = () => {
 
     try {
       const formData = new FormData();
-
       formData.append('title', form.title);
       formData.append('genre', form.genre);
-      formData.append('description', form.description);
       formData.append('privacy', form.privacy);
+      formData.append('description', form.description);
       formData.append('tags', JSON.stringify(form.tags));
 
-      formData.append('artists', JSON.stringify(form.artists));
+      if (form.image) {
+        formData.append('cover', form.image);
+      }
 
-      if (form.file) formData.append('file', form.file);
-      if (form.cover) formData.append('cover', form.cover);
-
-      const response = await fetch('/api/releases', {
-        method: 'POST',
-        body: formData,
+      form.tracks.forEach((track, i) => {
+        formData.append(`tracks[${i}].title`, track.title);
+        formData.append(`tracks[${i}].genre`, track.genre);
+        formData.append(`tracks[${i}].tags`, JSON.stringify(track.tags));
+        formData.append(`tracks[${i}].file`, track.file);
+        formData.append(`tracks[${i}].artists`, JSON.stringify(track.artists));
       });
 
-      if (!response.ok) throw new Error('Erro no envio');
+      const response = await createRelease(formData);
+      if (!response) throw new Error('Erro no envio');
       closeModal();
     } catch (err) {
       alert('Erro ao enviar. Tente novamente.');
@@ -69,7 +69,9 @@ const UploadReleaseModal = () => {
 
   const handleDrop = (files: File[]) => {
     const image = files[0];
-    if (image) setForm((prev) => ({ ...prev }));
+    if (image) {
+      setForm((prev) => ({ ...prev, image }));
+    }
   };
 
   const fetchArtists = (query: string) => {
@@ -94,7 +96,7 @@ const UploadReleaseModal = () => {
                 <Droppable
                   label="Upload da capa"
                   onDrop={handleDrop}
-                  shape="round"
+                  shape="square"
                   size="md"
                   accept="image/*"
                 />
@@ -113,7 +115,7 @@ const UploadReleaseModal = () => {
               <Input
                 type="text"
                 value={'TODO'}
-                onChange={handleChange('artists')}
+                onChange={() => alert('todo')}
                 label="Colaboradores"
               />
 

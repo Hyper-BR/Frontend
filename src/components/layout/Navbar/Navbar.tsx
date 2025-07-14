@@ -32,17 +32,20 @@ const Navbar = () => {
         <div className={styles.userSection}>
           {userSigned ? (
             <>
-              <Modal.Trigger modal="upload">
-                <Button variant="ghost">Upload</Button>
-              </Modal.Trigger>
+              {isArtist && (
+                <Modal.Trigger modal="upload">
+                  <Button variant="ghost">Upload</Button>
+                </Modal.Trigger>
+              )}
 
               {!isArtist && (
-                <button
+                <Button
                   className={styles.loginButton}
                   onClick={() => navigate('/plans')}
+                  variant="ghost"
                 >
                   Ver planos
-                </button>
+                </Button>
               )}
 
               {customer?.artistProfile == null && (
@@ -50,6 +53,7 @@ const Navbar = () => {
                   <Button
                     className={styles.loginButton}
                     onClick={() => navigate('/becomeArtist')}
+                    variant="ghost"
                   >
                     Sou artista
                   </Button>
