@@ -5,7 +5,7 @@ import styles from './Navbar.module.scss';
 import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
-import UploadReleaseModal from '@/components/ui/Forms/UploadReleaseModal';
+import UploadReleaseModal from '@/components/ui/Modals/UploadReleaseModal';
 
 const Navbar = () => {
   const navigate = useNavigate();

@@ -21,4 +21,5 @@ export type TrackDTO = {
   artists: ArtistDTO[];
   file: File;
   createdDate?: string;
+  bpm?: string;
 };

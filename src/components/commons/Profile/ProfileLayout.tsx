@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import styles from './ProfileLayout.module.scss';
-import { TrackDTO, TrackPageDTO } from '@/services/track/types';
+import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import TrackTable from '../Track/TrackTable';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
-import EditProfileModal from '@/components/ui/Forms/EditProfileModal';
-import { useNavigate } from 'react-router-dom';
+import EditProfileModal from '@/components/ui/Modals/EditProfileModal';
 import { Plan } from '@/components/ui/Cards/Plan';
+import TrackTable from '@/components/ui/Tracks/TrackTable';
 
 interface Props {
   avatarUrl: string;

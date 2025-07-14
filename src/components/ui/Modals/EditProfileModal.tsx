@@ -18,7 +18,7 @@ const EditProfileModal = () => {
     email: customer.email,
     birthDate: customer.birthDate,
     country: customer.country,
-    avatar: null, // ✅ File | null
+    avatar: null,
   });
 
   const handleChange =
