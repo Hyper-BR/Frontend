@@ -4,9 +4,10 @@ import clsx from 'clsx';
 interface Props {
   children: React.ReactNode;
   imageUrl: string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
+  direction?: 'row' | 'column';
   clickable?: boolean;
   onClick?: () => void;
 }
@@ -18,6 +19,7 @@ export function Root({
   shape = 'square',
   align = 'center',
   clickable = false,
+  direction = 'row',
   onClick,
 }: Props) {
   return (
@@ -27,6 +29,7 @@ export function Root({
         styles[size],
         styles[shape],
         styles[align],
+        styles[direction],
         clickable && styles.clickable,
       )}
       onClick={clickable ? onClick : undefined}

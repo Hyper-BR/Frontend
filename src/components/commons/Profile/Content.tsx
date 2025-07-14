@@ -1,4 +1,4 @@
-import TrackTable from '@/components/ui/Tracks/TrackTable';
+import TrackTable from '@/components/ui/Table/TrackTable';
 import { Tab } from './Tabs';
 import { TrackDTO } from '@/services/track/types';
 import styles from './Profile.module.scss';

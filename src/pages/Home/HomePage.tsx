@@ -38,7 +38,12 @@ const Home = () => {
         <h3>Faixas em destaque</h3>
         <div className={styles.carousel}>
           {tracks.map((track) => (
-            <TrackCard key={track.id} track={track} size="md" />
+            <TrackCard
+              key={track.id}
+              track={track}
+              size="md"
+              direction="column"
+            />
           ))}
         </div>
       </section>
@@ -48,11 +53,10 @@ const Home = () => {
         <div className={styles.carousel}>
           {artists.map((artist) => (
             <ArtistCard
-              name={artist.username}
+              artist={artist}
               size="md"
               key={artist.id}
-              imageUrl="https://i.pravatar.cc/1579?u="
-              onClick={() => navigate(`/artist/${artist.id}`)}
+              direction="column"
             />
           ))}
         </div>

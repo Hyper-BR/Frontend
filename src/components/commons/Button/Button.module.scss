@@ -2,8 +2,9 @@
 @use 'sass:color';
 
 .base {
+  background: none;
   border: none;
-  border-radius: $radius-sm;
+  border-radius: $radius-md;
   font-weight: $font-weight-bold;
   cursor: pointer;
   transition: background-color $transition;
@@ -11,7 +12,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.4rem;
-  padding: 0.35rem 0.9rem;
+  padding: $spacing-sm;
+  width: 100%;
+  transition: color $transition, background-color $transition,
+    border-color $transition;
 }
 
 .primary {
@@ -24,16 +28,8 @@
 }
 
 .ghost {
-  background: none;
   color: $color-primary;
-  padding: $spacing-sm;
   border: 1px solid transparent;
-  border-radius: $radius-md;
-  font-weight: $font-weight-bold;
-  font-size: $font-size-sm;
-  cursor: pointer;
-  transition: color $transition, background-color $transition,
-    border-color $transition;
 
   &:hover {
     background-color: color.adjust($color-primary, $alpha: -0.9);
@@ -47,14 +43,8 @@
 }
 
 .transparent {
-  background: transparent;
-  width: 100%;
-  border: none;
-  font-size: $font-size-sm;
   color: $color-muted;
   font-weight: $font-weight-regular;
-  cursor: pointer;
-  transition: color $transition, font-size $transition;
 
   &:hover {
     color: $color-white;

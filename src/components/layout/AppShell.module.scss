@@ -6,6 +6,7 @@
   flex-direction: column;
   height: 100%;
   padding-bottom: $player-height;
+  padding-top: $navbar-height;
   box-sizing: border-box;
 }
 
@@ -15,7 +16,7 @@
   flex-direction: row;
   overflow: hidden;
   gap: $spacing-sm;
-  padding: 0 $spacing-xs;
+  padding: $spacing-xs;
   box-sizing: border-box;
 
   &.noSidebar {

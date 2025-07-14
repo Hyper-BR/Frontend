@@ -18,19 +18,18 @@ const EditProfileModal = () => {
     email: customer.email,
     birthDate: customer.birthDate,
     country: customer.country,
-    avatar: null,
+    avatarUrl: customer.avatarUrl,
   });
 
   const handleChange =
     (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value =
-        field === 'avatar' ? e.target.files?.[0] || null : e.target.value;
+      const value = e.target.value;
       setForm((prev) => ({ ...prev, [field]: value }));
     };
 
   const handleDrop = (files: File[]) => {
     const image = files[0];
-    if (image) setForm((prev) => ({ ...prev, avatar: image }));
+    if (image) setForm((prev) => ({ ...prev }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,9 +60,9 @@ const EditProfileModal = () => {
               size="md"
               accept="image/*"
             />
-            {form.avatar && (
+            {form?.avatarUrl && (
               <img
-                src={URL.createObjectURL(form.avatar)}
+                src={form?.avatarUrl}
                 alt="Avatar"
                 className={styles.coverPreview}
               />

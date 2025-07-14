@@ -1,24 +1,38 @@
-import { Root } from '@/components/commons/Card/Root';
-import { Title } from '@/components/commons/Card/Title';
+import { Card } from '@/components/commons/Card';
+import { useAuth } from '@/hooks/useAuth';
+import { ArtistDTO } from '@/services/artist/types';
 
 interface Props {
-  name: string;
-  imageUrl: string;
-  onClick?: () => void;
-  size?: 'sm' | 'md' | 'lg';
+  artist: ArtistDTO;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  shape?: 'square' | 'round';
+  align?: 'left' | 'center';
+  direction?: 'row' | 'column';
 }
 
-export function ArtistCard({ name, imageUrl, onClick, size = 'md' }: Props) {
+export function ArtistCard({
+  artist,
+  size = 'md',
+  direction = 'row',
+  shape = 'square',
+  align,
+}: Props) {
+  const { customer } = useAuth();
+
   return (
-    <Root
-      imageUrl={imageUrl}
+    <Card.Root
+      imageUrl={'https://i.pravatar.cc/1579?u='}
       shape="round"
       size={size}
       clickable
-      onClick={onClick}
       align="center"
+      direction={direction}
     >
-      <Title text={name} onClick={onClick} color="primary" />
-    </Root>
+      <Card.Title
+        text={artist.username}
+        href={`/artist/${artist.id}`}
+        color="primary"
+      />
+    </Card.Root>
   );
 }

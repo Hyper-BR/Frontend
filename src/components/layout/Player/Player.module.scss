@@ -6,17 +6,15 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: $player-height;
-  z-index: 9999;
   display: flex;
   padding: 0 $spacing-md;
-  gap: $spacing-md;
   background-color: $color-black;
   border-top: 1px solid rgba(255, 0, 0, 0.08);
   box-shadow: 0 -4px 14px rgba(255, 0, 0, 0.05);
   border-top-left-radius: $radius-md;
   border-top-right-radius: $radius-md;
   box-sizing: border-box;
+  min-height: $player-height;
 }
 
 .player.disabled {
@@ -37,21 +35,17 @@
 .songInfo {
   display: flex;
   align-items: center;
-  gap: $spacing-md;
+  gap: $spacing-sm;
   color: $color-white;
-  width: 25%;
+  min-width: max-content;
 }
 
 .image {
-  width: 56px;
-  height: 56px;
   border-radius: calc($radius-md / 2);
 }
 
 .title {
   font-size: 0.95rem;
-  font-weight: $font-weight-bold;
-  color: $color-white;
 }
 
 .artist {
@@ -61,26 +55,10 @@
 
 .controls {
   display: flex;
-  align-items: center;
-  gap: $spacing-md;
-  width: 20%;
-
-  button {
-    background: none;
-    border: none;
-    font-size: 1.25rem;
-    color: $color-white;
-    cursor: pointer;
-    transition: color 0.2s ease;
-
-    &:hover {
-      color: $color-primary;
-    }
-  }
+  padding: $spacing-md;
 }
 
 .volume {
-  width: 20%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -93,26 +71,7 @@
 }
 
 .waveform {
-  flex: 1 1 auto;
   width: 100%;
-  max-width: 100%;
-  padding: 0 1rem;
+  padding: $spacing-sm;
   align-items: center;
-  justify-content: center;
-
-  canvas {
-    width: 100% !important;
-    height: 60px !important;
-  }
-}
-
-.artistName {
-  color: $color-muted;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-    color: $color-primary;
-  }
 }

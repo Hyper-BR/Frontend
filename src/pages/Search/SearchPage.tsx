@@ -50,13 +50,7 @@ export default function SearchPage() {
             {artists.length ? (
               <>
                 {artists.map((artist) => (
-                  <ArtistCard
-                    name={artist.username}
-                    size="lg"
-                    key={artist.id}
-                    imageUrl="https://i.pravatar.cc/1579?u="
-                    onClick={() => navigate(`/artist/${artist.id}`)}
-                  />
+                  <ArtistCard artist={artist} size="lg" key={artist.id} />
                 ))}
               </>
             ) : (

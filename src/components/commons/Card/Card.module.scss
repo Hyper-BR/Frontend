@@ -2,14 +2,32 @@
 @use 'sass:color';
 
 .card {
+  margin: $spacing-xs;
+  min-width: 120px;
+  max-width: 120px;
   display: flex;
-  flex-direction: column;
-  color: $color-white;
-  text-align: center;
-  transition: transform 0.2s ease;
-  width: 100%;
-  max-width: 180px;
-  min-width: 100px;
+  gap: $spacing-sm;
+  align-items: center;
+
+  &.column {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .info {
+      margin-top: $spacing-sm;
+    }
+  }
+
+  &.row {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+
+    .info {
+      margin-top: 0;
+    }
+  }
 
   &.left {
     text-align: left;
@@ -24,13 +42,14 @@
 
 .imageWrapper {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   cursor: pointer;
+  width: 100%;
+
+  &.xs {
+    max-width: 40px;
+  }
 
   &.sm {
     max-width: 100px;
@@ -62,7 +81,6 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 0;
 }
 
 .info {
@@ -70,7 +88,6 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 100%;
 }
 
 .title {

@@ -1,15 +1,18 @@
 @use '@/styles/theme.scss' as *;
 
-@use 'sass:color';
-
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: $color-black;
-  padding: $spacing-xs $spacing-lg;
+  padding: $spacing-xs $spacing-md;
   display: flex;
   align-items: center;
-  height: 50px;
+  height: $navbar-height;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   z-index: 10;
+  box-sizing: border-box;
 }
 
 .userSection {

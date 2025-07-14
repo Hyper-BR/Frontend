@@ -10,6 +10,7 @@ import {
   SkipForwardIcon,
   VolumeIcon,
 } from 'lucide-react';
+import { Button } from '@/components/commons/Button/Button';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -76,15 +77,19 @@ const Player = () => {
       {track && (
         <>
           <div className={styles.controls}>
-            <button disabled={!track}>
+            <Button disabled={!track} variant="transparent">
               <SkipBackIcon />
-            </button>
-            <button onClick={togglePlay} disabled={!track}>
+            </Button>
+            <Button
+              onClick={togglePlay}
+              disabled={!track}
+              variant="transparent"
+            >
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
-            </button>
-            <button disabled={!track}>
+            </Button>
+            <Button disabled={!track} variant="transparent">
               <SkipForwardIcon />
-            </button>
+            </Button>
           </div>
           <div className={styles.waveform}>
             <WavesurferPlayer
@@ -104,15 +109,6 @@ const Player = () => {
 
           <div className={styles.volume}>
             <VolumeIcon />
-            <Input
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              value={volume}
-              onChange={handleVolume}
-              disabled={!track}
-            />
           </div>
         </>
       )}

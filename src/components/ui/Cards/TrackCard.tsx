@@ -1,26 +1,34 @@
-import { Root } from '@/components/commons/Card/Root';
-import { Button } from '@/components/commons/Button/Button';
-import { Title } from '@/components/commons/Card/Title';
-import { Subtitle } from '@/components/commons/Card/Subtitle';
 import styles from './TrackCard.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
+import { Card } from '@/components/commons/Card';
+import { Button } from '@/components/commons/Button/Button';
 
 interface Props {
   track: TrackDTO;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  shape?: 'square' | 'round';
+  align?: 'left' | 'center';
+  direction?: 'row' | 'column';
 }
 
-export function TrackCard({ track, size = 'md' }: Props) {
+export function TrackCard({
+  track,
+  size = 'md',
+  direction = 'row',
+  shape = 'square',
+  align,
+}: Props) {
   const { setTrackPlayer } = usePlayer();
   return (
-    <Root
+    <Card.Root
+      direction={direction}
       imageUrl={'https://i.pravatar.cc/1579?u='}
-      shape="square"
+      shape={shape}
       size={size}
       clickable
       onClick={() => setTrackPlayer(track)}
-      align="center"
+      align={align}
     >
       <div className={styles.imageWrapper}>
         <Button
@@ -35,13 +43,13 @@ export function TrackCard({ track, size = 'md' }: Props) {
         />
       </div>
 
-      <Title text={track.title} href={`/track/${track.id}`} />
-      <Subtitle
+      <Card.Title text={track.title} href={`/track/${track.id}`} />
+      <Card.Subtitle
         items={track.artists.map((a) => ({
           text: a.username,
           href: `/artist/${a.id}`,
         }))}
       />
-    </Root>
+    </Card.Root>
   );
 }
