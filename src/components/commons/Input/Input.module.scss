@@ -1,16 +1,5 @@
 @use '@/styles/theme.scss' as *;
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  color: $color-muted;
-  font-size: $font-size-sm;
-}
-
-.label {
-  margin-bottom: $spacing-xs;
-}
-
 .input {
   background-color: transparent;
   border: none;
@@ -22,7 +11,7 @@
   resize: vertical;
   transition: border-color $transition;
   outline: none;
-  box-shadow: none; // 👈 remove sombras internas que simulam borda
+  box-shadow: none;
 
   &:focus,
   &:focus-visible {

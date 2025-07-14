@@ -1,8 +1,8 @@
 // src/services/track/index.ts
 import { AxiosPromise } from 'axios';
 import { useService } from '../hooks/useService';
-import { TrackPageDTO } from './types';
 import { ArtistPageDTO } from '../artist/types';
+import { TrackPageDTO } from '../track/types';
 
 export const searchTracks = (
   q: string,

@@ -17,7 +17,6 @@ function useQuery() {
 export default function SearchPage() {
   const q = useQuery();
   const navigate = useNavigate();
-  const { setTrackPlayer } = usePlayer();
 
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
   const [tracks, setTracks] = useState<TrackDTO[]>([]);

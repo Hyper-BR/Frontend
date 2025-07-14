@@ -1,21 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { TrackDTO } from '@/services/track/types';
 import { useModal } from '@/contexts/ModalContext';
 import { Input } from '@/components/commons/Input/Input';
 import { Button } from '@/components/commons/Button/Button';
 import styles from './UploadReleaseModal.module.scss';
+import { Droppable } from '@/components/commons/Droppable/Droppable';
+import { ArtistDTO } from '@/services/artist/types';
 
 const UploadReleaseModal = () => {
-  const [title, setTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  const [genre, setGenre] = useState('');
-  const [tags, setTags] = useState('');
-  const [description, setDescription] = useState('');
-  const [privacy, setPrivacy] = useState('PUBLIC');
-  const [coverImage, setCoverImage] = useState<File | null>(null);
-  const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('');
+  const [options, setOptions] = useState<ArtistDTO[]>([]);
+  const [selectedArtists, setSelectedArtists] = useState<ArtistDTO[]>([]);
+
+  const [form, setForm] = useState<TrackDTO>({
+    id: null,
+    title: '',
+    artists: [],
+    genre: '',
+    tags: [],
+    description: '',
+    privacy: '',
+    cover: '',
+    file: null,
+  });
 
   const { closeModal } = useModal();
 
@@ -24,32 +33,54 @@ const UploadReleaseModal = () => {
     setLoading(true);
 
     try {
-      console.log('Enviando lançamento...');
+      const formData = new FormData();
+
+      formData.append('title', form.title);
+      formData.append('genre', form.genre);
+      formData.append('description', form.description);
+      formData.append('privacy', form.privacy);
+      formData.append('tags', JSON.stringify(form.tags));
+
+      formData.append('artists', JSON.stringify(form.artists));
+
+      if (form.file) formData.append('file', form.file);
+      if (form.cover) formData.append('cover', form.cover);
+
+      const response = await fetch('/api/releases', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Erro no envio');
       closeModal();
     } catch (err) {
       alert('Erro ao enviar. Tente novamente.');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleRemoveTrack = (index: number) => {
-    setTracks((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const handleStartNewTrack = () => {
-    const newTrack: TrackDTO = {
-      id: '',
-      title: '',
-      duration: 0,
-      coverUrl: '',
-      genre: '',
-      file: null,
-      artists: [],
+  const handleChange =
+    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setForm((prev) => ({ ...prev, [field]: value }));
     };
 
-    setTracks((prev) => [...prev, newTrack]);
+  const handleDrop = (files: File[]) => {
+    const image = files[0];
+    if (image) setForm((prev) => ({ ...prev }));
   };
+
+  const fetchArtists = (query: string) => {
+    console.log('retornar artista: ' + query);
+  };
+
+  useEffect(() => {
+    if (query.length > 1) {
+      fetchArtists(query);
+    }
+  }, [query]);
 
   return (
     <Modal.Root modal="upload" size="lg">
@@ -60,120 +91,78 @@ const UploadReleaseModal = () => {
           <div className={styles.topSection}>
             <div className={styles.coverUpload}>
               <label className={styles.coverLabel}>
-                {coverImage ? (
-                  <img
-                    src={URL.createObjectURL(coverImage)}
-                    alt="Capa"
-                    className={styles.coverPreview}
-                  />
-                ) : (
-                  <span>🖼️ Capa do lançamento</span>
-                )}
-                <Input
-                  type="file"
+                <Droppable
+                  label="Upload da capa"
+                  onDrop={handleDrop}
+                  shape="round"
+                  size="md"
                   accept="image/*"
-                  onChange={(e) => setCoverImage(e.target.files?.[0] || null)}
-                  hidden
                 />
               </label>
             </div>
 
             <div className={styles.metadata}>
-              <label className={styles.label}>
-                Título
-                <Input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  required
-                />
-              </label>
+              <Input
+                type="text"
+                value={form.title}
+                onChange={handleChange('title')}
+                required
+                label="Título"
+              />
 
-              <label className={styles.label}>
-                Artista(s)
-                <Input
-                  type="text"
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
-                />
-              </label>
+              <Input
+                type="text"
+                value={'TODO'}
+                onChange={handleChange('artists')}
+                label="Colaboradores"
+              />
 
-              <label className={styles.label}>
-                Gênero
-                <Input
-                  type="text"
-                  value={genre}
-                  onChange={(e) => setGenre(e.target.value)}
-                />
-              </label>
+              <Input
+                type="text"
+                value={form.genre}
+                onChange={handleChange('genre')}
+                label="Gênero"
+              />
 
-              <label className={styles.label}>
-                Tags
-                <Input
-                  type="text"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                />
-              </label>
+              <Input
+                type="text"
+                value={form.tags}
+                onChange={handleChange('tags')}
+                label="Tags"
+              />
 
-              <label className={styles.label}>
-                Descrição
-                <Input
-                  type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-              </label>
+              <Input
+                type="text"
+                value={form.description}
+                onChange={handleChange('description')}
+                label="Descrição"
+              />
 
               <div className={styles.privacy}>
-                <p>Privacidade</p>
-                <label>
-                  <Input
-                    type="radio"
-                    value="PUBLIC"
-                    checked={privacy === 'PUBLIC'}
-                    onChange={(e) => setPrivacy(e.target.value)}
-                  />
-                  Público
-                </label>
-                <label>
-                  <Input
-                    type="radio"
-                    value="UNLISTED"
-                    checked={privacy === 'UNLISTED'}
-                    onChange={(e) => setPrivacy(e.target.value)}
-                  />
-                  Não listado
-                </label>
-                <label>
-                  <Input
-                    type="radio"
-                    value="PRIVATE"
-                    checked={privacy === 'PRIVATE'}
-                    onChange={(e) => setPrivacy(e.target.value)}
-                  />
-                  Privado
-                </label>
+                <Input
+                  type="radio"
+                  value="PUBLIC"
+                  checked={form.privacy === 'PUBLIC'}
+                  onChange={handleChange('privacy')}
+                  label="Público"
+                />
+
+                <Input
+                  type="radio"
+                  value="PRIVATE"
+                  checked={form.privacy === 'PRIVATE'}
+                  onChange={handleChange('privacy')}
+                  label="Privado"
+                />
               </div>
             </div>
-          </div>
-
-          <div className={styles.trackBar}>
-            {tracks.map((track, index) => (
-              <div key={index} className={styles.trackItem}>
-                <span>{track.title}</span>
-                <Button type="button" onClick={() => handleRemoveTrack(index)}>
-                  Remover
-                </Button>
-              </div>
-            ))}
           </div>
         </form>
       </Modal.Content>
 
       <Modal.Footer
         leftButton={
-          <Button variant="ghost" onClick={handleStartNewTrack}>
+          <Button variant="ghost" onClick={() => handleSubmit}>
             + Adicionar faixa
           </Button>
         }
