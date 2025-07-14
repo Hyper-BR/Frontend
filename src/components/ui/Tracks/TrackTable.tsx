@@ -82,6 +82,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                       className={styles.cover}
                     />
                     <Button
+                      variant="transparent"
                       className={styles.playButton}
                       onClick={() => setTrackPlayer(track)}
                       title="Tocar faixa"
@@ -111,7 +112,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                 </div>
               </Table.Cell>
 
-              <Table.Cell>1A</Table.Cell>
+              <Table.Cell>{track.bpm ?? '--'}</Table.Cell>
               <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
               <Table.Cell>{track.duration ?? '—'}</Table.Cell>
               <Table.Cell>{track.createdDate ?? '—'}</Table.Cell>

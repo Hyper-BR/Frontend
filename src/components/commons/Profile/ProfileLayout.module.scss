@@ -12,7 +12,12 @@
     font-weight: $font-weight-bold;
   }
 }
-
+.editProfile {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+}
 .header {
   display: flex;
   justify-content: space-between;

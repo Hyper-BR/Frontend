@@ -42,73 +42,76 @@ export default function ProfileLayout({
   const [activeTab, setActiveTab] = useState<Tab>('Faixas');
 
   return (
-    <section className={styles.profile}>
-      <div className={styles.cover}>
-        <header className={styles.header}>
-          <div className={styles.userInfo}>
-            <img src={avatarUrl} alt={name} className={styles.avatar} />
-            <div className={styles.details}>
-              <h2>{name}</h2>
-              {email && <p className={styles.email}>{email}</p>}
-              {onEdit && (
-                <>
-                  <Modal.Trigger modal="editProfile">
-                    <Button className={styles.editBtn} variant="ghost">
-                      Editar perfil
-                    </Button>
-                  </Modal.Trigger>
-
-                  <EditProfileModal />
-                </>
-              )}
-              <div className={styles.stats}>
-                <span>
-                  <strong>{stats.followers}</strong> seguidores
-                </span>
-                <span>
-                  <strong>{stats.following}</strong> seguindo
-                </span>
+    <>
+      <EditProfileModal />
+      <section className={styles.profile}>
+        <div className={styles.cover}>
+          <header className={styles.header}>
+            <div className={styles.userInfo}>
+              <img src={avatarUrl} alt={name} className={styles.avatar} />
+              <div className={styles.details}>
+                <h2>{name}</h2>
+                {email && <p className={styles.email}>{email}</p>}
+                {onEdit && (
+                  <div className={styles.editProfile}>
+                    <Modal.Trigger modal="editProfile">
+                      <Button className={styles.editBtn} variant="ghost">
+                        Editar perfil
+                      </Button>
+                    </Modal.Trigger>
+                  </div>
+                )}
+                <div className={styles.stats}>
+                  <span>
+                    <strong>{stats.followers}</strong> seguidores
+                  </span>
+                  <span>
+                    <strong>{stats.following}</strong> seguindo
+                  </span>
+                </div>
               </div>
             </div>
+
+            {owner && (
+              <div className={styles.planSection}>
+                <Plan title="Plano Premium" />
+              </div>
+            )}
+          </header>
+        </div>
+
+        {analytics && (
+          <div className={styles.analytics}>
+            <span>Reproduções: {analytics.plays}</span>
+            <span>Seguidores: {analytics.followers}</span>
           </div>
+        )}
 
-          {owner && (
-            <div className={styles.planSection}>
-              <Plan title="Plano Premium" />
-            </div>
-          )}
-        </header>
-      </div>
+        <nav className={styles.tabNav}>
+          {tabs.map((tab) => (
+            <Button
+              variant="transparent"
+              onClick={() => setActiveTab(tab)}
+              className={tab === activeTab ? styles.activeTab : styles.tab}
+            >
+              {tab}
+            </Button>
+          ))}
+        </nav>
 
-      {analytics && (
-        <div className={styles.analytics}>
-          <span>Reproduções: {analytics.plays}</span>
-          <span>Seguidores: {analytics.followers}</span>
-        </div>
-      )}
-
-      <nav className={styles.tabNav}>
-        {tabs.map((tab) => (
-          <Button
-            variant="transparent"
-            onClick={() => setActiveTab(tab)}
-            className={tab === activeTab ? styles.activeTab : styles.tab}
-          >
-            {tab}
-          </Button>
-        ))}
-      </nav>
-
-      {tracks?.content && (
-        <div className={styles.tabContent}>
-          {activeTab === 'Faixas' && <TrackTable tracks={tracks.content} />}
-          {activeTab === 'Playlists' && <TrackTable tracks={tracks.content} />}
-          {activeTab === 'Álbuns' && <TrackTable tracks={tracks.content} />}
-          {activeTab === 'Artistas relacionados' && (
-            <TrackTable tracks={tracks.content} />
-          )}
-        </div>
-      )}
-    </section>
+        {tracks?.content && (
+          <div className={styles.tabContent}>
+            {activeTab === 'Faixas' && <TrackTable tracks={tracks.content} />}
+            {activeTab === 'Playlists' && (
+              <TrackTable tracks={tracks.content} />
+            )}
+            {activeTab === 'Álbuns' && <TrackTable tracks={tracks.content} />}
+            {activeTab === 'Artistas relacionados' && (
+              <TrackTable tracks={tracks.content} />
+            )}
+          </div>
+        )}
+      </section>
+    </>
   );
 }
