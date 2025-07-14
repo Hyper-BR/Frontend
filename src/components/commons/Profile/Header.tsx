@@ -1,7 +1,7 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
-import { Plan } from '@/components/ui/Cards/Plan';
+import { PlanCard } from '@/components/ui/Cards/PlanCard';
 import { Profile } from '.';
 
 interface Props {
@@ -48,7 +48,7 @@ export function Header({
 
         {owner && (
           <div className={styles.planSection}>
-            <Plan title="Plano Premium" />
+            <PlanCard title="Plano Premium" />
           </div>
         )}
       </header>

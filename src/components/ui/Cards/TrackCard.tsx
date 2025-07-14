@@ -2,7 +2,7 @@ import { Root } from '@/components/commons/Card/Root';
 import { Button } from '@/components/commons/Button/Button';
 import { Title } from '@/components/commons/Card/Title';
 import { Subtitle } from '@/components/commons/Card/Subtitle';
-import styles from './Track.module.scss';
+import styles from './TrackCard.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
 
@@ -11,7 +11,7 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function Track({ track, size = 'md' }: Props) {
+export function TrackCard({ track, size = 'md' }: Props) {
   const { setTrackPlayer } = usePlayer();
   return (
     <Root

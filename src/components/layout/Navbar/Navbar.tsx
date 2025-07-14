@@ -6,6 +6,7 @@ import Search from '@/components/commons/Search/Search';
 import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import UploadReleaseModal from '@/components/ui/Modals/UploadReleaseModal';
+import { Dropdown } from '@/components/commons/Dropdown';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -56,26 +57,23 @@ const Navbar = () => {
               )}
 
               <div className={styles.avatarDropdown}>
-                <img
-                  src={`https://i.pravatar.cc/40?u=`}
-                  alt="avatar"
-                  className={styles.avatar}
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                />
+                <Dropdown.Root>
+                  <Dropdown.Trigger>
+                    <img
+                      src={`https://i.pravatar.cc/40?u=`}
+                      alt="avatar"
+                      className={styles.avatar}
+                    />
+                  </Dropdown.Trigger>
 
-                {dropdownOpen && (
-                  <div className={styles.dropdownMenu}>
-                    <span
-                      className={styles.dropdownItem}
-                      onClick={() => navigate('/profile')}
-                    >
-                      Perfil
-                    </span>
-                    <span className={styles.dropdownItem} onClick={signOut}>
-                      Sair
-                    </span>
-                  </div>
-                )}
+                  <Dropdown.Content>
+                    <Dropdown.Item
+                      label="Perfil"
+                      onSelect={() => navigate('/profile')}
+                    />
+                    <Dropdown.Item label="Sair" onSelect={signOut} />
+                  </Dropdown.Content>
+                </Dropdown.Root>
               </div>
             </>
           ) : (

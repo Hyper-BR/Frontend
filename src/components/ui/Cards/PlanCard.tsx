@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import styles from './Plan.module.scss';
+import styles from './PlanCard.module.scss';
 
 interface Props {
   title: string;
 }
 
-export function Plan({ title }: Props) {
+export function PlanCard({ title }: Props) {
   const navigate = useNavigate();
 
   return (

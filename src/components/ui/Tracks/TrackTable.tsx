@@ -12,6 +12,7 @@ import { PlaylistDTO } from '@/services/playlist/types';
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { Table } from '@/components/commons/Table';
+import { Dropdown } from '@/components/commons/Dropdown';
 
 type Props = {
   tracks: TrackDTO[];
@@ -118,77 +119,35 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
               <Table.Cell>{track.createdDate ?? '—'}</Table.Cell>
 
               <Table.Cell>
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger asChild>
+                <Dropdown.Root>
+                  <Dropdown.Trigger>
                     <Button variant="transparent" icon="⋯" />
-                  </DropdownMenu.Trigger>
+                  </Dropdown.Trigger>
 
-                  <DropdownMenu.Portal>
-                    <DropdownMenu.Content
-                      className={styles.menu}
-                      sideOffset={8}
-                      align="start"
-                    >
-                      <DropdownMenu.Item
-                        className={styles.item}
-                        onSelect={() => console.log('Editar', track.id)}
-                      >
-                        Editar
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        className={styles.item}
-                        onSelect={() => console.log('Compartilhar', track.id)}
-                      >
-                        Compartilhar
-                      </DropdownMenu.Item>
+                  <Dropdown.Content>
+                    <Dropdown.Item label="Editar" onSelect={() => {}} />
+                    <Dropdown.Item label="Compartilhar" onSelect={() => {}} />
 
-                      <DropdownMenu.Sub>
-                        <DropdownMenu.SubTrigger className={styles.item}>
-                          Adicionar à playlist +
-                        </DropdownMenu.SubTrigger>
-
-                        <DropdownMenu.Portal>
-                          <DropdownMenu.SubContent
-                            className={styles.submenu}
-                            sideOffset={4}
-                            alignOffset={-5}
-                          >
-                            {playlists.length > 0 ? (
-                              playlists.map((pl) => {
-                                const isMember = pl.tracks.some(
-                                  (t) => t.id === track.id,
-                                );
-                                return (
-                                  <DropdownMenu.Item
-                                    key={pl.id}
-                                    className={`${styles.item} ${
-                                      isMember ? styles.inPlaylist : ''
-                                    }`}
-                                    onSelect={() =>
-                                      toggleInPlaylist(track.id, pl, isMember)
-                                    }
-                                  >
-                                    {pl.name}
-                                    <span className={styles.icon}>
-                                      {isMember ? '✓' : '+'}
-                                    </span>
-                                  </DropdownMenu.Item>
-                                );
-                              })
-                            ) : (
-                              <DropdownMenu.Item
-                                className={styles.item}
-                                disabled
-                              >
-                                Nenhuma playlist disponível
-                              </DropdownMenu.Item>
-                            )}
-                          </DropdownMenu.SubContent>
-                        </DropdownMenu.Portal>
-                      </DropdownMenu.Sub>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Portal>
-                </DropdownMenu.Root>
+                    <Dropdown.Submenu label="Adicionar à playlist +">
+                      {playlists.map((pl) => {
+                        const isMember = pl.tracks.some(
+                          (t) => t.id === track.id,
+                        );
+                        return (
+                          <Dropdown.Item
+                            key={pl.id}
+                            label={pl.name}
+                            onSelect={() =>
+                              toggleInPlaylist(track.id, pl, isMember)
+                            }
+                            rightIcon={isMember ? '✓' : '+'}
+                            className={isMember ? styles.inPlaylist : ''}
+                          />
+                        );
+                      })}
+                    </Dropdown.Submenu>
+                  </Dropdown.Content>
+                </Dropdown.Root>
               </Table.Cell>
             </Table.DraggableRow>
           ))}

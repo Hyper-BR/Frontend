@@ -8,7 +8,7 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export function Artist({ name, imageUrl, onClick, size = 'md' }: Props) {
+export function ArtistCard({ name, imageUrl, onClick, size = 'md' }: Props) {
   return (
     <Root
       imageUrl={imageUrl}

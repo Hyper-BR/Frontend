@@ -1,0 +1,65 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.menu {
+  background: rgba($color-gray-dark, 0.95);
+  border-radius: $radius-sm;
+  padding: $spacing-xs;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  min-width: 180px;
+  z-index: 99999 !important;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.submenu {
+  background: rgba($color-gray-dark, 0.95);
+  border-radius: $radius-sm;
+  padding: $spacing-xs;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  min-width: 180px;
+  z-index: 99999 !important;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.item {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.15s;
+
+  &:hover {
+    background-color: rgba($color-white, 0.05);
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.icon {
+  margin-left: 8px;
+  font-size: 0.75rem;
+  color: $color-primary;
+}
+
+.inPlaylist {
+  color: $color-primary;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

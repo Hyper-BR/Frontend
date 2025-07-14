@@ -5,8 +5,8 @@ import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
-import { Track } from '@/components/ui/Cards/Track';
-import { Artist } from '@/components/ui/Cards/Artist';
+import { TrackCard } from '@/components/ui/Cards/TrackCard';
+import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
 
 function useQuery() {
   const { search } = useLocation();
@@ -50,7 +50,7 @@ export default function SearchPage() {
             {artists.length ? (
               <>
                 {artists.map((artist) => (
-                  <Artist
+                  <ArtistCard
                     name={artist.username}
                     size="lg"
                     key={artist.id}
@@ -69,7 +69,7 @@ export default function SearchPage() {
             {tracks.length ? (
               <>
                 {tracks.map((track) => (
-                  <Track key={track.id} track={track} size="md" />
+                  <TrackCard key={track.id} track={track} size="md" />
                 ))}
               </>
             ) : (

@@ -5,8 +5,8 @@ import { getArtists } from '@/services/artist';
 import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
 import { useNavigate } from 'react-router-dom';
-import { Artist } from '@/components/ui/Cards/Artist';
-import { Track } from '@/components/ui/Cards/Track';
+import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
+import { TrackCard } from '@/components/ui/Cards/TrackCard';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
@@ -38,7 +38,7 @@ const Home = () => {
         <h3>Faixas em destaque</h3>
         <div className={styles.carousel}>
           {tracks.map((track) => (
-            <Track key={track.id} track={track} size="md" />
+            <TrackCard key={track.id} track={track} size="md" />
           ))}
         </div>
       </section>
@@ -47,7 +47,7 @@ const Home = () => {
         <h3>Artistas em alta</h3>
         <div className={styles.carousel}>
           {artists.map((artist) => (
-            <Artist
+            <ArtistCard
               name={artist.username}
               size="md"
               key={artist.id}
