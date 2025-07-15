@@ -14,11 +14,11 @@ const EditProfileModal = () => {
   const { customer } = useAuth();
 
   const [form, setForm] = useState<CustomerDTO>({
-    name: customer.name,
-    email: customer.email,
-    birthDate: customer.birthDate,
-    country: customer.country,
-    avatarUrl: customer.avatarUrl,
+    name: customer?.name,
+    email: customer?.email,
+    birthDate: customer?.birthDate,
+    country: customer?.country,
+    avatarUrl: customer?.avatarUrl,
   });
 
   const handleChange =

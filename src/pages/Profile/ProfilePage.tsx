@@ -11,15 +11,16 @@ export default function ProfilePage() {
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
 
-  const { customer } = useAuth();
-  const navigate = useNavigate();
+  const { customer, isArtist } = useAuth();
 
-  const fetchData = () => {
-    const response = getPlaylistsCustomer();
-    response.then((r) => setPlaylists(r.data));
+  const fetchData = async () => {
+    const response = await getPlaylistsCustomer();
+    setPlaylists(response.data);
 
-    const trackPage = getTracksByArtist(customer?.artistProfile?.id);
-    trackPage.then((r) => setTracks(r.data));
+    if (isArtist) {
+      const trackPage = await getTracksByArtist(customer?.artistProfile?.id);
+      setTracks(trackPage.data);
+    }
   };
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export default function ProfilePage() {
           : customer.name
       }
       email={customer.email}
-      stats={{ followers: 120, following: 87 }}
+      stats={{ followers: '120', following: '87' }}
       analytics={null}
       onEdit
       tracks={tracks}

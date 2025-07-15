@@ -13,8 +13,8 @@ interface Props {
   avatarUrl: string;
   name: string;
   email?: string;
-  stats: { followers: number; following: number };
-  analytics?: { plays: number; followers: number };
+  stats: { followers: string; following: string };
+  analytics?: { plays: string };
   onEdit?: boolean;
   tracks: TrackPageDTO;
   playlists: PlaylistDTO[];
@@ -44,8 +44,8 @@ export default function ProfileLayout({
           email={email}
           onEdit={onEdit}
           owner={owner}
-          stats={{ followers: '87', following: '120' }}
-          analytics={{ plays: '1000' }}
+          stats={stats}
+          analytics={analytics}
         />
         <Tabs active={activeTab} setActive={setActiveTab} />
         <Content tab={activeTab} tracks={tracks?.content} />

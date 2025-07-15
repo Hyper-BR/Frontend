@@ -12,9 +12,9 @@ export function Content({ tab, tracks }: Props) {
   return (
     <div className={styles.tabContent}>
       {tab === 'Faixas' && <TrackTable tracks={tracks ?? []} />}
-      {tab === 'Playlists' && <TrackTable tracks={tracks ?? []} />}
-      {tab === 'Álbuns' && <TrackTable tracks={tracks ?? []} />}
-      {tab === 'Artistas relacionados' && <TrackTable tracks={tracks ?? []} />}
+      {tab === 'Playlists' && 'Playlists'}
+      {tab === 'Álbuns' && 'Álbuns'}
+      {tab === 'Artistas relacionados' && 'Artistas relacionados'}
     </div>
   );
 }

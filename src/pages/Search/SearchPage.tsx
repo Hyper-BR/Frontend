@@ -7,6 +7,7 @@ import styles from './SearchPage.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackCard } from '@/components/ui/Cards/TrackCard';
 import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
+import { Button } from '@/components/commons/Button/Button';
 
 function useQuery() {
   const { search } = useLocation();
@@ -36,7 +37,9 @@ export default function SearchPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <button onClick={() => navigate(-1)}>← Voltar</button>
+        <Button onClick={() => navigate(-1)} variant="ghost">
+          ← Voltar
+        </Button>
         <h1>Resultados para “{q}”</h1>
       </header>
 

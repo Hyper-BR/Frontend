@@ -7,7 +7,7 @@ interface Props {
   onDrop: (files: File[]) => void;
   multiple?: boolean;
   accept?: string;
-  shape?: 'square' | 'round';
+  shape?: 'square' | 'round' | 'rectangle';
   size?: 'sm' | 'md' | 'lg';
   file?: File;
 }

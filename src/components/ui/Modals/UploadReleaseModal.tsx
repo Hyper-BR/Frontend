@@ -8,11 +8,14 @@ import styles from './UploadReleaseModal.module.scss';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
 import { ArtistDTO } from '@/services/artist/types';
 import { createRelease } from '@/services/release';
-import { ReleaseDTO } from '@/services/release/types';
+import { searchArtistsByName } from '@/services/artist';
 
 const UploadReleaseModal = () => {
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('');
+  const [showArtistSearch, setShowArtistSearch] = useState(false);
+  const [searchArtistName, setSearchArtistName] = useState('');
+  const [matchedArtists, setMatchedArtists] = useState<ArtistDTO[]>([]);
 
   const [form, setForm] = useState({
     title: '',
@@ -74,15 +77,22 @@ const UploadReleaseModal = () => {
     }
   };
 
-  const fetchArtists = (query: string) => {
-    console.log('retornar artista: ' + query);
+  const getArtistByName = async (name: string) => {
+    try {
+      const response = await searchArtistsByName(name);
+      setMatchedArtists(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar artistas:', error);
+    }
   };
 
   useEffect(() => {
-    if (query.length > 1) {
-      fetchArtists(query);
+    if (searchArtistName.length > 1) {
+      getArtistByName(searchArtistName);
+    } else {
+      setMatchedArtists([]);
     }
-  }, [query]);
+  }, [searchArtistName]);
 
   return (
     <Modal.Root modal="upload" size="lg">
@@ -114,13 +124,6 @@ const UploadReleaseModal = () => {
 
               <Input
                 type="text"
-                value={'TODO'}
-                onChange={() => alert('todo')}
-                label="Colaboradores"
-              />
-
-              <Input
-                type="text"
                 value={form.genre}
                 onChange={handleChange('genre')}
                 label="Gênero"
@@ -140,6 +143,14 @@ const UploadReleaseModal = () => {
                 label="Descrição"
               />
 
+              <Droppable
+                label="Upload da track"
+                onDrop={handleDrop}
+                size="sm"
+                shape="rectangle"
+                accept="image/*"
+              />
+
               <div className={styles.privacy}>
                 <Input
                   type="radio"
@@ -156,6 +167,50 @@ const UploadReleaseModal = () => {
                   onChange={handleChange('privacy')}
                   label="Privado"
                 />
+              </div>
+
+              {showArtistSearch && (
+                <div className={styles.artistSearch}>
+                  <Input
+                    type="text"
+                    value={searchArtistName}
+                    onChange={(e) => setSearchArtistName(e.target.value)}
+                    label="Buscar colaboradores"
+                  />
+
+                  {matchedArtists.length > 0 && (
+                    <ul className={styles.artistList}>
+                      {matchedArtists.map((artist) => (
+                        <li key={artist.id}>
+                          {artist.username}
+                          <Button
+                            variant="ghost"
+                            onClick={() =>
+                              setForm((prev) => ({
+                                ...prev,
+                                tracks: prev.tracks.map((t) => ({
+                                  ...t,
+                                  artists: [...(t.artists || []), artist],
+                                })),
+                              }))
+                            }
+                          >
+                            + Adicionar
+                          </Button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+
+              <div className={styles.addArtistButton}>
+                <Button
+                  variant="ghost"
+                  onClick={() => setShowArtistSearch(!showArtistSearch)}
+                >
+                  + Colaboradores
+                </Button>
               </div>
             </div>
           </div>
