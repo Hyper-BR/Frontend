@@ -1,13 +1,6 @@
 @use '@/styles/theme.scss' as *;
 @use 'sass:color';
 
-.uploadForm {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: $spacing-lg;
-}
-
 .topSection {
   display: flex;
   flex-wrap: wrap;

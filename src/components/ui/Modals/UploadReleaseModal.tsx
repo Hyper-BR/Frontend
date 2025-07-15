@@ -12,7 +12,6 @@ import { searchArtistsByName } from '@/services/artist';
 
 const UploadReleaseModal = () => {
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState('');
   const [showArtistSearch, setShowArtistSearch] = useState(false);
   const [searchArtistName, setSearchArtistName] = useState('');
   const [matchedArtists, setMatchedArtists] = useState<ArtistDTO[]>([]);
@@ -52,7 +51,7 @@ const UploadReleaseModal = () => {
         formData.append(`tracks[${i}].file`, track.file);
         formData.append(`tracks[${i}].artists`, JSON.stringify(track.artists));
       });
-
+      console.log(formData);
       const response = await createRelease(formData);
       if (!response) throw new Error('Erro no envio');
       closeModal();
@@ -95,11 +94,11 @@ const UploadReleaseModal = () => {
   }, [searchArtistName]);
 
   return (
-    <Modal.Root modal="upload" size="lg">
-      <Modal.Header title="Upload de novas faixas" />
+    <form onSubmit={handleSubmit}>
+      <Modal.Root modal="upload" size="lg">
+        <Modal.Header title="Upload de novas faixas" />
 
-      <Modal.Content>
-        <form onSubmit={handleSubmit}>
+        <Modal.Content>
           <div className={styles.topSection}>
             <div className={styles.coverUpload}>
               <label className={styles.coverLabel}>
@@ -148,7 +147,7 @@ const UploadReleaseModal = () => {
                 onDrop={handleDrop}
                 size="sm"
                 shape="rectangle"
-                accept="image/*"
+                accept="audio/*"
               />
 
               <div className={styles.privacy}>
@@ -214,27 +213,27 @@ const UploadReleaseModal = () => {
               </div>
             </div>
           </div>
-        </form>
-      </Modal.Content>
+        </Modal.Content>
 
-      <Modal.Footer
-        leftButton={
-          <Button variant="ghost" onClick={() => handleSubmit}>
-            + Adicionar faixa
-          </Button>
-        }
-        cancelButton={
-          <Button variant="ghost" onClick={closeModal}>
-            Cancelar
-          </Button>
-        }
-        submitButton={
-          <Button type="submit" loading={loading} onClick={closeModal}>
-            Upload
-          </Button>
-        }
-      />
-    </Modal.Root>
+        <Modal.Footer
+          leftButton={
+            <Button variant="ghost" onClick={() => alert('todo')}>
+              + Adicionar faixa
+            </Button>
+          }
+          cancelButton={
+            <Button variant="ghost" onClick={closeModal}>
+              Cancelar
+            </Button>
+          }
+          submitButton={
+            <Button type="submit" loading={loading}>
+              Upload
+            </Button>
+          }
+        />
+      </Modal.Root>
+    </form>
   );
 };
 
