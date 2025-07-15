@@ -149,10 +149,6 @@ const UploadReleaseModal = () => {
           });
       });
 
-      formData.forEach((val, key) =>
-        console.log(`${key}:`, val instanceof File ? val.name : val),
-      );
-
       const response = await createRelease(formData);
       if (!response) throw new Error('Erro no envio');
       closeModal();

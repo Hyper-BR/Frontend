@@ -1,3 +1,4 @@
+import { buildFullUrl } from '@/utils/buildFullUrl';
 import styles from './Card.module.scss';
 import clsx from 'clsx';
 
@@ -37,7 +38,7 @@ export function Root({
       <div className={clsx(styles.imageWrapper, styles[size], styles[shape])}>
         <div
           className={styles.image}
-          style={{ backgroundImage: `url(${imageUrl})` }}
+          style={{ backgroundImage: `url(${buildFullUrl(imageUrl)})` }}
         />
       </div>
 

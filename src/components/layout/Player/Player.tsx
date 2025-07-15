@@ -11,6 +11,7 @@ import {
   VolumeIcon,
 } from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
+import { buildFullUrl } from '@/utils/buildFullUrl';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -59,7 +60,7 @@ const Player = () => {
       <div className={styles.songInfo}>
         {track && (
           <img
-            src={`${process.env.API_URL}/${track.coverUrl}`}
+            src={buildFullUrl(track?.coverUrl)}
             alt="Cover"
             className={styles.image}
           />
@@ -99,7 +100,7 @@ const Player = () => {
               cursorColor="#b41414"
               normalize
               backend="MediaElement"
-              url={`${process.env.API_URL}/track/play/${track.id}`}
+              url={buildFullUrl(`/track/play/${track.id}`)}
               onReady={handleReady}
               onTimeupdate={handleTimeupdate}
               onFinish={() => togglePlay()}

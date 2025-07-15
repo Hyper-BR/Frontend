@@ -7,6 +7,7 @@ import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import UploadReleaseModal from '@/components/ui/Modals/UploadReleaseModal';
 import { Dropdown } from '@/components/commons/Dropdown';
+import { buildFullUrl } from '@/utils/buildFullUrl';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ const Navbar = () => {
                 <Dropdown.Root>
                   <Dropdown.Trigger>
                     <img
-                      src={customer?.avatarUrl}
+                      src={buildFullUrl(customer?.avatarUrl)}
                       alt="avatar"
                       className={styles.avatar}
                     />

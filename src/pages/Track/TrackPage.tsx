@@ -5,6 +5,7 @@ import { getTrackById } from '@/services/track';
 import WavesurferPlayer from '@wavesurfer/react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
+import { buildFullUrl } from '@/utils/buildFullUrl';
 
 export default function TrackPage() {
   const { id } = useParams();
@@ -54,7 +55,7 @@ export default function TrackPage() {
             cursorColor="#e8202a"
             normalize
             backend="MediaElement"
-            url={`${process.env.API_URL}/track/play/${track.id}`}
+            url={buildFullUrl(`/track/play/${track.id}`)}
             onReady={handleReady}
             onTimeupdate={handleTimeupdate}
             onFinish={() => togglePlay()}

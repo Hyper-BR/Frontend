@@ -20,11 +20,10 @@ export function TrackCard({
   align,
 }: Props) {
   const { setTrackPlayer } = usePlayer();
-  console.log('trackCard - ' + `${process.env.API_URL}/${track.coverUrl}`);
   return (
     <Card.Root
       direction={direction}
-      imageUrl={`${process.env.API_URL}/${track.coverUrl}`}
+      imageUrl={track?.coverUrl}
       shape={shape}
       size={size}
       clickable
