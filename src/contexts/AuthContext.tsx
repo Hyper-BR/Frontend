@@ -26,7 +26,6 @@ export const AuthContext = createContext<AuthContextType>(
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerDTO | null>(null);
 
-  console.log(customer);
   let isArtist = customer?.artist;
   let isLabel = customer?.label;
   let userSigned = !!customer;

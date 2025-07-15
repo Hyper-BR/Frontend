@@ -4,6 +4,6 @@ export type ReleaseDTO = {
   id?: string;
   type?: string;
   description: string;
-  image: string;
+  cover: File;
   tracks: TrackDTO[];
 };

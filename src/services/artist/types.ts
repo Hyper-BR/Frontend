@@ -12,7 +12,6 @@ export type ArtistPageDTO = {
 export type ArtistDTO = {
   id: string;
   username: string;
-  credits: number;
   email?: string;
   carts?: [];
 };

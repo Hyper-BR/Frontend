@@ -9,6 +9,7 @@ import { Droppable } from '@/components/commons/Droppable/Droppable';
 import { ArtistDTO } from '@/services/artist/types';
 import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
+import { ReleaseDTO } from '@/services/release/types';
 
 const UploadReleaseModal = () => {
   const [loading, setLoading] = useState(false);
@@ -16,64 +17,80 @@ const UploadReleaseModal = () => {
   const [searchArtistName, setSearchArtistName] = useState('');
   const [matchedArtists, setMatchedArtists] = useState<ArtistDTO[]>([]);
 
-  const [form, setForm] = useState({
-    title: '',
-    genre: '',
-    description: '',
-    tags: [] as string[],
-    privacy: 'PUBLIC',
-    image: null as File | null,
-    tracks: [] as TrackDTO[],
-  });
-
   const { closeModal } = useModal();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  const [form, setForm] = useState<ReleaseDTO>({
+    description: '',
+    cover: null,
+    tracks: [
+      {
+        title: '',
+        genre: '',
+        tags: [],
+        file: undefined as any,
+        artists: [
+          {
+            id: '',
+            username: '',
+          },
+        ],
+        privacy: '',
+      },
+    ],
+  });
 
-    try {
-      const formData = new FormData();
-      formData.append('title', form.title);
-      formData.append('genre', form.genre);
-      formData.append('privacy', form.privacy);
-      formData.append('description', form.description);
-      formData.append('tags', JSON.stringify(form.tags));
-
-      if (form.image) {
-        formData.append('cover', form.image);
-      }
-
-      form.tracks.forEach((track, i) => {
-        formData.append(`tracks[${i}].title`, track.title);
-        formData.append(`tracks[${i}].genre`, track.genre);
-        formData.append(`tracks[${i}].tags`, JSON.stringify(track.tags));
-        formData.append(`tracks[${i}].file`, track.file);
-        formData.append(`tracks[${i}].artists`, JSON.stringify(track.artists));
+  const handleTrackChange =
+    (index: number, field: keyof TrackDTO) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setForm((prev) => {
+        const updated = [...prev.tracks];
+        updated[index] = { ...updated[index], [field]: value };
+        return { ...prev, tracks: updated };
       });
-      console.log(formData);
-      const response = await createRelease(formData);
-      if (!response) throw new Error('Erro no envio');
-      closeModal();
-    } catch (err) {
-      alert('Erro ao enviar. Tente novamente.');
-      console.error(err);
-    } finally {
-      setLoading(false);
+    };
+
+  const handleTrackFileDrop = (index: number) => (files: File[]) => {
+    const audio = files[0];
+    if (audio) {
+      setForm((prev) => {
+        const updated = [...prev.tracks];
+        updated[index].file = audio;
+        return { ...prev, tracks: updated };
+      });
     }
   };
 
-  const handleChange =
-    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setForm((prev) => ({ ...prev, [field]: value }));
-    };
-
-  const handleDrop = (files: File[]) => {
+  const handleCoverDrop = (files: File[]) => {
     const image = files[0];
     if (image) {
-      setForm((prev) => ({ ...prev, image }));
+      setForm((prev) => ({ ...prev, cover: image }));
     }
+  };
+
+  const handleAddTrack = () => {
+    setForm((prev) => ({
+      ...prev,
+      tracks: [
+        ...prev.tracks,
+        {
+          title: '',
+          genre: '',
+          tags: [],
+          file: undefined as any,
+          artists: [],
+          privacy: '',
+        },
+      ],
+    }));
+  };
+
+  const handleAddArtistToTrack = (artist: ArtistDTO, index: number) => {
+    setForm((prev) => {
+      const updated = [...prev.tracks];
+      updated[index].artists = [...(updated[index].artists || []), artist];
+      return { ...prev, tracks: updated };
+    });
   };
 
   const getArtistByName = async (name: string) => {
@@ -93,6 +110,60 @@ const UploadReleaseModal = () => {
     }
   }, [searchArtistName]);
 
+  const handleChange =
+    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+
+      formData.append('description', form.description);
+
+      if (form.cover) {
+        formData.append('cover', form.cover);
+      }
+
+      form.tracks.forEach((track, i) => {
+        formData.append(`tracks[${i}].title`, track.title);
+        formData.append(`tracks[${i}].genre`, track.genre);
+        formData.append(`tracks[${i}].privacy`, track.privacy);
+        formData.append(`tracks[${i}].tags`, JSON.stringify(track.tags));
+
+        if (track.file) {
+          formData.append(`tracks[${i}].file`, track.file);
+        }
+
+        track.artists
+          .filter((artist) => artist.id)
+          .forEach((artist, j) => {
+            formData.append(`tracks[${i}].artists[${j}].id`, artist.id);
+            formData.append(
+              `tracks[${i}].artists[${j}].username`,
+              artist.username,
+            );
+          });
+      });
+
+      formData.forEach((val, key) =>
+        console.log(`${key}:`, val instanceof File ? val.name : val),
+      );
+
+      const response = await createRelease(formData);
+      if (!response) throw new Error('Erro no envio');
+      closeModal();
+    } catch (err) {
+      alert('Erro ao enviar. Tente novamente.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Modal.Root modal="upload" size="lg">
@@ -100,127 +171,144 @@ const UploadReleaseModal = () => {
 
         <Modal.Content>
           <div className={styles.topSection}>
-            <div className={styles.coverUpload}>
-              <label className={styles.coverLabel}>
-                <Droppable
-                  label="Upload da capa"
-                  onDrop={handleDrop}
-                  shape="square"
-                  size="md"
-                  accept="image/*"
-                />
-              </label>
-            </div>
+            <Droppable
+              label="Upload da capa"
+              onDrop={handleCoverDrop}
+              shape="square"
+              size="md"
+              accept="image/*"
+            />
 
             <div className={styles.metadata}>
               <Input
                 type="text"
-                value={form.title}
-                onChange={handleChange('title')}
-                required
-                label="Título"
-              />
-
-              <Input
-                type="text"
-                value={form.genre}
-                onChange={handleChange('genre')}
-                label="Gênero"
-              />
-
-              <Input
-                type="text"
-                value={form.tags}
-                onChange={handleChange('tags')}
-                label="Tags"
-              />
-
-              <Input
-                type="text"
                 value={form.description}
                 onChange={handleChange('description')}
-                label="Descrição"
+                label="Descrição do release"
               />
 
-              <Droppable
-                label="Upload da track"
-                onDrop={handleDrop}
-                size="sm"
-                shape="rectangle"
-                accept="audio/*"
-              />
-
-              <div className={styles.privacy}>
-                <Input
-                  type="radio"
-                  value="PUBLIC"
-                  checked={form.privacy === 'PUBLIC'}
-                  onChange={handleChange('privacy')}
-                  label="Público"
-                />
-
-                <Input
-                  type="radio"
-                  value="PRIVATE"
-                  checked={form.privacy === 'PRIVATE'}
-                  onChange={handleChange('privacy')}
-                  label="Privado"
-                />
-              </div>
-
-              {showArtistSearch && (
-                <div className={styles.artistSearch}>
+              {form.tracks.map((track, index) => (
+                <div key={index} className={styles.trackFields}>
                   <Input
                     type="text"
-                    value={searchArtistName}
-                    onChange={(e) => setSearchArtistName(e.target.value)}
-                    label="Buscar colaboradores"
+                    value={track.title}
+                    onChange={handleTrackChange(index, 'title')}
+                    required
+                    label={`Título da faixa ${index + 1}`}
                   />
 
-                  {matchedArtists.length > 0 && (
-                    <ul className={styles.artistList}>
-                      {matchedArtists.map((artist) => (
-                        <li key={artist.id}>
-                          {artist.username}
-                          <Button
-                            variant="ghost"
-                            onClick={() =>
-                              setForm((prev) => ({
-                                ...prev,
-                                tracks: prev.tracks.map((t) => ({
-                                  ...t,
-                                  artists: [...(t.artists || []), artist],
-                                })),
-                              }))
-                            }
-                          >
-                            + Adicionar
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
+                  <Input
+                    type="text"
+                    value={track.genre}
+                    onChange={handleTrackChange(index, 'genre')}
+                    label="Gênero"
+                  />
+
+                  <Input
+                    type="text"
+                    value={track.tags.join(', ')}
+                    onChange={(e) =>
+                      handleTrackChange(
+                        index,
+                        'tags',
+                      )({
+                        ...e,
+                        target: {
+                          ...e.target,
+                          value: e.target.value
+                            .split(',')
+                            .map((tag) => tag.trim()),
+                        },
+                      } as unknown as React.ChangeEvent<HTMLInputElement>)
+                    }
+                    label="Tags (separadas por vírgula)"
+                  />
+
+                  <Droppable
+                    label="Upload da track"
+                    onDrop={handleTrackFileDrop(index)}
+                    size="sm"
+                    shape="rectangle"
+                    accept="audio/*"
+                  />
+
+                  <div className={styles.privacy}>
+                    <Input
+                      type="radio"
+                      value="PUBLIC"
+                      checked={track.privacy === 'PUBLIC'}
+                      onChange={() =>
+                        handleTrackChange(
+                          index,
+                          'privacy',
+                        )({
+                          target: { value: 'PUBLIC' },
+                        } as React.ChangeEvent<HTMLInputElement>)
+                      }
+                      label="Público"
+                    />
+
+                    <Input
+                      type="radio"
+                      value="PRIVATE"
+                      checked={track.privacy === 'PRIVATE'}
+                      onChange={() =>
+                        handleTrackChange(
+                          index,
+                          'privacy',
+                        )({
+                          target: { value: 'PRIVATE' },
+                        } as React.ChangeEvent<HTMLInputElement>)
+                      }
+                      label="Privado"
+                    />
+                  </div>
+
+                  {showArtistSearch && (
+                    <div className={styles.artistSearch}>
+                      <Input
+                        type="text"
+                        value={searchArtistName}
+                        onChange={(e) => setSearchArtistName(e.target.value)}
+                        label="Buscar colaboradores"
+                      />
+                      {matchedArtists.length > 0 && (
+                        <ul className={styles.artistList}>
+                          {matchedArtists.map((artist) => (
+                            <li key={artist.id}>
+                              {artist.username}
+                              <Button
+                                variant="ghost"
+                                onClick={() =>
+                                  handleAddArtistToTrack(artist, index)
+                                }
+                              >
+                                + Adicionar
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
+              ))}
 
-              <div className={styles.addArtistButton}>
-                <Button
-                  variant="ghost"
-                  onClick={() => setShowArtistSearch(!showArtistSearch)}
-                >
-                  + Colaboradores
-                </Button>
-              </div>
+              <Button variant="ghost" onClick={handleAddTrack}>
+                + Adicionar faixa
+              </Button>
+
+              <Button
+                variant="ghost"
+                onClick={() => setShowArtistSearch(!showArtistSearch)}
+              >
+                + Colaboradores
+              </Button>
             </div>
           </div>
         </Modal.Content>
 
         <Modal.Footer
-          leftButton={
-            <Button variant="ghost" onClick={() => alert('todo')}>
-              + Adicionar faixa
-            </Button>
-          }
           cancelButton={
             <Button variant="ghost" onClick={closeModal}>
               Cancelar
