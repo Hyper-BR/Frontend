@@ -29,7 +29,7 @@ export default function ProfilePage() {
 
   return (
     <ProfileLayout
-      avatarUrl={'https://i.pravatar.cc/1579?u='}
+      avatarUrl={customer?.avatarUrl}
       name={
         customer.artistProfile != null
           ? customer?.artistProfile?.username

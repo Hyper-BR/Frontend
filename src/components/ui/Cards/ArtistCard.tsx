@@ -17,11 +17,9 @@ export function ArtistCard({
   shape = 'square',
   align,
 }: Props) {
-  const { customer } = useAuth();
-
   return (
     <Card.Root
-      imageUrl={'https://i.pravatar.cc/1579?u='}
+      imageUrl={artist.avatarUrl}
       shape="round"
       size={size}
       clickable

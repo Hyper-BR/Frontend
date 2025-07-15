@@ -10,7 +10,6 @@ import { Dropdown } from '@/components/commons/Dropdown';
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const { userSigned, signOut, isArtist, customer } = useAuth();
 
@@ -64,7 +63,7 @@ const Navbar = () => {
                 <Dropdown.Root>
                   <Dropdown.Trigger>
                     <img
-                      src={`https://i.pravatar.cc/40?u=`}
+                      src={customer?.avatarUrl}
                       alt="avatar"
                       className={styles.avatar}
                     />

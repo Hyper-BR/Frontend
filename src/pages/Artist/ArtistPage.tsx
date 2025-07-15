@@ -25,7 +25,7 @@ export default function ArtistPage() {
 
   return (
     <ProfileLayout
-      avatarUrl={'https://i.pravatar.cc/1579?u='}
+      avatarUrl={artist?.avatarUrl}
       stats={{ followers: '120', following: '87' }}
       name={artist?.username}
       tracks={tracks}

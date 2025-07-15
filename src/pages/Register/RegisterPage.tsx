@@ -8,6 +8,7 @@ import { getTimeZoneByCountry } from '@/utils/getTimeZoneByCountry';
 import { buildZonedDateTime } from '@/utils/buildZonedDateTime';
 import { countries } from '@/constants/countries';
 import { Input } from '@/components/commons/Input/Input';
+import { Button } from '@/components/commons/Button/Button';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -137,7 +138,7 @@ const RegisterPage = () => {
           />
         </label>
 
-        <button type="submit">Registrar</button>
+        <Button type="submit">Registrar</Button>
       </form>
     </div>
   );

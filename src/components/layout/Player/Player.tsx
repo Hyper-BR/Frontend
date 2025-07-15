@@ -59,7 +59,7 @@ const Player = () => {
       <div className={styles.songInfo}>
         {track && (
           <img
-            src={'https://i.pravatar.cc/50?u='}
+            src={`${process.env.API_URL}/${track.coverUrl}`}
             alt="Cover"
             className={styles.image}
           />

@@ -41,7 +41,7 @@ export default function TrackPage() {
       <section className={styles.playerWrapper}>
         <div className={styles.coverContainer}>
           <img
-            src={'https://i.pravatar.cc/1579?u='}
+            src={track.coverUrl}
             alt={track.title}
             className={styles.cover}
           />

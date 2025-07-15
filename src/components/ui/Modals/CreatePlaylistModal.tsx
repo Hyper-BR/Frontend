@@ -20,7 +20,7 @@ const CreatePlaylistModal = () => {
         id: null,
         name: name.trim(),
         description: 'Nova playlist',
-        image: '',
+        coverUrl: '',
       };
 
       await createPlaylist(playlist);

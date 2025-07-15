@@ -65,7 +65,7 @@ const Sidebar = () => {
               onClick={() => navigate(`/playlist/${playlist.id}`)}
             >
               <img
-                src={'https://i.pravatar.cc/150?u='}
+                src={playlist.coverUrl}
                 alt={playlist.name}
                 className={styles.cover}
               />

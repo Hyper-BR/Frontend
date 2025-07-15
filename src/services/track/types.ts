@@ -16,6 +16,7 @@ export type TrackDTO = {
   title: string;
   duration?: number;
   genre: string;
+  coverUrl?: string;
   tags: string[];
   privacy: string;
   createdDate?: string;
