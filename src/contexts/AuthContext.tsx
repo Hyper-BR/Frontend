@@ -13,6 +13,7 @@ interface AuthContextType {
   customer: CustomerDTO | null;
   userSigned: boolean;
   isArtist: boolean;
+  isLabel: boolean;
   signIn(credentials: LoginCredentialsDTO): Promise<void>;
   signOut(): Promise<void>;
   loadUser(): Promise<void>;
@@ -25,7 +26,8 @@ export const AuthContext = createContext<AuthContextType>(
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [customer, setCustomer] = useState<CustomerDTO | null>(null);
 
-  let isArtist = customer?.artistProfile != null;
+  let isArtist = customer?.isArtist;
+  let isLabel = customer?.isLabel;
   let userSigned = !!customer;
 
   const loadUser = useCallback(async () => {
@@ -72,6 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         customer,
         userSigned,
         isArtist,
+        isLabel,
         signIn,
         signOut,
         loadUser,

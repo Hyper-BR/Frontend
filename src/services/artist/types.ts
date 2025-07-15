@@ -1,3 +1,5 @@
+import { CustomerDTO } from '../customer/types';
+
 export type ArtistPageDTO = {
   last: boolean;
   first: boolean;
@@ -9,10 +11,7 @@ export type ArtistPageDTO = {
   content: ArtistDTO[];
 };
 
-export type ArtistDTO = {
-  id: string;
+export interface ArtistDTO extends CustomerDTO {
   username: string;
-  credits: number;
-  email?: string;
-  carts?: [];
-};
+  isVerified: boolean;
+}
