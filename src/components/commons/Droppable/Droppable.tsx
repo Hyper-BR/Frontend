@@ -1,6 +1,7 @@
-import styles from './Droppable.module.scss';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import clsx from 'clsx';
 import React from 'react';
+import styles from './Droppable.module.scss';
 
 interface Props {
   label?: string;
@@ -25,7 +26,7 @@ export function Droppable({
 }: Props) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = React.useState(false);
-  const previewUrl = file ? URL.createObjectURL(file) : null;
+  const previewUrl = (file && URL.createObjectURL(file)) || null;
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -44,8 +45,8 @@ export function Droppable({
     <div
       className={clsx(
         styles.wrapper,
-        styles[shape],
-        styles[size],
+        shape === 'rectangle' && styles[`rectangle-${size}`],
+        shape !== 'rectangle' && styles[size],
         isDragging && styles.hover,
         className,
       )}
@@ -66,7 +67,11 @@ export function Droppable({
         hidden
       />
       {previewUrl ? (
-        <img src={previewUrl} className={styles.preview} />
+        <TransformWrapper>
+          <TransformComponent>
+            <img src={previewUrl} className={styles.preview} />
+          </TransformComponent>
+        </TransformWrapper>
       ) : (
         <span className={styles.label}>{label}</span>
       )}

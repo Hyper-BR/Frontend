@@ -5,67 +5,77 @@
   height: 100%;
 }
 
-.formContainer {
-  flex-direction: column;
-}
-
-.formRelease {
-  flex-direction: column;
-}
-
-.formData {
+.columns2 {
   display: flex;
+  gap: $spacing-md;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
-.formTrack {
-  flex-direction: column;
-}
-
-.topSection {
-  display: flex;
-  gap: $spacing-xl;
-  flex-wrap: wrap;
-}
-
-.leftColumn {
-  flex: 1;
+.colSidebar {
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
-  min-width: 280px;
+  min-height: max-content;
 }
 
-.trackList {
+.colMain {
+  flex: 2; // parte maior
   display: flex;
   flex-direction: column;
-  border-top: 1px solid rgba($color-white, 0.05);
-  margin-top: $spacing-md;
+  gap: $spacing-md;
 }
 
-.trackItem {
-  background: none;
-  border: none;
-  color: $color-muted;
-  text-align: left;
-  padding: $spacing-sm;
+.trackColumnTitle {
   font-size: $font-size-md;
+  font-weight: bold;
+  margin-top: $spacing-lg;
+}
+
+.trackColumnList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.trackColumnItem {
+  padding: $spacing-xs $spacing-sm;
+  background-color: rgba($color-white, 0.02);
+  border-radius: $radius-sm;
+  font-size: $font-size-sm;
   cursor: pointer;
+  color: $color-muted;
 
   &:hover {
+    background-color: rgba($color-primary, 0.08);
     color: $color-white;
   }
 }
 
 .active {
-  font-weight: bold;
+  background-color: rgba($color-primary, 0.15);
   color: $color-white;
-  background-color: rgba($color-primary, 0.08);
-  border-radius: $radius-sm;
+  font-weight: 500;
 }
 
-.rightColumn {
-  flex: 2;
+.privacy {
   display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
+  gap: $spacing-lg;
+  margin-top: $spacing-md;
+
+  input[type='radio'] {
+    accent-color: $color-primary;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: $font-size-sm;
+    color: $color-white;
+    cursor: pointer;
+  }
 }

@@ -32,7 +32,6 @@ const UploadReleaseModal = () => {
     tracks: [],
   });
 
-  // 1) upload inicial de áudio(s)
   const handleInitialUpload = (files: File[]) => {
     if (!files.length) return;
     const trackObjects: TrackDTO[] = files.map((file) => ({
@@ -55,7 +54,6 @@ const UploadReleaseModal = () => {
     setReleaseType(files.length === 1 ? 'SINGLE' : 'RELEASE');
   };
 
-  // busca colaboradores por nome
   useEffect(() => {
     if (searchArtistName.length < 2) {
       setMatchedArtists([]);
@@ -66,7 +64,6 @@ const UploadReleaseModal = () => {
       .catch(console.error);
   }, [searchArtistName]);
 
-  // alterações genéricas no form
   const handleTrackChange =
     (index: number, field: keyof TrackDTO) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +87,6 @@ const UploadReleaseModal = () => {
       return { ...prev, tracks };
     });
 
-  // reset de estado + fechar modal
   const cleanAndClose = () => {
     setInitialUploadDone(false);
     setReleaseType(null);
@@ -102,7 +98,6 @@ const UploadReleaseModal = () => {
     closeModal();
   };
 
-  // envio
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -162,47 +157,37 @@ const UploadReleaseModal = () => {
           )}
 
           {initialUploadDone && (
-            <div className={styles.topSection}>
-              {/* ⬅️ Lado esquerdo: capa + release metadata + lista de faixas */}
-              <div className={styles.leftColumn}>
-                {releaseType === 'RELEASE' && (
-                  <Droppable
-                    label="Upload da capa"
-                    onDrop={handleCoverDrop}
-                    shape="square"
-                    size="md"
-                    accept="image/*"
-                  />
-                )}
-
-                <Input
-                  type="text"
-                  label="Descrição do release"
-                  value={form.description}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, description: e.target.value }))
-                  }
+            <div className={styles.columns2}>
+              <div className={styles.colSidebar}>
+                <Droppable
+                  label="Upload da capa"
+                  onDrop={handleCoverDrop}
+                  shape="square"
+                  size="xl"
+                  accept="image/*"
+                  file={form.cover}
                 />
 
-                <div className={styles.trackList}>
+                <h3 className={styles.trackColumnTitle}>Faixas enviadas</h3>
+                <ul className={styles.trackColumnList}>
                   {form.tracks.map((track, i) => (
-                    <button
+                    <li
                       key={i}
-                      type="button"
                       className={clsx(
-                        styles.trackItem,
+                        styles.trackColumnItem,
                         i === openTrackIndex && styles.active,
                       )}
                       onClick={() => setOpenTrackIndex(i)}
                     >
-                      {track.title || `Faixa ${i + 1}`}
-                    </button>
+                      {track.title?.trim() !== ''
+                        ? track.title
+                        : track.file?.name}
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
-              {/* ➡️ Lado direito: Formulário da faixa selecionada */}
-              <div className={styles.rightColumn}>
+              <div className={styles.colMain}>
                 <Input
                   type="text"
                   label="Título da faixa"
@@ -239,6 +224,7 @@ const UploadReleaseModal = () => {
                 />
 
                 <div className={styles.privacy}>
+                  Privacidade
                   <Input
                     type="radio"
                     value="PUBLIC"
