@@ -5,6 +5,7 @@ import { SubscriptionDTO } from '@/services/subscriptions/types';
 import { subscriptionDetailsByType } from '@/constants/subscriptionDetails';
 import styles from './SubscriptionPage.module.scss';
 import { upgradeSubscription } from '@/services/payment';
+import { Button } from '@/components/commons/Button/Button';
 
 export default function SubscriptionPage() {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ export default function SubscriptionPage() {
                   <li key={i}>{f}</li>
                 ))}
               </ul>
-              <button onClick={() => handleUpgrade(plan)}>Assinar</button>
+              <Button onClick={() => handleUpgrade(plan)}>Assinar</Button>
             </div>
           );
         })}

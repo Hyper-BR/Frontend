@@ -4,16 +4,13 @@ import { getTracks } from '@/services/track';
 import { getArtists } from '@/services/artist';
 import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
-import { usePlayer } from '@/context/PlayerContext';
 import { useNavigate } from 'react-router-dom';
-import ArtistCard from '@/components/commons/Cards/ArtistCard';
-import TrackCard from '@/components/commons/Cards/TrackCard';
+import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
+import { TrackCard } from '@/components/ui/Cards/TrackCard';
 
 const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
-
-  const { setTrackPlayer } = usePlayer();
 
   const navigate = useNavigate();
 
@@ -44,7 +41,8 @@ const Home = () => {
             <TrackCard
               key={track.id}
               track={track}
-              onPlay={() => setTrackPlayer(track)}
+              size="md"
+              direction="column"
             />
           ))}
         </div>
@@ -55,10 +53,10 @@ const Home = () => {
         <div className={styles.carousel}>
           {artists.map((artist) => (
             <ArtistCard
+              artist={artist}
+              size="md"
               key={artist.id}
-              image={'https://i.pravatar.cc/1579?u='}
-              name={artist.username}
-              onClick={() => navigate(`/artist/${artist.id}`)}
+              direction="column"
             />
           ))}
         </div>

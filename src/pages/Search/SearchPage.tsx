@@ -4,9 +4,10 @@ import { searchArtists, searchTracks } from '@/services/search';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
-import { usePlayer } from '@/context/PlayerContext';
-import TrackCard from '@/components/commons/Cards/TrackCard';
-import ArtistCard from '@/components/commons/Cards/ArtistCard';
+import { usePlayer } from '@/contexts/PlayerContext';
+import { TrackCard } from '@/components/ui/Cards/TrackCard';
+import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
+import { Button } from '@/components/commons/Button/Button';
 
 function useQuery() {
   const { search } = useLocation();
@@ -17,7 +18,6 @@ function useQuery() {
 export default function SearchPage() {
   const q = useQuery();
   const navigate = useNavigate();
-  const { setTrackPlayer } = usePlayer();
 
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
@@ -37,7 +37,9 @@ export default function SearchPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <button onClick={() => navigate(-1)}>← Voltar</button>
+        <Button onClick={() => navigate(-1)} variant="ghost">
+          ← Voltar
+        </Button>
         <h1>Resultados para “{q}”</h1>
       </header>
 
@@ -50,12 +52,7 @@ export default function SearchPage() {
             {artists.length ? (
               <>
                 {artists.map((artist) => (
-                  <ArtistCard
-                    key={artist.id}
-                    image={'https://i.pravatar.cc/1579?u='}
-                    name={artist.username}
-                    onClick={() => navigate(`/artist/${artist.id}`)}
-                  />
+                  <ArtistCard artist={artist} size="lg" key={artist.id} />
                 ))}
               </>
             ) : (
@@ -68,11 +65,7 @@ export default function SearchPage() {
             {tracks.length ? (
               <>
                 {tracks.map((track) => (
-                  <TrackCard
-                    key={track.id}
-                    track={track}
-                    onPlay={() => setTrackPlayer(track)}
-                  />
+                  <TrackCard key={track.id} track={track} size="md" />
                 ))}
               </>
             ) : (

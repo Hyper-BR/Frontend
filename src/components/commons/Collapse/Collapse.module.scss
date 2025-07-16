@@ -1,0 +1,49 @@
+@use '@/styles/theme.scss' as *;
+
+.wrapper {
+  border: 1px solid rgba($color-white, 0.08);
+  border-radius: $radius-sm;
+  margin-bottom: $spacing-md;
+  background-color: rgba($color-white, 0.025);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-md;
+  background: none;
+  border: none;
+  color: $color-white;
+  font-size: $font-size-md;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.06);
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+.icon {
+  font-size: 1.2em;
+  color: $color-muted;
+}
+
+.toggle {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: $color-primary;
+}
+
+.content {
+  padding: $spacing-md;
+  border-top: 1px solid rgba($color-white, 0.05);
+}

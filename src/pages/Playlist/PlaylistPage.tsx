@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { PlaylistDTO } from '@/services/playlist/types';
-import { getPlaylistById, addTrackToPlaylist } from '@/services/playlist';
-import TrackTable from '@/components/commons/Track/TrackTable';
+import { getPlaylistById } from '@/services/playlist';
 import styles from './PlaylistPage.module.scss';
+import TrackTable from '@/components/ui/Table/TrackTable';
 
 const PlaylistPage = () => {
   const { id } = useParams();

@@ -1,0 +1,123 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.card {
+  margin: $spacing-xs;
+  min-width: 120px;
+  max-width: 120px;
+  display: flex;
+  gap: $spacing-sm;
+  align-items: center;
+
+  &.column {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .info {
+      margin-top: $spacing-sm;
+    }
+  }
+
+  &.row {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+
+    .info {
+      margin-top: 0;
+    }
+  }
+
+  &.left {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  &.center {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+  width: 100%;
+
+  &.xs {
+    max-width: 40px;
+  }
+
+  &.sm {
+    max-width: 100px;
+  }
+
+  &.md {
+    max-width: 140px;
+  }
+
+  &.lg {
+    max-width: 180px;
+  }
+
+  &.round {
+    border-radius: 50%;
+  }
+
+  &.square {
+    border-radius: $radius-md;
+  }
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.info {
+  margin-top: $spacing-sm;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  font-size: 0.95rem;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  transition: color $transition, text-decoration 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-white;
+    text-decoration: underline;
+  }
+}
+
+.subtitleLink {
+  font-size: 0.85rem;
+  color: $color-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  transition: color $transition, text-decoration 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-white;
+    text-decoration: underline;
+  }
+}

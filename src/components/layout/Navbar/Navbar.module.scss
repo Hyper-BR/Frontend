@@ -1,21 +1,18 @@
 @use '@/styles/theme.scss' as *;
-@use '@/styles/components/buttons.scss' as buttons;
-@use 'sass:color';
 
 .navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   background-color: $color-black;
-  padding: $spacing-sm $spacing-lg;
+  padding: $spacing-xs $spacing-md;
   display: flex;
   align-items: center;
-  gap: $spacing-lg;
-  height: 64px;
+  height: $navbar-height;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   z-index: 10;
-}
-
-.loginButton {
-  margin-left: auto;
-  @include buttons.ghostButton;
+  box-sizing: border-box;
 }
 
 .userSection {
@@ -71,11 +68,6 @@
         color: $color-primary;
       }
     }
-  }
-
-  .loginButton,
-  button {
-    @include buttons.ghostButton;
   }
 }
 

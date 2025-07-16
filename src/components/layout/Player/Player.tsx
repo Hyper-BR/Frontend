@@ -1,7 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import WavesurferPlayer from '@wavesurfer/react';
+import { Input } from '@/components/commons/Input/Input';
+import {
+  PauseIcon,
+  PlayIcon,
+  SkipBackIcon,
+  SkipForwardIcon,
+  VolumeIcon,
+} from 'lucide-react';
+import { Button } from '@/components/commons/Button/Button';
+import { buildFullUrl } from '@/utils/buildFullUrl';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -48,11 +58,13 @@ const Player = () => {
   return (
     <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
       <div className={styles.songInfo}>
-        <img
-          src={track?.coverUrl || 'https://i.pravatar.cc/50?u='}
-          alt="Cover"
-          className={styles.image}
-        />
+        {track && (
+          <img
+            src={buildFullUrl(track?.coverUrl)}
+            alt="Cover"
+            className={styles.image}
+          />
+        )}
         <div>
           <p className={styles.title}>
             {track?.title || 'Nenhuma faixa selecionada'}
@@ -63,44 +75,44 @@ const Player = () => {
         </div>
       </div>
 
-      <div className={styles.controls}>
-        <button disabled={!track}>⏮</button>
-        <button onClick={togglePlay} disabled={!track}>
-          {isPlaying ? '⏸' : '▶'}
-        </button>
-        <button disabled={!track}>⏭</button>
-      </div>
-
       {track && (
-        <div className={styles.waveform}>
-          <WavesurferPlayer
-            height={60}
-            progressColor="#b41414"
-            waveColor="#ddd"
-            cursorColor="#b41414"
-            normalize
-            backend="MediaElement"
-            url={`${process.env.API_URL}/track/play/${track.id}`}
-            onReady={handleReady}
-            onTimeupdate={handleTimeupdate}
-            onFinish={() => togglePlay()}
-            onError={(e) => console.error('WaveSurfer error:', e)}
-          />
-        </div>
-      )}
+        <>
+          <div className={styles.controls}>
+            <Button disabled={!track} variant="transparent">
+              <SkipBackIcon />
+            </Button>
+            <Button
+              onClick={togglePlay}
+              disabled={!track}
+              variant="transparent"
+            >
+              {isPlaying ? <PauseIcon /> : <PlayIcon />}
+            </Button>
+            <Button disabled={!track} variant="transparent">
+              <SkipForwardIcon />
+            </Button>
+          </div>
+          <div className={styles.waveform}>
+            <WavesurferPlayer
+              height={60}
+              progressColor="#b41414"
+              waveColor="#ddd"
+              cursorColor="#b41414"
+              normalize
+              backend="MediaElement"
+              url={buildFullUrl(`/track/play/${track.id}`)}
+              onReady={handleReady}
+              onTimeupdate={handleTimeupdate}
+              onFinish={() => togglePlay()}
+              onError={(e) => console.error('WaveSurfer error:', e)}
+            />
+          </div>
 
-      <div className={styles.volume}>
-        🔊
-        <input
-          type="range"
-          min={0}
-          max={1}
-          step={0.01}
-          value={volume}
-          onChange={handleVolume}
-          disabled={!track}
-        />
-      </div>
+          <div className={styles.volume}>
+            <VolumeIcon />
+          </div>
+        </>
+      )}
     </footer>
   );
 };

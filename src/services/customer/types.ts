@@ -12,4 +12,6 @@ export type CustomerDTO = {
   avatarUrl?: string;
   bio?: string;
   artistProfile?: ArtistDTO;
+  artist?: boolean;
+  label?: boolean;
 };

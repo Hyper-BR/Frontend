@@ -12,14 +12,6 @@
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   padding: $spacing-md;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  > * {
-    scroll-snap-align: start;
-  }
 }
 
 .arrow {

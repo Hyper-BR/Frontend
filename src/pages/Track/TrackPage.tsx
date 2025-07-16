@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './TrackPage.module.scss';
 import { getTrackById } from '@/services/track';
 import WavesurferPlayer from '@wavesurfer/react';
-import { usePlayer } from '@/context/PlayerContext';
+import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
+import { buildFullUrl } from '@/utils/buildFullUrl';
 
 export default function TrackPage() {
   const { id } = useParams();
@@ -41,7 +42,7 @@ export default function TrackPage() {
       <section className={styles.playerWrapper}>
         <div className={styles.coverContainer}>
           <img
-            src={'https://i.pravatar.cc/1579?u='}
+            src={track.coverUrl}
             alt={track.title}
             className={styles.cover}
           />
@@ -54,7 +55,7 @@ export default function TrackPage() {
             cursorColor="#e8202a"
             normalize
             backend="MediaElement"
-            url={`${process.env.API_URL}/track/play/${track.id}`}
+            url={buildFullUrl(`/track/play/${track.id}`)}
             onReady={handleReady}
             onTimeupdate={handleTimeupdate}
             onFinish={() => togglePlay()}

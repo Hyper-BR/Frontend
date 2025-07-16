@@ -1,0 +1,15 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.title {
+  color: $color-primary;
+  font-size: $font-size-lg;
+  margin-bottom: $spacing-sm;
+  text-align: center;
+}

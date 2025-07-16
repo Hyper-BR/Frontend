@@ -30,39 +30,6 @@
     flex-direction: column;
     font-size: $font-size-md;
     gap: $spacing-xs;
-
-    input {
-      background-color: $color-gray-dark;
-      border: 1px solid color.adjust($color-gray-dark, $lightness: 10%);
-      border-radius: $radius-md;
-      padding: $spacing-md;
-      color: $color-white;
-
-      &::placeholder {
-        color: $color-muted;
-      }
-
-      &:focus {
-        outline: none;
-        border-color: $color-primary;
-        box-shadow: 0 0 0 1px $color-primary;
-      }
-    }
-  }
-
-  button {
-    background-color: $color-primary;
-    color: $color-white;
-    padding: $spacing-md;
-    border: none;
-    border-radius: $radius-md;
-    cursor: pointer;
-    font-weight: $font-weight-bold;
-    transition: background-color $transition;
-
-    &:hover {
-      background-color: $color-primary-dark;
-    }
   }
 }
 

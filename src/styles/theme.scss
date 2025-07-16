@@ -1,4 +1,4 @@
-// 🎯 Paleta de Cores
+// Paleta de Cores
 $color-primary: #e8202a !default;
 $color-primary-dark: #b41414 !default;
 $color-black: #000000 !default;
@@ -6,7 +6,7 @@ $color-gray-dark: #1c1c1cf0 !default;
 $color-muted: #b3b3b3 !default;
 $color-white: #ffffff !default;
 
-// 🌌 Gradientes e fundos
+// Gradientes e fundos
 $background-gradient: radial-gradient(
   circle at 20% 20%,
   $color-primary-dark 0%,
@@ -14,24 +14,28 @@ $background-gradient: radial-gradient(
   $color-black 100%
 ) !default;
 
-// 🧱 Espaçamento
+// Espaçamento
 $spacing-xs: 0.25rem !default;
 $spacing-sm: 0.5rem !default;
 $spacing-md: 1rem !default;
 $spacing-lg: 2rem !default;
 $spacing-xl: 4rem !default;
 
-// 🔤 Tipografia
+// Tipografia
 $font-size-sm: 0.875rem !default;
 $font-size-md: 1rem !default;
 $font-size-lg: 1.25rem !default;
 $font-weight-regular: 400 !default;
 $font-weight-bold: 600 !default;
 
-// 🧩 Estética geral
+// Estética geral
 $radius-xs: 4px !default;
 $radius-sm: 6px !default;
 $radius-md: 8px !default;
 $radius-lg: 10px !default;
 $radius-xl: 12px !default;
 $transition: 0.3s ease !default;
+
+// Outros
+$player-height: 80px;
+$navbar-height: 60px;

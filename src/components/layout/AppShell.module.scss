@@ -4,8 +4,10 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  overflow: hidden;
+  height: 100%;
+  padding-bottom: $player-height;
+  padding-top: $navbar-height;
+  box-sizing: border-box;
 }
 
 .layout {
@@ -13,7 +15,6 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  min-height: 0;
   gap: $spacing-sm;
   padding: $spacing-xs;
   box-sizing: border-box;
@@ -30,56 +31,12 @@
 .home {
   flex: 1;
   overflow-y: auto;
-  min-height: 0;
-
-  padding: $spacing-sm $spacing-sm 120px;
-
+  overflow-x: hidden;
   background-color: $color-gray-dark;
   border-radius: $radius-md;
-  position: relative;
-
-  background-image: radial-gradient(
-      circle at 15% 30%,
-      rgba(255, 0, 0, 0.03),
-      transparent 50%
-    ),
-    radial-gradient(circle at 85% 70%, rgba(255, 0, 0, 0.025), transparent 50%);
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  box-shadow: 0 0 1px rgba(255, 0, 0, 0.06),
-    inset 0 0 12px rgba(255, 0, 0, 0.015);
 
   h1,
   h2 {
     color: color.adjust($color-white, $lightness: 10%);
-  }
-
-  .button-red {
-    background: transparent;
-    color: $color-primary;
-    border: 1px solid $color-primary-dark;
-    padding: 0.75rem 1.5rem;
-    border-radius: $radius-md;
-    transition: all 0.3s ease;
-
-    &:hover {
-      background: rgba(255, 0, 0, 0.1);
-      color: $color-white;
-      border-color: $color-primary-dark;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 0, 0, 0.15);
-    border-radius: 3px;
-  }
-
-  @media (max-width: 768px) {
-    padding: $spacing-xs $spacing-xs 112px;
   }
 }

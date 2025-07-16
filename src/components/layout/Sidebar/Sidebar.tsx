@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import styles from './Sidebar.module.scss';
 import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
-import PlaylistModal from '../../commons/Forms/PlaylistForm';
-import { Modal } from '../../commons/Modal/Modal';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@/components/commons/Button/Button';
+import { Modal } from '@/components/commons/Modal';
+import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylistModal';
 
 const Sidebar = () => {
-  const [showModal, setShowModal] = useState(false);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
   const [hoveredPlaylistId, setHoveredPlaylistId] = useState<string | null>(
     null,
@@ -36,51 +36,45 @@ const Sidebar = () => {
 
   if (!userSigned) return;
   return (
-    <aside className={styles.sidebar}>
-      {showModal && (
-        <Modal isOpen={true} onClose={() => setShowModal(false)}>
-          <PlaylistModal
-            onClose={() => setShowModal(false)}
-            onCreate={fetchPlaylists}
-          />
-        </Modal>
-      )}
-      <div className={styles.playlistList}>
-        <button
-          className={styles.addPlaylistButton}
-          onClick={() => setShowModal(true)}
-        >
-          ➕ Nova Playlist
-        </button>
+    <>
+      <CreatePlaylistModal />
+      <aside className={styles.sidebar}>
+        <div className={styles.playlistList}>
+          <Modal.Trigger modal="createPlaylist">
+            <Button variant="ghost">Nova Playlist</Button>
+          </Modal.Trigger>
 
-        {playlists.map((playlist) => (
-          <div
-            key={playlist.id}
-            className={`${styles.item} ${
-              hoveredPlaylistId === playlist.id ? styles['droppable-hover'] : ''
-            }`}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setHoveredPlaylistId(playlist.id);
-            }}
-            onDragLeave={() => setHoveredPlaylistId(null)}
-            onDrop={(e) => {
-              const trackId = e.dataTransfer.getData('text/plain');
-              handleAddToPlaylist(trackId, playlist.id);
-              setHoveredPlaylistId(null);
-            }}
-            onClick={() => navigate(`/playlist/${playlist.id}`)}
-          >
-            <img
-              src={'https://i.pravatar.cc/150?u='}
-              alt={playlist.name}
-              className={styles.cover}
-            />
-            <span className={styles.name}>{playlist.name}</span>
-          </div>
-        ))}
-      </div>
-    </aside>
+          {playlists.map((playlist) => (
+            <div
+              key={playlist.id}
+              className={`${styles.item} ${
+                hoveredPlaylistId === playlist.id
+                  ? styles['droppable-hover']
+                  : ''
+              }`}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setHoveredPlaylistId(playlist.id);
+              }}
+              onDragLeave={() => setHoveredPlaylistId(null)}
+              onDrop={(e) => {
+                const trackId = e.dataTransfer.getData('text/plain');
+                handleAddToPlaylist(trackId, playlist.id);
+                setHoveredPlaylistId(null);
+              }}
+              onClick={() => navigate(`/playlist/${playlist.id}`)}
+            >
+              <img
+                src={playlist.coverUrl}
+                alt={playlist.name}
+                className={styles.cover}
+              />
+              <span className={styles.name}>{playlist.name}</span>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </>
   );
 };
 

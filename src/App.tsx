@@ -1,14 +1,17 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
-import { PlayerProvider } from './context/PlayerContext';
+import { PlayerProvider } from './contexts/PlayerContext';
+import { ModalProvider } from './contexts/ModalContext';
 
 export const App = () => {
   return (
-    <PlayerProvider>
-      <AppShell>
-        <Outlet />
-      </AppShell>
-    </PlayerProvider>
+    <ModalProvider>
+      <PlayerProvider>
+        <AppShell>
+          <Outlet />
+        </AppShell>
+      </PlayerProvider>
+    </ModalProvider>
   );
 };
