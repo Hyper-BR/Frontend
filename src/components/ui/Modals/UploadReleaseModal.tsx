@@ -10,8 +10,8 @@ import { ArtistDTO } from '@/services/artist/types';
 import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
-import { Collapse } from '@/components/commons/Collapse/Collapse';
 import clsx from 'clsx';
+import Select from 'react-select';
 
 const UploadReleaseModal = () => {
   const { closeModal } = useModal();
@@ -21,7 +21,6 @@ const UploadReleaseModal = () => {
     null,
   );
   const [openTrackIndex, setOpenTrackIndex] = useState<number>(-1);
-
   const [searchArtistName, setSearchArtistName] = useState('');
   const [matchedArtists, setMatchedArtists] = useState<ArtistDTO[]>([]);
   const [showArtistSearch, setShowArtistSearch] = useState(false);
@@ -32,6 +31,16 @@ const UploadReleaseModal = () => {
     tracks: [],
   });
 
+  const collaboratorOptions = Array.isArray(matchedArtists)
+    ? matchedArtists.map((artist) => ({
+        value: artist.id,
+        label: artist.username,
+      }))
+    : [];
+
+  const selectedArtist =
+    collaboratorOptions.find((opt) => opt.label === searchArtistName) || null;
+
   const handleInitialUpload = (files: File[]) => {
     if (!files.length) return;
     const trackObjects: TrackDTO[] = files.map((file) => ({
@@ -41,7 +50,7 @@ const UploadReleaseModal = () => {
       file,
       artists: [
         {
-          id: '0',
+          id: '',
           username: '',
         },
       ],
@@ -53,27 +62,6 @@ const UploadReleaseModal = () => {
     setInitialUploadDone(true);
     setReleaseType(files.length === 1 ? 'SINGLE' : 'RELEASE');
   };
-
-  useEffect(() => {
-    if (searchArtistName.length < 2) {
-      setMatchedArtists([]);
-      return;
-    }
-    searchArtistsByName(searchArtistName)
-      .then((res) => setMatchedArtists(res.data))
-      .catch(console.error);
-  }, [searchArtistName]);
-
-  const handleTrackChange =
-    (index: number, field: keyof TrackDTO) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setForm((prev) => {
-        const tracks = [...prev.tracks];
-        tracks[index] = { ...tracks[index], [field]: value };
-        return { ...prev, tracks };
-      });
-    };
 
   const handleCoverDrop = (files: File[]) => {
     const img = files[0];
@@ -119,6 +107,7 @@ const UploadReleaseModal = () => {
       });
 
       const res = await createRelease(data);
+      console.log('Release created:', res);
       if (!res) throw new Error('Erro no envio');
       cleanAndClose();
     } catch (err) {
@@ -128,6 +117,34 @@ const UploadReleaseModal = () => {
       setLoading(false);
     }
   };
+
+  const fetchArtists = async () => {
+    try {
+      const res = await searchArtistsByName(searchArtistName);
+      setMatchedArtists(res.data.content);
+    } catch (error) {
+      console.error('Erro ao buscar artistas:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (searchArtistName.length < 2) {
+      setMatchedArtists([]);
+      return;
+    }
+    fetchArtists();
+  }, [searchArtistName]);
+
+  const handleTrackChange =
+    (index: number, field: keyof TrackDTO) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setForm((prev) => {
+        const tracks = [...prev.tracks];
+        tracks[index] = { ...tracks[index], [field]: value };
+        return { ...prev, tracks };
+      });
+    };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -257,29 +274,43 @@ const UploadReleaseModal = () => {
 
                 {showArtistSearch && (
                   <div className={styles.artistSearch}>
-                    <Input
-                      type="text"
-                      value={searchArtistName}
-                      onChange={(e) => setSearchArtistName(e.target.value)}
-                      label="Buscar colaboradores"
+                    <Select
+                      value={form.tracks[openTrackIndex].artists.map(
+                        (artist) => ({
+                          value: artist.id,
+                          label: artist.username,
+                        }),
+                      )}
+                      inputValue={searchArtistName}
+                      onInputChange={(input) => setSearchArtistName(input)}
+                      onChange={(selectedOptions) => {
+                        const selectedArtists = selectedOptions
+                          .map((option) =>
+                            matchedArtists.find((a) => a.id === option.value),
+                          )
+                          .filter(Boolean);
+
+                        setForm((prev) => {
+                          const updatedTracks = [...prev.tracks];
+                          updatedTracks[openTrackIndex].artists =
+                            selectedArtists as ArtistDTO[];
+                          return { ...prev, tracks: updatedTracks };
+                        });
+
+                        setSearchArtistName('');
+                      }}
+                      options={collaboratorOptions}
+                      placeholder="Buscar colaboradores..."
+                      noOptionsMessage={() =>
+                        searchArtistName.length < 2
+                          ? 'Digite pelo menos 2 letras'
+                          : 'Nenhum artista encontrado'
+                      }
+                      isMulti
+                      isClearable
+                      isSearchable
+                      classNamePrefix="react-select"
                     />
-                    {matchedArtists.length > 0 && (
-                      <ul className={styles.artistList}>
-                        {matchedArtists.map((artist) => (
-                          <li key={artist.id}>
-                            {artist.username}
-                            <Button
-                              variant="ghost"
-                              onClick={() =>
-                                handleAddArtistToTrack(artist, openTrackIndex)
-                              }
-                            >
-                              + Adicionar
-                            </Button>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
                   </div>
                 )}
 
@@ -289,6 +320,28 @@ const UploadReleaseModal = () => {
                 >
                   + Colaboradores
                 </Button>
+                <ul className={styles.artistListInline}>
+                  {form.tracks[openTrackIndex].artists.map((a) => (
+                    <li key={a.id}>
+                      {a.username}
+                      <Button
+                        variant="ghost"
+                        onClick={() => {
+                          setForm((prev) => {
+                            const updatedTracks = [...prev.tracks];
+                            updatedTracks[openTrackIndex].artists =
+                              updatedTracks[openTrackIndex].artists.filter(
+                                (artist) => artist.id !== a.id,
+                              );
+                            return { ...prev, tracks: updatedTracks };
+                          });
+                        }}
+                      >
+                        ✖
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           )}

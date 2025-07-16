@@ -79,3 +79,30 @@
     cursor: pointer;
   }
 }
+
+.react-select__control {
+  background-color: rgba($color-white, 0.03);
+  border: 1px solid rgba($color-white, 0.08);
+  border-radius: $radius-sm;
+  color: $color-white;
+  font-size: $font-size-sm;
+}
+
+.react-select__multi-value {
+  background-color: rgba($color-primary, 0.1);
+  border-radius: $radius-sm;
+  padding: 2px 6px;
+}
+
+.react-select__multi-value__label {
+  color: $color-white;
+  font-size: $font-size-sm;
+}
+
+.react-select__multi-value__remove {
+  color: $color-muted;
+
+  &:hover {
+    color: $color-primary;
+  }
+}

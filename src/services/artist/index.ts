@@ -22,8 +22,8 @@ export const getArtistById = (id: string): AxiosPromise<ArtistDTO> => {
 
 export const searchArtistsByName = (
   query: string,
-): AxiosPromise<ArtistDTO[]> => {
+): AxiosPromise<ArtistPageDTO> => {
   const { get } = useService();
 
-  return get<ArtistDTO[]>(`/artists`, { query });
+  return get<ArtistPageDTO>(`/artists`, { query });
 };
