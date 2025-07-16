@@ -14,7 +14,7 @@
   padding: $spacing-lg;
   box-sizing: border-box;
 
-  z-index: 9999999 !important;
+  z-index: 9999999;
 
   @media (max-width: 768px) {
     padding: $spacing-sm;
@@ -38,8 +38,6 @@
   padding: $spacing-lg;
   padding-bottom: 64px;
   box-sizing: border-box;
-
-  z-index: 100000;
 
   @media (max-width: 768px) {
     padding: $spacing-md;
@@ -90,7 +88,7 @@
 .content {
   flex: 1;
   overflow-y: auto;
-  padding-right: 4px;
+  box-sizing: border-box;
   padding-bottom: $spacing-lg;
 
   &::-webkit-scrollbar {

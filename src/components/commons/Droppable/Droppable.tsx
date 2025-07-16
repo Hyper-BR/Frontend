@@ -8,8 +8,9 @@ interface Props {
   multiple?: boolean;
   accept?: string;
   shape?: 'square' | 'round' | 'rectangle';
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   file?: File;
+  className?: string;
 }
 
 export function Droppable({
@@ -19,6 +20,7 @@ export function Droppable({
   accept = 'image/*',
   shape = 'square',
   size = 'md',
+  className,
   file,
 }: Props) {
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -45,6 +47,7 @@ export function Droppable({
         styles[shape],
         styles[size],
         isDragging && styles.hover,
+        className,
       )}
       onDragOver={(e) => {
         e.preventDefault();

@@ -90,8 +90,8 @@
 .tabNav {
   display: flex;
   gap: $spacing-lg;
-  border-bottom: 1px solid rgba($color-white, 0.1); // 👈 linha de separação
-  padding-bottom: $spacing-sm; // 👈 espaçamento entre botões e linha
+  border-bottom: 1px solid rgba($color-white, 0.1);
+  padding-bottom: $spacing-sm;
 }
 
 .activeTab {

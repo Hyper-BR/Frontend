@@ -1,26 +1,71 @@
 @use '@/styles/theme.scss' as *;
 @use 'sass:color';
 
-.topSection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $spacing-xl;
-  align-items: flex-start;
+.initialDrop {
+  height: 100%;
 }
 
-.metadata {
+.formContainer {
+  flex-direction: column;
+}
+
+.formRelease {
+  flex-direction: column;
+}
+
+.formData {
+  display: flex;
+}
+
+.formTrack {
+  flex-direction: column;
+}
+
+.topSection {
+  display: flex;
+  gap: $spacing-xl;
+  flex-wrap: wrap;
+}
+
+.leftColumn {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: $spacing-md;
+  min-width: 280px;
 }
 
-.privacy {
+.trackList {
   display: flex;
-  gap: $spacing-lg;
+  flex-direction: column;
+  border-top: 1px solid rgba($color-white, 0.05);
   margin-top: $spacing-md;
+}
 
-  input[type='radio'] {
-    accent-color: $color-primary;
+.trackItem {
+  background: none;
+  border: none;
+  color: $color-muted;
+  text-align: left;
+  padding: $spacing-sm;
+  font-size: $font-size-md;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-white;
   }
+}
+
+.active {
+  font-weight: bold;
+  color: $color-white;
+  background-color: rgba($color-primary, 0.08);
+  border-radius: $radius-sm;
+}
+
+.rightColumn {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
 }

@@ -32,7 +32,7 @@ const CreatePlaylistModal = () => {
   };
 
   return (
-    <Modal.Root modal="createPlaylist" size="sm">
+    <Modal.Root modal="createPlaylist" size="sm" onClose={closeModal}>
       <Modal.Header title="Nova Playlist" />
 
       <Modal.Content>

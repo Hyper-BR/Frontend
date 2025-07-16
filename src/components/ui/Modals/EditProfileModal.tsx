@@ -47,7 +47,7 @@ const EditProfileModal = () => {
   };
 
   return (
-    <Modal.Root modal="editProfile" size="md">
+    <Modal.Root modal="editProfile" size="md" onClose={closeModal}>
       <Modal.Header title="Editar Perfil" />
 
       <Modal.Content>
