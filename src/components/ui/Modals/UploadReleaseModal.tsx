@@ -12,6 +12,8 @@ import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
 import clsx from 'clsx';
 import Select from 'react-select';
+import TrackEditor from '@/components/commons/Tracks/TrackEditor';
+import TrackList from '@/components/commons/Tracks/TrackList';
 
 const UploadReleaseModal = () => {
   const { closeModal } = useModal();
@@ -37,9 +39,6 @@ const UploadReleaseModal = () => {
         label: artist.username,
       }))
     : [];
-
-  const selectedArtist =
-    collaboratorOptions.find((opt) => opt.label === searchArtistName) || null;
 
   const handleInitialUpload = (files: File[]) => {
     if (!files.length) return;
@@ -67,13 +66,6 @@ const UploadReleaseModal = () => {
     const img = files[0];
     if (img) setForm((prev) => ({ ...prev, cover: img }));
   };
-
-  const handleAddArtistToTrack = (artist: ArtistDTO, index: number) =>
-    setForm((prev) => {
-      const tracks = [...prev.tracks];
-      tracks[index].artists = [...(tracks[index].artists || []), artist];
-      return { ...prev, tracks };
-    });
 
   const cleanAndClose = () => {
     setInitialUploadDone(false);
@@ -185,163 +177,50 @@ const UploadReleaseModal = () => {
                   file={form.cover}
                 />
 
-                <h3 className={styles.trackColumnTitle}>Faixas enviadas</h3>
-                <ul className={styles.trackColumnList}>
-                  {form.tracks.map((track, i) => (
-                    <li
-                      key={i}
-                      className={clsx(
-                        styles.trackColumnItem,
-                        i === openTrackIndex && styles.active,
-                      )}
-                      onClick={() => setOpenTrackIndex(i)}
-                    >
-                      {track.title?.trim() !== ''
-                        ? track.title
-                        : track.file?.name}
-                    </li>
-                  ))}
-                </ul>
+                <TrackList
+                  tracks={form.tracks}
+                  activeIndex={openTrackIndex}
+                  onSelect={(i) => setOpenTrackIndex(i)}
+                />
               </div>
 
               <div className={styles.colMain}>
-                <Input
-                  type="text"
-                  label="Título da faixa"
-                  value={form.tracks[openTrackIndex].title}
-                  required
-                  onChange={handleTrackChange(openTrackIndex, 'title')}
-                />
-
-                <Input
-                  type="text"
-                  label="Gênero"
-                  value={form.tracks[openTrackIndex].genre}
-                  onChange={handleTrackChange(openTrackIndex, 'genre')}
-                />
-
-                <Input
-                  type="text"
-                  label="Tags (separadas por vírgula)"
-                  value={form.tracks[openTrackIndex].tags.join(', ')}
-                  onChange={(e) =>
-                    handleTrackChange(
-                      openTrackIndex,
-                      'tags',
-                    )({
-                      ...e,
-                      target: {
-                        ...e.target,
-                        value: e.target.value
-                          .split(',')
-                          .map((tag) => tag.trim()),
-                      },
-                    } as unknown as React.ChangeEvent<HTMLInputElement>)
+                <TrackEditor
+                  track={form.tracks[openTrackIndex]}
+                  index={openTrackIndex}
+                  onChange={(field, value) =>
+                    setForm((prev) => {
+                      const updated = [...prev.tracks];
+                      updated[openTrackIndex] = {
+                        ...updated[openTrackIndex],
+                        [field]: value,
+                      };
+                      return { ...prev, tracks: updated };
+                    })
                   }
+                  onArtistRemove={(artistId) =>
+                    setForm((prev) => {
+                      const updated = [...prev.tracks];
+                      updated[openTrackIndex].artists = updated[
+                        openTrackIndex
+                      ].artists.filter((a) => a.id !== artistId);
+                      return { ...prev, tracks: updated };
+                    })
+                  }
+                  onToggleSearch={() => setShowArtistSearch(!showArtistSearch)}
+                  showArtistSearch={showArtistSearch}
+                  matchedArtists={matchedArtists}
+                  collaboratorOptions={collaboratorOptions}
+                  onArtistSelect={(selected) =>
+                    setForm((prev) => {
+                      const updated = [...prev.tracks];
+                      updated[openTrackIndex].artists = selected;
+                      return { ...prev, tracks: updated };
+                    })
+                  }
+                  searchArtistName={searchArtistName}
+                  onSearchInput={(val) => setSearchArtistName(val)}
                 />
-
-                <div className={styles.privacy}>
-                  Privacidade
-                  <Input
-                    type="radio"
-                    value="PUBLIC"
-                    checked={form.tracks[openTrackIndex].privacy === 'PUBLIC'}
-                    onChange={() =>
-                      handleTrackChange(
-                        openTrackIndex,
-                        'privacy',
-                      )({
-                        target: { value: 'PUBLIC' },
-                      } as React.ChangeEvent<HTMLInputElement>)
-                    }
-                    label="Público"
-                  />
-                  <Input
-                    type="radio"
-                    value="PRIVATE"
-                    checked={form.tracks[openTrackIndex].privacy === 'PRIVATE'}
-                    onChange={() =>
-                      handleTrackChange(
-                        openTrackIndex,
-                        'privacy',
-                      )({
-                        target: { value: 'PRIVATE' },
-                      } as React.ChangeEvent<HTMLInputElement>)
-                    }
-                    label="Privado"
-                  />
-                </div>
-
-                {showArtistSearch && (
-                  <div className={styles.artistSearch}>
-                    <Select
-                      value={form.tracks[openTrackIndex].artists.map(
-                        (artist) => ({
-                          value: artist.id,
-                          label: artist.username,
-                        }),
-                      )}
-                      inputValue={searchArtistName}
-                      onInputChange={(input) => setSearchArtistName(input)}
-                      onChange={(selectedOptions) => {
-                        const selectedArtists = selectedOptions
-                          .map((option) =>
-                            matchedArtists.find((a) => a.id === option.value),
-                          )
-                          .filter(Boolean);
-
-                        setForm((prev) => {
-                          const updatedTracks = [...prev.tracks];
-                          updatedTracks[openTrackIndex].artists =
-                            selectedArtists as ArtistDTO[];
-                          return { ...prev, tracks: updatedTracks };
-                        });
-
-                        setSearchArtistName('');
-                      }}
-                      options={collaboratorOptions}
-                      placeholder="Buscar colaboradores..."
-                      noOptionsMessage={() =>
-                        searchArtistName.length < 2
-                          ? 'Digite pelo menos 2 letras'
-                          : 'Nenhum artista encontrado'
-                      }
-                      isMulti
-                      isClearable
-                      isSearchable
-                      classNamePrefix="react-select"
-                    />
-                  </div>
-                )}
-
-                <Button
-                  variant="ghost"
-                  onClick={() => setShowArtistSearch(!showArtistSearch)}
-                >
-                  + Colaboradores
-                </Button>
-                <ul className={styles.artistListInline}>
-                  {form.tracks[openTrackIndex].artists.map((a) => (
-                    <li key={a.id}>
-                      {a.username}
-                      <Button
-                        variant="ghost"
-                        onClick={() => {
-                          setForm((prev) => {
-                            const updatedTracks = [...prev.tracks];
-                            updatedTracks[openTrackIndex].artists =
-                              updatedTracks[openTrackIndex].artists.filter(
-                                (artist) => artist.id !== a.id,
-                              );
-                            return { ...prev, tracks: updatedTracks };
-                          });
-                        }}
-                      >
-                        ✖
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           )}

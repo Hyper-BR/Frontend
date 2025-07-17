@@ -1,0 +1,50 @@
+@use '@/styles/theme.scss' as *;
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.privacy {
+  display: flex;
+  gap: $spacing-lg;
+  margin-top: $spacing-md;
+
+  input[type='radio'] {
+    accent-color: $color-primary;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: $font-size-sm;
+    color: $color-white;
+    cursor: pointer;
+  }
+}
+
+.artistSearch {
+  margin-top: 1rem;
+}
+
+.artistListInline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: #f3f3f3;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    color: red;
+    font-size: 0.9rem;
+  }
+}
