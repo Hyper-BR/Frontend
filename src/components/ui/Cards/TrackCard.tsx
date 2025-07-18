@@ -13,10 +13,19 @@ interface Props {
 }
 
 export function TrackCard({ track, size = 'md', direction = 'row', shape = 'square', align }: Props) {
-  const { setTrackPlayer } = usePlayer();
+  const { currentTrack, setTrackList, trackList, play } = usePlayer();
 
   const handlePlayClick = () => {
-    setTrackPlayer(track);
+    const isAlreadyPlayingThis = currentTrack?.id === track.id;
+    const isTrackInList = trackList.some((t) => t.id === track.id);
+
+    if (!isAlreadyPlayingThis) {
+      // ✅ define a fila com apenas essa track (ou adicione à fila se preferir)
+      const newList = isTrackInList ? trackList : [track];
+      const index = newList.findIndex((t) => t.id === track.id);
+      setTrackList(newList, index);
+      play(); // ✅ inicia reprodução
+    }
   };
 
   return (

@@ -10,18 +10,10 @@ import { PlayIcon, PauseIcon } from 'lucide-react';
 import type WaveSurfer from 'wavesurfer.js';
 import type { TrackDTO } from '@/services/track/types';
 import styles from './TrackPage.module.scss';
-import Waveform from '@/components/Waveform/Waveform';
 
 export default function TrackPage() {
   const { id } = useParams<{ id: string }>();
-  const {
-    track: globalTrack,
-    currentTime: globalTime,
-    duration: globalDuration,
-    isPlaying: globalPlaying,
-    pause: pauseGlobal,
-    volume,
-  } = usePlayer();
+  const { currentTrack, isPlaying: globalPlaying, pause: pauseGlobal, volume } = usePlayer();
 
   const [pageTrack, setPageTrack] = useState<TrackDTO | null>(null);
   const [localWs, setLocalWs] = useState<WaveSurfer | null>(null);
@@ -29,7 +21,7 @@ export default function TrackPage() {
   const [localTime, setLocalTime] = useState(0);
   const [localDuration, setLocalDuration] = useState(0);
 
-  const isSameTrack = globalTrack?.id === id;
+  const isSameTrack = currentTrack?.id === id;
 
   useEffect(() => {
     if (id) {
@@ -38,18 +30,16 @@ export default function TrackPage() {
   }, [id]);
 
   useEffect(() => {
-    if (localWs) {
-      localPlaying ? localWs.play() : localWs.pause();
-    }
-  }, [localPlaying, localWs]);
-
-  useEffect(() => {
-    if (localWs) {
-      localWs.setVolume(volume);
-    }
+    if (!localWs) return;
+    localWs.setVolume(volume);
   }, [volume, localWs]);
 
-  const handleLocalReady = useCallback(
+  useEffect(() => {
+    if (!localWs) return;
+    localPlaying ? localWs.play().catch(console.warn) : localWs.pause();
+  }, [localPlaying, localWs]);
+
+  const handleReady = useCallback(
     (ws: WaveSurfer) => {
       setLocalWs(ws);
       ws.setVolume(volume);
@@ -58,13 +48,13 @@ export default function TrackPage() {
     [volume],
   );
 
-  const handleLocalTimeUpdate = useCallback((ws: WaveSurfer) => {
+  const handleTimeUpdate = useCallback((ws: WaveSurfer) => {
     setLocalTime(ws.getCurrentTime());
   }, []);
 
   const toggleLocalPlay = () => {
     if (!localWs) return;
-    pauseGlobal(); // ✅ Interrompe player global
+    pauseGlobal();
     setLocalPlaying((prev) => !prev);
   };
 
@@ -78,28 +68,24 @@ export default function TrackPage() {
         </div>
 
         <div className={styles.waveformContainer}>
-          {isSameTrack ? (
-            <Waveform trackId={pageTrack.id} isPlaying={globalPlaying} onFinish={pauseGlobal} height={120} />
-          ) : (
-            <div className={styles.localWaveform}>
-              <Button variant="transparent" onClick={toggleLocalPlay}>
-                {localPlaying ? <PauseIcon /> : <PlayIcon />}
-              </Button>
-              <WavesurferPlayer
-                height={120}
-                url={buildFullUrl(`/track/play/${pageTrack.id}`)}
-                progressColor="#b41414"
-                waveColor="#ddd"
-                cursorColor="#b41414"
-                normalize
-                backend="MediaElement"
-                onReady={handleLocalReady}
-                onTimeupdate={handleLocalTimeUpdate}
-                onFinish={() => setLocalPlaying(false)}
-                onError={(e) => console.error('WaveSurfer (local) error:', e)}
-              />
-            </div>
-          )}
+          <div className={styles.localWaveform}>
+            <Button variant="transparent" onClick={toggleLocalPlay}>
+              {localPlaying ? <PauseIcon /> : <PlayIcon />}
+            </Button>
+            <WavesurferPlayer
+              height={120}
+              url={buildFullUrl(`/track/play/${pageTrack.id}`)}
+              progressColor="#b41414"
+              waveColor="#ddd"
+              cursorColor="#b41414"
+              normalize
+              backend="MediaElement"
+              onReady={handleReady}
+              onTimeupdate={handleTimeUpdate}
+              onFinish={() => setLocalPlaying(false)}
+              onError={(e) => console.error('WaveSurfer error:', e)}
+            />
+          </div>
         </div>
       </section>
 
@@ -110,11 +96,7 @@ export default function TrackPage() {
           {pageTrack.genre} · {pageTrack.plays}
         </p>
 
-        <div className={styles.time}>
-          {isSameTrack
-            ? `${formatTime(globalTime)} / ${formatTime(globalDuration)}`
-            : `${formatTime(localTime)} / ${formatTime(localDuration)}`}
-        </div>
+        <div className={styles.time}>{`${formatTime(localTime)} / ${formatTime(localDuration)}`}</div>
       </section>
     </main>
   );

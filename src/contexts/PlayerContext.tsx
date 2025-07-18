@@ -1,45 +1,49 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
-import type WaveSurfer from 'wavesurfer.js';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { TrackDTO } from '@/services/track/types';
+import type WaveSurfer from 'wavesurfer.js';
 
 export type PlayerContextType = {
-  track: TrackDTO | null;
+  trackList: TrackDTO[];
+  currentIndex: number;
+  currentTrack: TrackDTO | null;
   isPlaying: boolean;
-  currentTime: number;
-  duration: number;
-  volume: number;
-  waveformRef: WaveSurfer | null;
-  setTrackPlayer: (track: TrackDTO) => void;
+
   play: () => void;
   pause: () => void;
   togglePlay: () => void;
-  setCurrentTime: (time: number) => void;
-  setDuration: (duration: number) => void;
+  next: () => void;
+  prev: () => void;
+
+  setTrackList: (tracks: TrackDTO[], startIndex?: number) => void;
+
+  volume: number;
   setVolume: (vol: number) => void;
+
+  waveformRef: WaveSurfer | null;
   setWaveformRef: (ws: WaveSurfer | null) => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider = ({ children }: { children: ReactNode }) => {
-  const [track, setTrack] = useState<TrackDTO | null>(null);
+  const [trackList, setTrackListState] = useState<TrackDTO[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTimeState] = useState(0);
-  const [duration, setDurationState] = useState(0);
   const [volume, setVolumeState] = useState(1);
   const [waveformRef, setWaveformRefState] = useState<WaveSurfer | null>(null);
 
-  const setTrackPlayer = useCallback((newTrack: TrackDTO) => {
-    setTrack(newTrack);
-    setCurrentTimeState(0);
-    setDurationState(0);
-    setWaveformRefState(null);
-    setIsPlaying(true);
+  const currentTrack = trackList[currentIndex] ?? null;
+
+  const setTrackList = useCallback((tracks: TrackDTO[], startIndex = 0) => {
+    setTrackListState(tracks);
+    const idx = Math.max(0, Math.min(startIndex, tracks.length - 1));
+    setCurrentIndex(idx);
+    setIsPlaying(false);
   }, []);
 
   const play = useCallback(() => {
     if (waveformRef) {
-      waveformRef.play().catch((error) => console.warn('Playback failed:', error));
+      waveformRef.play().catch(console.warn);
       setIsPlaying(true);
     }
   }, [waveformRef]);
@@ -55,46 +59,58 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     isPlaying ? pause() : play();
   }, [isPlaying, play, pause]);
 
-  const setCurrentTime = useCallback(
-    (time: number) => {
-      setCurrentTimeState(time);
-      waveformRef?.setTime(time);
-    },
-    [waveformRef],
-  );
+  const next = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const nextIdx = prev + 1 < trackList.length ? prev + 1 : 0;
+      return nextIdx;
+    });
+    setIsPlaying(true);
+  }, [trackList.length]);
 
-  const setDuration = useCallback((dur: number) => {
-    setDurationState(dur);
-  }, []);
+  const prev = useCallback(() => {
+    setCurrentIndex((prev) => {
+      const idx = prev - 1 >= 0 ? prev - 1 : trackList.length - 1;
+      return idx;
+    });
+    setIsPlaying(true);
+  }, [trackList.length]);
 
   const setVolume = useCallback(
     (vol: number) => {
       setVolumeState(vol);
-      waveformRef?.setVolume(vol);
+      if (waveformRef) {
+        waveformRef.setVolume(vol);
+      }
     },
     [waveformRef],
   );
 
-  const setWaveformRef = useCallback((ws: WaveSurfer | null) => {
-    setWaveformRefState(ws);
-  }, []);
+  const setWaveformRef = useCallback(
+    (ws: WaveSurfer | null) => {
+      setWaveformRefState(ws);
+      if (ws) {
+        ws.setVolume(volume);
+      }
+    },
+    [volume],
+  );
 
   return (
     <PlayerContext.Provider
       value={{
-        track,
+        trackList,
+        currentIndex,
+        currentTrack,
         isPlaying,
-        currentTime,
-        duration,
-        volume,
-        waveformRef,
-        setTrackPlayer,
         play,
         pause,
         togglePlay,
-        setCurrentTime,
-        setDuration,
+        next,
+        prev,
+        setTrackList,
+        volume,
         setVolume,
+        waveformRef,
         setWaveformRef,
       }}
     >
@@ -105,6 +121,8 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
 
 export const usePlayer = (): PlayerContextType => {
   const ctx = useContext(PlayerContext);
-  if (!ctx) throw new Error('usePlayer deve estar dentro de <PlayerProvider>');
+  if (!ctx) {
+    throw new Error('usePlayer must be used within <PlayerProvider>');
+  }
   return ctx;
 };

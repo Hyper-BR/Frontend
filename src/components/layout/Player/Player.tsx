@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import { KeyboardIcon, ListMusic, PauseIcon, PlayIcon, SkipBackIcon, SkipForwardIcon, VolumeIcon } from 'lucide-react';
@@ -7,49 +8,51 @@ import Waveform from '@/components/Waveform/Waveform';
 import { formatTime } from '@/utils/formatTime';
 
 const Player = () => {
-  const { track, isPlaying, togglePlay, currentTime, duration, volume, setVolume } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, prev, next, volume, setVolume } = usePlayer();
 
-  if (!track) return null;
+  if (!currentTrack) return null;
 
   return (
-    <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
+    <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
       <div className={styles.songInfo}>
-        <img src={buildFullUrl(track.coverUrl)} alt="Cover" className={styles.image} />
+        <img src={buildFullUrl(currentTrack.coverUrl)} alt="Cover" className={styles.image} />
         <div>
-          <p className={styles.title}>{track.title}</p>
-          <p className={styles.artist}>{track.artists.map((a) => a.username).join(', ')}</p>
+          <p className={styles.title}>{currentTrack.title}</p>
+          <p className={styles.artist}>{currentTrack.artists.map((a) => a.username).join(', ')}</p>
         </div>
       </div>
 
       <div className={styles.controls}>
-        <Button disabled={!track} variant="transparent">
+        <Button onClick={prev} variant="transparent">
           <SkipBackIcon />
         </Button>
-        <Button onClick={togglePlay} disabled={!track} variant="transparent">
+        <Button onClick={togglePlay} variant="transparent">
           {isPlaying ? <PauseIcon /> : <PlayIcon />}
         </Button>
-        <Button disabled={!track} variant="transparent">
+        <Button onClick={next} variant="transparent">
           <SkipForwardIcon />
         </Button>
       </div>
 
       <div className={styles.waveform}>
-        <Waveform trackId={track.id} isPlaying={isPlaying} onFinish={togglePlay} height={60} />
+        <Waveform height={60} />
       </div>
 
       <div className={styles.buttons}>
         <div className={styles.infoBox}>
-          <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
-          {track.bpm && <span>{track.bpm} bpm</span>}
-          {track.key && <span>{track.key}</span>}
+          <span>
+            {formatTime(0)} / {formatTime(0)}
+          </span>
+          {currentTrack.bpm && <span>{currentTrack.bpm} bpm</span>}
+          {currentTrack.key && <span>{currentTrack.key}</span>}
         </div>
 
         <div className={styles.trackInfo}>
-          <Button variant="ghost" onClick={() => console.log('Adicionar à playlist:', track.id)}>
+          <Button variant="ghost" onClick={() => console.log('Adicionar à playlist:', currentTrack.id)}>
             +
           </Button>
-          <Button onClick={() => window.open(`/track/${track.id}/buy`, '_blank')}>
-            {track.price ? `R$ ${track.price}` : 'Comprar'}
+          <Button onClick={() => window.open(`/track/${currentTrack.id}/buy`, '_blank')}>
+            {currentTrack.price ? `R$ ${currentTrack.price}` : 'Comprar'}
           </Button>
         </div>
 
@@ -57,7 +60,7 @@ const Player = () => {
           <Button variant="ghost" className={styles.keyboard}>
             <KeyboardIcon />
           </Button>
-          <Button variant="ghost" className={styles.volume}>
+          <Button variant="ghost" className={styles.volume} onClick={() => setVolume(volume > 0.5 ? 0 : 1)}>
             <VolumeIcon />
           </Button>
           <Button variant="ghost" className={styles.inLine}>
