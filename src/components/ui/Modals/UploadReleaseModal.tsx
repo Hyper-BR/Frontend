@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { TrackDTO } from '@/services/track/types';
 import { useModal } from '@/contexts/ModalContext';
-import { Input } from '@/components/commons/Input/Input';
 import { Button } from '@/components/commons/Button/Button';
 import styles from './UploadReleaseModal.module.scss';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
@@ -10,8 +9,6 @@ import { ArtistDTO } from '@/services/artist/types';
 import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
-import clsx from 'clsx';
-import Select from 'react-select';
 import TrackEditor from '@/components/commons/Tracks/TrackEditor';
 import TrackList from '@/components/commons/Tracks/TrackList';
 
@@ -45,14 +42,9 @@ const UploadReleaseModal = () => {
     const trackObjects: TrackDTO[] = files.map((file) => ({
       title: '',
       genre: '',
-      tags: [''],
+      tags: [] as string[],
       file,
-      artists: [
-        {
-          id: '',
-          username: '',
-        },
-      ],
+      artists: [] as ArtistDTO[],
       privacy: 'PUBLIC',
     }));
 

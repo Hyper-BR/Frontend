@@ -105,17 +105,6 @@ const TrackEditor: React.FC<TrackEditorProps> = ({
       <Button variant="ghost" onClick={onToggleSearch}>
         + Colaboradores
       </Button>
-
-      <ul className={styles.artistListInline}>
-        {track.artists.map((a) => (
-          <li key={a.id}>
-            {a.username}
-            <Button variant="ghost" onClick={() => onArtistRemove(a.id)}>
-              ✖
-            </Button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
