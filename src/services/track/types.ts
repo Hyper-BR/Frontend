@@ -14,15 +14,16 @@ export type TrackPageDTO = {
 export type TrackDTO = {
   id?: string;
   title: string;
-  duration?: number;
+  file: File;
   genre: string;
-  coverUrl?: string;
   tags: string[];
   privacy: string;
+  type: string;
+  key?: string;
+  coverUrl?: string;
+  duration?: number;
   createdDate?: string;
   bpm?: string;
-  file: File;
   price?: number;
-  type: string;
   artists: ArtistDTO[];
 };
