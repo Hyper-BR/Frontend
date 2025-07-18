@@ -42,7 +42,8 @@
   align-items: center;
   gap: $spacing-sm;
   color: $color-white;
-  min-width: max-content;
+  min-width: 200px;
+  max-width: 200px;
 }
 
 .image {

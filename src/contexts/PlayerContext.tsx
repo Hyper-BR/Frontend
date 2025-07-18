@@ -1,36 +1,51 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-} from 'react';
+import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { TrackDTO } from '@/services/track/types';
 
 export type PlayerContextType = {
-  track: TrackDTO | null;
+  trackList: TrackDTO[];
+  currentIndex: number;
+  currentTrack: TrackDTO | null;
   isPlaying: boolean;
+
   setTrackPlayer: (track: TrackDTO) => void;
+  setTrackList: (list: TrackDTO[], startIndex?: number) => void;
+
   play: () => void;
   pause: () => void;
   togglePlay: () => void;
+  next: () => void;
+  prev: () => void;
 };
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider = ({ children }: { children: ReactNode }) => {
-  const [track, setTrack] = useState<TrackDTO | null>(null);
+  const [trackList, setTrackListState] = useState<TrackDTO[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const currentTrack = trackList[currentIndex] ?? null;
+
   const setTrackPlayer = useCallback(
-    (newTrack: TrackDTO) => {
-      if (track?.id !== newTrack.id) {
-        setTrack(newTrack);
+    (track: TrackDTO) => {
+      const index = trackList.findIndex((t) => t.id === track.id);
+      if (index !== -1) {
+        setCurrentIndex(index);
+      } else {
+        setTrackListState([track]);
+        setCurrentIndex(0);
       }
       setIsPlaying(true);
     },
-    [track],
+    [trackList],
   );
+
+  const setTrackList = useCallback((list: TrackDTO[], startIndex = 0) => {
+    setTrackListState(list);
+    const safeIndex = Math.max(0, Math.min(startIndex, list.length - 1));
+    setCurrentIndex(safeIndex);
+    setIsPlaying(false);
+  }, []);
 
   const play = useCallback(() => {
     setIsPlaying(true);
@@ -44,15 +59,32 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
     setIsPlaying((prev) => !prev);
   }, []);
 
+  const next = useCallback(() => {
+    if (trackList.length === 0) return;
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % trackList.length);
+    setIsPlaying(true);
+  }, [trackList.length]);
+
+  const prev = useCallback(() => {
+    if (trackList.length === 0) return;
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + trackList.length) % trackList.length);
+    setIsPlaying(true);
+  }, [trackList.length]);
+
   return (
     <PlayerContext.Provider
       value={{
-        track,
+        trackList,
+        currentIndex,
+        currentTrack,
         isPlaying,
         setTrackPlayer,
+        setTrackList,
         play,
         pause,
         togglePlay,
+        next,
+        prev,
       }}
     >
       {children}
@@ -60,7 +92,7 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const usePlayer = () => {
+export const usePlayer = (): PlayerContextType => {
   const ctx = useContext(PlayerContext);
   if (!ctx) {
     throw new Error('usePlayer deve estar dentro de <PlayerProvider>');

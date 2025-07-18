@@ -6,9 +6,11 @@ import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import Waveform from '@/components/commons/Waveform/Waveform';
 import { formatTime } from '@/utils/formatTime';
+import { Dropdown } from '@/components/commons/Dropdown';
 
 const Player = () => {
-  const { track, isPlaying, togglePlay } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, next, prev } = usePlayer();
+
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
@@ -33,31 +35,34 @@ const Player = () => {
   }, [isPlaying]);
 
   return (
-    <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
+    <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
       <div className={styles.songInfo}>
-        {track && <img src={buildFullUrl(track?.coverUrl)} alt="Cover" className={styles.image} />}
+        {currentTrack && <img src={buildFullUrl(currentTrack?.coverUrl)} alt="Cover" className={styles.image} />}
         <div>
-          <p className={styles.title}>{track?.title || 'Nenhuma faixa selecionada'}</p>
-          <p className={styles.artist}>{track?.artists.map((a) => a.username).join(', ') || ''}</p>
+          <p className={styles.title}>{currentTrack?.title}</p>
+          <p className={styles.artist}>{currentTrack?.artists.map((a) => a.username).join(', ') || ''}</p>
         </div>
       </div>
 
-      {track && (
+      {currentTrack && (
         <>
           <div className={styles.controls}>
-            <Button disabled={!track} variant="transparent">
+            <Button onClick={prev} disabled={!currentTrack} variant="transparent">
               <SkipBackIcon />
             </Button>
-            <Button onClick={togglePlay} disabled={!track} variant="transparent">
+
+            <Button onClick={togglePlay} disabled={!currentTrack} variant="transparent">
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
             </Button>
-            <Button disabled={!track} variant="transparent">
+
+            <Button onClick={next} disabled={!currentTrack} variant="transparent">
               <SkipForwardIcon />
             </Button>
           </div>
+
           <div className={styles.waveform}>
             <Waveform
-              trackId={track.id}
+              trackId={currentTrack.id}
               height={60}
               onReady={handleReady}
               onTimeupdate={handleTimeupdate}
@@ -69,9 +74,9 @@ const Player = () => {
             <div className={styles.infoBox}>
               <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
 
-              {track?.bpm && <span>{track.bpm} bpm</span>}
+              {currentTrack?.bpm && <span>{currentTrack.bpm} bpm</span>}
 
-              {track?.key && <span>{track.key}</span>}
+              {currentTrack?.key && <span>{currentTrack.key}</span>}
             </div>
 
             <div className={styles.trackInfo}>
@@ -79,32 +84,56 @@ const Player = () => {
                 variant="ghost"
                 onClick={() => {
                   // Aqui você pode chamar uma função como addToPlaylist(track.id)
-                  console.log('Adicionar à playlist:', track.id);
+                  console.log('Adicionar à playlist:', currentTrack.id);
                 }}
               >
                 +
               </Button>
               <Button
                 onClick={() => {
-                  window.open(`/track/${track.id}/buy`, '_blank');
+                  window.open(`/track/${currentTrack.id}/buy`, '_blank');
                 }}
               >
-                {track.price ? `R$ ${track.price}` : 'Comprar'}
+                {currentTrack.price ? `R$ ${currentTrack.price}` : 'Comprar'}
               </Button>
             </div>
 
             <div className={styles.musicControls}>
-              <Button variant="ghost" className={styles.keyboard}>
-                <KeyboardIcon />
-              </Button>
+              <Dropdown.Root key={'keyboard'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.keyboard}>
+                    <KeyboardIcon />
+                  </Button>
+                </Dropdown.Trigger>
 
-              <Button variant="ghost" className={styles.volume}>
-                <VolumeIcon />
-              </Button>
+                <Dropdown.Content>
+                  <Dropdown.Item label="Atalhos de teclado" />
+                </Dropdown.Content>
+              </Dropdown.Root>
 
-              <Button variant="ghost" className={styles.inLine}>
-                <ListMusic />
-              </Button>
+              <Dropdown.Root key={'volume'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.volume}>
+                    <VolumeIcon />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content>
+                  <Dropdown.Item label="Volume" />
+                </Dropdown.Content>
+              </Dropdown.Root>
+
+              <Dropdown.Root key={'queue'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.inLine}>
+                    <ListMusic />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content>
+                  <Dropdown.Item label="queue" />
+                </Dropdown.Content>
+              </Dropdown.Root>
             </div>
           </div>
         </>

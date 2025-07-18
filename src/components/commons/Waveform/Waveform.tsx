@@ -1,5 +1,3 @@
-// src/components/Waveform/Waveform.tsx
-
 import { memo } from 'react';
 import WavesurferPlayer from '@wavesurfer/react';
 import type WaveSurfer from 'wavesurfer.js';
