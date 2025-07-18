@@ -39,12 +39,6 @@ const Player = () => {
     setCurrentTime(ws.getCurrentTime());
   };
 
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = parseFloat(e.target.value);
-    wavesurferRef.current?.setTime(time);
-    setCurrentTime(time);
-  };
-
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const vol = parseFloat(e.target.value);
     setVolume(vol);
@@ -98,6 +92,14 @@ const Player = () => {
           </div>
 
           <div className={styles.buttons}>
+            <div className={styles.infoBox}>
+              <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
+
+              {track?.bpm && <span>{track.bpm} bpm</span>}
+
+              {track?.key && <span>{track.key}</span>}
+            </div>
+
             <div className={styles.trackInfo}>
               <Button
                 variant="ghost"
@@ -115,14 +117,6 @@ const Player = () => {
               >
                 {track.price ? `R$ ${track.price}` : 'Comprar'}
               </Button>
-
-              <div className={styles.infoBox}>
-                <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
-
-                {track?.bpm && <span>{track.bpm} bpm</span>}
-
-                {track?.key && <span>{track.key}</span>}
-              </div>
             </div>
 
             <div className={styles.musicControls}>
