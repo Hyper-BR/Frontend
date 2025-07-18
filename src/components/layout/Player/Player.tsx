@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
+import Waveform from '@/components/commons/Waveform/Waveform';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -76,18 +77,12 @@ const Player = () => {
             </Button>
           </div>
           <div className={styles.waveform}>
-            <WavesurferPlayer
+            <Waveform
+              trackId={track.id}
               height={60}
-              progressColor="#b41414"
-              waveColor="#ddd"
-              cursorColor="#b41414"
-              normalize
-              backend="MediaElement"
-              url={buildFullUrl(`/track/play/${track.id}`)}
               onReady={handleReady}
               onTimeupdate={handleTimeupdate}
-              onFinish={() => togglePlay()}
-              onError={(e) => console.error('WaveSurfer error:', e)}
+              onFinish={togglePlay}
             />
           </div>
 
