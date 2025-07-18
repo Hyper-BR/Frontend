@@ -3,7 +3,7 @@ import { Button } from '@/components/commons/Button/Button';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './TrackEditor.module.scss';
-import Select from '../Select/Select';
+import Select from '../../commons/Select/Select';
 
 interface TrackEditorProps {
   track: TrackDTO;

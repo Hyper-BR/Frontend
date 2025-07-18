@@ -9,8 +9,8 @@ import { ArtistDTO } from '@/services/artist/types';
 import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
-import TrackEditor from '@/components/commons/Tracks/TrackEditor';
-import TrackList from '@/components/commons/Tracks/TrackList';
+import TrackEditor from '@/components/ui/Tracks/TrackEditor';
+import TrackList from '@/components/ui/Tracks/TrackList';
 
 const UploadReleaseModal = () => {
   const { closeModal } = useModal();
