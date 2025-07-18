@@ -7,10 +7,10 @@
 
 .columns {
   display: flex;
-  gap: 20px;
+  gap: $spacing-md;
 }
 
-.coverImage {
+.cover {
   margin-right: 2px;
 }
 
@@ -18,6 +18,6 @@
   width: 100%;
 }
 
-.trackList {
+.accordion {
   width: 60%;
 }

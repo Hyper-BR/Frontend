@@ -1,28 +1,36 @@
 import { useEffect, useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
-import { TrackDTO } from '@/services/track/types';
-import { useModal } from '@/contexts/ModalContext';
-import { Button } from '@/components/commons/Button/Button';
-import styles from './UploadReleaseModal.module.scss';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
-import { ArtistDTO } from '@/services/artist/types';
+import { Button } from '@/components/commons/Button/Button';
+import TrackForm from '@/components/ui/Tracks/TrackForm';
+import { useModal } from '@/contexts/ModalContext';
 import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
-import TrackEditor from '@/components/ui/Tracks/TrackEditor';
-import TrackList from '@/components/ui/Tracks/TrackCollapse';
+import { ArtistDTO } from '@/services/artist/types';
+import { TrackDTO } from '@/services/track/types';
+import styles from './UploadReleaseModal.module.scss';
+import TrackList from '../Tracks/TrackList';
+import { Accordion } from '@/components/commons/Accordion';
 
 const UploadReleaseModal = () => {
   const { closeModal } = useModal();
+
   const [loading, setLoading] = useState(false);
-  const [initialUploadDone, setInitialUploadDone] = useState(false);
+  const [uploadStarted, setUploadStarted] = useState(false);
   const [releaseType, setReleaseType] = useState<'SINGLE' | 'RELEASE' | null>(
-    null,
+    'RELEASE',
   );
-  const [openTrackIndex, setOpenTrackIndex] = useState<number>(-1);
-  const [searchArtistName, setSearchArtistName] = useState('');
-  const [matchedArtists, setMatchedArtists] = useState<ArtistDTO[]>([]);
-  const [showArtistSearch, setShowArtistSearch] = useState(false);
+  const [activePanel, setActivePanel] = useState<'tracks' | 'configs' | null>(
+    'tracks',
+  );
+  const [selectedTrackIndex, setSelectedTrackIndex] = useState(0);
+
+  const [artistSearch, setArtistSearch] = useState({
+    name: '',
+    matched: [] as ArtistDTO[],
+    visible: false,
+  });
 
   const [form, setForm] = useState<ReleaseDTO>({
     description: '',
@@ -30,114 +38,117 @@ const UploadReleaseModal = () => {
     tracks: [],
   });
 
-  const collaboratorOptions = Array.isArray(matchedArtists)
-    ? matchedArtists.map((artist) => ({
-        value: artist.id,
-        label: artist.username,
-      }))
-    : [];
+  const collaboratorOptions = artistSearch.matched.map((artist) => ({
+    value: artist.id,
+    label: artist.username,
+  }));
 
-  const handleInitialUpload = (files: File[]) => {
+  const handleUploadTracks = (files: File[]) => {
     if (!files.length) return;
-    const trackObjects: TrackDTO[] = files.map((file) => ({
-      title: '',
-      genre: '',
-      tags: [] as string[],
-      file,
-      artists: [] as ArtistDTO[],
-      privacy: 'PUBLIC',
-    }));
+    const tracks = files.map(
+      (file): TrackDTO => ({
+        title: '',
+        genre: '',
+        tags: [],
+        file,
+        artists: [],
+        privacy: 'PUBLIC',
+      }),
+    );
 
-    setForm((prev) => ({ ...prev, tracks: trackObjects }));
-    setOpenTrackIndex(0);
-    setInitialUploadDone(true);
+    setForm((prev) => ({ ...prev, tracks }));
+    setSelectedTrackIndex(0);
+    setUploadStarted(true);
     setReleaseType(files.length === 1 ? 'SINGLE' : 'RELEASE');
   };
 
-  const handleCoverDrop = (files: File[]) => {
-    const img = files[0];
-    if (img) setForm((prev) => ({ ...prev, cover: img }));
+  const handleUploadCover = (files: File[]) => {
+    const image = files[0];
+    if (image) {
+      setForm((prev) => ({ ...prev, cover: image }));
+    }
   };
 
-  const cleanAndClose = () => {
-    setInitialUploadDone(false);
+  const resetAndClose = () => {
+    setUploadStarted(false);
     setReleaseType(null);
     setForm({ description: '', cover: null, tracks: [] });
-    setOpenTrackIndex(-1);
-    setSearchArtistName('');
-    setMatchedArtists([]);
-    setShowArtistSearch(false);
+    setSelectedTrackIndex(-1);
+    setArtistSearch({ name: '', matched: [], visible: false });
     closeModal();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const data = new FormData();
       data.append('description', form.description);
       if (form.cover) data.append('cover', form.cover);
 
-      form.tracks.forEach((t, i) => {
-        data.append(`tracks[${i}].title`, t.title);
-        data.append(`tracks[${i}].genre`, t.genre);
-        data.append(`tracks[${i}].privacy`, t.privacy);
-        data.append(`tracks[${i}].tags`, JSON.stringify(t.tags));
-        if (t.file) data.append(`tracks[${i}].file`, t.file);
-        t.artists.forEach((a, j) => {
-          data.append(`tracks[${i}].artists[${j}].id`, a.id);
-          data.append(`tracks[${i}].artists[${j}].username`, a.username);
+      form.tracks.forEach((track, i) => {
+        data.append(`tracks[${i}].title`, track.title);
+        data.append(`tracks[${i}].genre`, track.genre);
+        data.append(`tracks[${i}].privacy`, track.privacy);
+        data.append(`tracks[${i}].tags`, JSON.stringify(track.tags));
+        if (track.file) data.append(`tracks[${i}].file`, track.file);
+
+        track.artists.forEach((artist, j) => {
+          data.append(`tracks[${i}].artists[${j}].id`, artist.id);
+          data.append(`tracks[${i}].artists[${j}].username`, artist.username);
         });
       });
 
       const res = await createRelease(data);
-      console.log('Release created:', res);
       if (!res) throw new Error('Erro no envio');
-      cleanAndClose();
-    } catch (err) {
-      console.error(err);
+      resetAndClose();
+    } catch (error) {
+      console.error(error);
       alert('Erro ao enviar. Tente novamente.');
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchArtists = async () => {
-    try {
-      const res = await searchArtistsByName(searchArtistName);
-      setMatchedArtists(res.data.content);
-    } catch (error) {
-      console.error('Erro ao buscar artistas:', error);
-    }
-  };
-
   useEffect(() => {
-    if (searchArtistName.length < 2) {
-      setMatchedArtists([]);
-      return;
-    }
-    fetchArtists();
-  }, [searchArtistName]);
+    const timer = setTimeout(() => {
+      if (artistSearch.name.length >= 2) {
+        searchArtistsByName(artistSearch.name)
+          .then((res) =>
+            setArtistSearch((prev) => ({
+              ...prev,
+              matched: res.data.content,
+            })),
+          )
+          .catch((err) => console.error('Erro ao buscar artistas:', err));
+      } else {
+        setArtistSearch((prev) => ({ ...prev, matched: [] }));
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [artistSearch.name]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <Modal.Root modal="upload" size="lg" onClose={cleanAndClose}>
+      <Modal.Root modal="upload" size="lg" onClose={resetAndClose}>
         <Modal.Header
           title={
-            releaseType
-              ? releaseType === 'SINGLE'
-                ? 'Upload de Faixa'
-                : 'Upload de EP / Álbum'
+            releaseType === 'SINGLE'
+              ? 'Upload de Faixa'
+              : releaseType === 'RELEASE'
+              ? 'Upload de EP / Álbum'
               : 'Upload de Release'
           }
         />
 
         <Modal.Content>
-          {!initialUploadDone && (
+          {!uploadStarted && (
             <div className={styles.initialDrop}>
               <Droppable
                 label="Arraste ou clique para enviar suas faixas"
-                onDrop={handleInitialUpload}
+                onDrop={handleUploadTracks}
                 shape="rectangle"
                 size="xl"
                 accept="audio/*"
@@ -146,12 +157,12 @@ const UploadReleaseModal = () => {
             </div>
           )}
 
-          {initialUploadDone && (
+          {uploadStarted && (
             <div className={styles.columns}>
-              <div className={styles.coverImage}>
+              <div className={styles.cover}>
                 <Droppable
                   label="Upload da capa"
-                  onDrop={handleCoverDrop}
+                  onDrop={handleUploadCover}
                   shape="square"
                   size="xl"
                   accept="image/*"
@@ -160,59 +171,69 @@ const UploadReleaseModal = () => {
               </div>
 
               <div className={styles.form}>
-                <TrackEditor
-                  track={form.tracks[openTrackIndex]}
-                  index={openTrackIndex}
+                <TrackForm
+                  track={form.tracks[selectedTrackIndex]}
                   onChange={(field, value) =>
                     setForm((prev) => {
                       const updated = [...prev.tracks];
-                      updated[openTrackIndex] = {
-                        ...updated[openTrackIndex],
+                      updated[selectedTrackIndex] = {
+                        ...updated[selectedTrackIndex],
                         [field]: value,
                       };
                       return { ...prev, tracks: updated };
                     })
                   }
-                  onArtistRemove={(artistId) =>
-                    setForm((prev) => {
-                      const updated = [...prev.tracks];
-                      updated[openTrackIndex].artists = updated[
-                        openTrackIndex
-                      ].artists.filter((a) => a.id !== artistId);
-                      return { ...prev, tracks: updated };
-                    })
-                  }
-                  onToggleSearch={() => setShowArtistSearch(!showArtistSearch)}
-                  showArtistSearch={showArtistSearch}
-                  matchedArtists={matchedArtists}
+                  matchedArtists={artistSearch.matched}
                   collaboratorOptions={collaboratorOptions}
                   onArtistSelect={(selected) =>
                     setForm((prev) => {
                       const updated = [...prev.tracks];
-                      updated[openTrackIndex].artists = selected;
+                      updated[selectedTrackIndex].artists = selected;
                       return { ...prev, tracks: updated };
                     })
                   }
-                  searchArtistName={searchArtistName}
-                  onSearchInput={(val) => setSearchArtistName(val)}
+                  searchArtistName={artistSearch.name}
+                  onSearchInput={(name) =>
+                    setArtistSearch((prev) => ({ ...prev, name }))
+                  }
                 />
               </div>
 
-              <div className={styles.trackList}>
-                <TrackList
-                  tracks={form.tracks}
-                  activeIndex={openTrackIndex}
-                  onSelect={(i) => setOpenTrackIndex(i)}
-                />
+              <div className={styles.accordion}>
+                <Accordion.Root>
+                  <Accordion.Item
+                    id="tracks"
+                    activeId={activePanel}
+                    setActiveId={() => setActivePanel('tracks')}
+                    title="Faixas"
+                  >
+                    <TrackList
+                      tracks={form.tracks}
+                      activeIndex={selectedTrackIndex}
+                      onSelect={(i) => setSelectedTrackIndex(i)}
+                    />
+                  </Accordion.Item>
+
+                  <Accordion.Item
+                    id="configs"
+                    activeId={activePanel}
+                    setActiveId={() => setActivePanel('configs')}
+                    title="Configurações Avançadas"
+                  >
+                    <div className={styles.configs}>
+                      <label>Descrição</label>
+                    </div>
+                  </Accordion.Item>
+                </Accordion.Root>
               </div>
             </div>
           )}
         </Modal.Content>
 
-        {initialUploadDone && (
+        {uploadStarted && (
           <Modal.Footer
             cancelButton={
-              <Button variant="ghost" onClick={cleanAndClose}>
+              <Button variant="ghost" onClick={resetAndClose}>
                 Cancelar
               </Button>
             }

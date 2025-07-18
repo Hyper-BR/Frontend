@@ -1,17 +1,12 @@
 import { Input } from '@/components/commons/Input/Input';
-import { Button } from '@/components/commons/Button/Button';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
-import styles from './TrackEditor.module.scss';
+import styles from './TrackForm.module.scss';
 import Select from '../../commons/Select/Select';
 
-interface TrackEditorProps {
+interface TrackFormProps {
   track: TrackDTO;
-  index: number;
   onChange: (field: keyof TrackDTO, value: any) => void;
-  onArtistRemove: (artistId: string) => void;
-  onToggleSearch: () => void;
-  showArtistSearch: boolean;
   matchedArtists: ArtistDTO[];
   collaboratorOptions: { value: string; label: string }[];
   onArtistSelect: (selected: ArtistDTO[]) => void;
@@ -19,13 +14,9 @@ interface TrackEditorProps {
   onSearchInput: (value: string) => void;
 }
 
-const TrackEditor: React.FC<TrackEditorProps> = ({
+const TrackForm: React.FC<TrackFormProps> = ({
   track,
-  index,
   onChange,
-  onArtistRemove,
-  onToggleSearch,
-  showArtistSearch,
   matchedArtists,
   collaboratorOptions,
   onArtistSelect,
@@ -82,31 +73,25 @@ const TrackEditor: React.FC<TrackEditorProps> = ({
         />
       </div>
 
-      {showArtistSearch && (
-        <div className={styles.artistSearch}>
-          <Select
-            value={track.artists.map((artist) => ({
-              value: artist.id,
-              label: artist.username,
-            }))}
-            inputValue={searchArtistName}
-            onInputChange={onSearchInput}
-            onChange={(selectedOptions) => {
-              const selected = selectedOptions
-                .map((opt) => matchedArtists.find((a) => a.id === opt.value))
-                .filter(Boolean) as ArtistDTO[];
-              onArtistSelect(selected);
-            }}
-            options={collaboratorOptions}
-          />
-        </div>
-      )}
-
-      <Button variant="ghost" onClick={onToggleSearch}>
-        + Colaboradores
-      </Button>
+      <div className={styles.artistSearch}>
+        <Select
+          value={track.artists.map((artist) => ({
+            value: artist.id,
+            label: artist.username,
+          }))}
+          inputValue={searchArtistName}
+          onInputChange={onSearchInput}
+          onChange={(selectedOptions) => {
+            const selected = selectedOptions
+              .map((opt) => matchedArtists.find((a) => a.id === opt.value))
+              .filter(Boolean) as ArtistDTO[];
+            onArtistSelect(selected);
+          }}
+          options={collaboratorOptions}
+        />
+      </div>
     </div>
   );
 };
 
-export default TrackEditor;
+export default TrackForm;
