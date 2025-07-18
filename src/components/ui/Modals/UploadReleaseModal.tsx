@@ -10,7 +10,7 @@ import { createRelease } from '@/services/release';
 import { searchArtistsByName } from '@/services/artist';
 import { ReleaseDTO } from '@/services/release/types';
 import TrackEditor from '@/components/ui/Tracks/TrackEditor';
-import TrackList from '@/components/ui/Tracks/TrackList';
+import TrackList from '@/components/ui/Tracks/TrackCollapse';
 
 const UploadReleaseModal = () => {
   const { closeModal } = useModal();
@@ -119,17 +119,6 @@ const UploadReleaseModal = () => {
     fetchArtists();
   }, [searchArtistName]);
 
-  const handleTrackChange =
-    (index: number, field: keyof TrackDTO) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setForm((prev) => {
-        const tracks = [...prev.tracks];
-        tracks[index] = { ...tracks[index], [field]: value };
-        return { ...prev, tracks };
-      });
-    };
-
   return (
     <form onSubmit={handleSubmit}>
       <Modal.Root modal="upload" size="lg" onClose={cleanAndClose}>
@@ -158,8 +147,8 @@ const UploadReleaseModal = () => {
           )}
 
           {initialUploadDone && (
-            <div className={styles.columns2}>
-              <div className={styles.colSidebar}>
+            <div className={styles.columns}>
+              <div className={styles.coverImage}>
                 <Droppable
                   label="Upload da capa"
                   onDrop={handleCoverDrop}
@@ -168,15 +157,9 @@ const UploadReleaseModal = () => {
                   accept="image/*"
                   file={form.cover}
                 />
-
-                <TrackList
-                  tracks={form.tracks}
-                  activeIndex={openTrackIndex}
-                  onSelect={(i) => setOpenTrackIndex(i)}
-                />
               </div>
 
-              <div className={styles.colMain}>
+              <div className={styles.form}>
                 <TrackEditor
                   track={form.tracks[openTrackIndex]}
                   index={openTrackIndex}
@@ -212,6 +195,14 @@ const UploadReleaseModal = () => {
                   }
                   searchArtistName={searchArtistName}
                   onSearchInput={(val) => setSearchArtistName(val)}
+                />
+              </div>
+
+              <div className={styles.trackList}>
+                <TrackList
+                  tracks={form.tracks}
+                  activeIndex={openTrackIndex}
+                  onSelect={(i) => setOpenTrackIndex(i)}
                 />
               </div>
             </div>
