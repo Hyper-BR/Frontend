@@ -6,6 +6,8 @@
   bottom: 0;
   left: 0;
   width: 100%;
+  max-height: $player-height;
+  overflow: hidden;
   display: flex;
   padding: 0 $spacing-md;
   background-color: $color-black;
@@ -15,6 +17,14 @@
   border-top-right-radius: $radius-md;
   box-sizing: border-box;
   min-height: $player-height;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    .player {
+      max-height: 80px;
+      min-height: 80px;
+    }
+  }
 }
 
 .player.disabled {
@@ -25,11 +35,6 @@
   .title {
     color: $color-muted;
   }
-
-  .progress,
-  .volume input[type='range'] {
-    opacity: 0.4;
-  }
 }
 
 .songInfo {
@@ -37,11 +42,27 @@
   align-items: center;
   gap: $spacing-sm;
   color: $color-white;
-  min-width: max-content;
+  min-width: 200px;
+  max-width: 200px;
 }
 
 .image {
+  display: block;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  object-fit: cover;
   border-radius: calc($radius-md / 2);
+
+  @media (max-width: 768px) {
+    .image {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+    }
+  }
 }
 
 .title {
@@ -55,23 +76,39 @@
 
 .controls {
   display: flex;
-  padding: $spacing-md;
-}
-
-.volume {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: $spacing-sm;
-
-  input[type='range'] {
-    width: 100px;
-    accent-color: $color-primary;
-  }
+  padding: $spacing-sm;
 }
 
 .waveform {
   width: 100%;
   padding: $spacing-sm;
+  align-items: center;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-md;
+  min-width: 30%;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-sm;
+  color: $color-muted;
+}
+
+.trackInfo {
+  display: flex;
+  gap: $spacing-md;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.musicControls {
+  display: flex;
   align-items: center;
 }

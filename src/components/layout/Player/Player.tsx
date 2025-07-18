@@ -1,29 +1,29 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
-import WavesurferPlayer from '@wavesurfer/react';
-import { Input } from '@/components/commons/Input/Input';
 import {
+  KeyboardIcon,
+  ListMusic,
   PauseIcon,
   PlayIcon,
   SkipBackIcon,
   SkipForwardIcon,
+  SpaceIcon,
   VolumeIcon,
 } from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
+import Waveform from '@/components/commons/Waveform/Waveform';
+import { formatTime } from '@/utils/formatTime';
+import { Dropdown } from '@/components/commons/Dropdown';
 
 const Player = () => {
-  const { track, isPlaying, togglePlay } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, next, prev, trackList, setTrackPlayer } = usePlayer();
+
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
   const wavesurferRef = useRef<any>(null);
-
-  const formatTime = (s: number) =>
-    `${Math.floor(s / 60)}:${Math.floor(s % 60)
-      .toString()
-      .padStart(2, '0')}`;
 
   const handleReady = (ws: any) => {
     wavesurferRef.current = ws;
@@ -36,18 +36,6 @@ const Player = () => {
     setCurrentTime(ws.getCurrentTime());
   };
 
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = parseFloat(e.target.value);
-    wavesurferRef.current?.setTime(time);
-    setCurrentTime(time);
-  };
-
-  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const vol = parseFloat(e.target.value);
-    setVolume(vol);
-    wavesurferRef.current?.setVolume(vol);
-  };
-
   useEffect(() => {
     if (!wavesurferRef.current) return;
     const ws = wavesurferRef.current;
@@ -56,60 +44,113 @@ const Player = () => {
   }, [isPlaying]);
 
   return (
-    <footer className={`${styles.player} ${!track ? styles.disabled : ''}`}>
+    <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
       <div className={styles.songInfo}>
-        {track && (
-          <img
-            src={buildFullUrl(track?.coverUrl)}
-            alt="Cover"
-            className={styles.image}
-          />
-        )}
+        {currentTrack && <img src={buildFullUrl(currentTrack?.coverUrl)} alt="Cover" className={styles.image} />}
         <div>
-          <p className={styles.title}>
-            {track?.title || 'Nenhuma faixa selecionada'}
-          </p>
-          <p className={styles.artist}>
-            {track?.artists.map((a) => a.username).join(', ') || ''}
-          </p>
+          <p className={styles.title}>{currentTrack?.title}</p>
+          <p className={styles.artist}>{currentTrack?.artists.map((a) => a.username).join(', ') || ''}</p>
         </div>
       </div>
 
-      {track && (
+      {currentTrack && (
         <>
           <div className={styles.controls}>
-            <Button disabled={!track} variant="transparent">
+            <Button onClick={prev} disabled={!currentTrack} variant="transparent">
               <SkipBackIcon />
             </Button>
-            <Button
-              onClick={togglePlay}
-              disabled={!track}
-              variant="transparent"
-            >
+
+            <Button onClick={togglePlay} disabled={!currentTrack} variant="transparent">
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
             </Button>
-            <Button disabled={!track} variant="transparent">
+
+            <Button onClick={next} disabled={!currentTrack} variant="transparent">
               <SkipForwardIcon />
             </Button>
           </div>
+
           <div className={styles.waveform}>
-            <WavesurferPlayer
+            <Waveform
+              trackId={currentTrack.id}
               height={60}
-              progressColor="#b41414"
-              waveColor="#ddd"
-              cursorColor="#b41414"
-              normalize
-              backend="MediaElement"
-              url={buildFullUrl(`/track/play/${track.id}`)}
               onReady={handleReady}
               onTimeupdate={handleTimeupdate}
-              onFinish={() => togglePlay()}
-              onError={(e) => console.error('WaveSurfer error:', e)}
+              onFinish={togglePlay}
             />
           </div>
 
-          <div className={styles.volume}>
-            <VolumeIcon />
+          <div className={styles.buttons}>
+            <div className={styles.infoBox}>
+              <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
+
+              {currentTrack?.bpm && <span>{currentTrack.bpm} bpm</span>}
+
+              {currentTrack?.key && <span>{currentTrack.key}</span>}
+            </div>
+
+            <div className={styles.trackInfo}>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  // Aqui você pode chamar uma função como addToPlaylist(track.id)
+                  console.log('Adicionar à playlist:', currentTrack.id);
+                }}
+              >
+                +
+              </Button>
+              <Button
+                onClick={() => {
+                  window.open(`/track/${currentTrack.id}/buy`, '_blank');
+                }}
+              >
+                {currentTrack.price ? `R$ ${currentTrack.price}` : 'Comprar'}
+              </Button>
+            </div>
+
+            <div className={styles.musicControls}>
+              <Dropdown.Root key={'keyboard'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.keyboard}>
+                    <KeyboardIcon />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content size="sm" side="top">
+                  <Dropdown.Item label="Play / Pause" rightIcon={<SpaceIcon />} />
+                </Dropdown.Content>
+              </Dropdown.Root>
+
+              <Dropdown.Root key={'volume'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.volume}>
+                    <VolumeIcon />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content size="sm" side="top">
+                  <Dropdown.Item label="Volume" />
+                </Dropdown.Content>
+              </Dropdown.Root>
+
+              <Dropdown.Root key={'queue'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost" className={styles.inLine}>
+                    <ListMusic />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content side="top" size="sm">
+                  {trackList.map((track) => (
+                    <Dropdown.Item
+                      leftImage={track.coverUrl}
+                      key={track.id}
+                      label={track.title}
+                      onClick={() => setTrackPlayer(track)}
+                    />
+                  ))}
+                </Dropdown.Content>
+              </Dropdown.Root>
+            </div>
           </div>
         </>
       )}

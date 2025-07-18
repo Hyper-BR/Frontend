@@ -99,6 +99,7 @@
   text-decoration: none;
   transition: color $transition, text-decoration 0.2s ease;
   cursor: pointer;
+  max-width: 120px;
 
   &:hover {
     color: $color-white;

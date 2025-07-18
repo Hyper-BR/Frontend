@@ -1,0 +1,23 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.initialDrop {
+  height: 100%;
+}
+
+.columns {
+  display: flex;
+  gap: $spacing-lg;
+}
+
+.form {
+  width: 100%;
+}
+
+.accordion {
+  width: 60%;
+}
+
+.releaseTypeSelect {
+  margin-top: $spacing-md;
+}

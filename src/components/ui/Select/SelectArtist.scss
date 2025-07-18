@@ -1,0 +1,92 @@
+@use '@/styles/theme.scss' as *;
+
+.react-select__control {
+  background-color: $color-gray-dark !important;
+  border-color: $color-gray-dark !important;
+  font-size: 0.95rem !important;
+
+  &:hover {
+    border-color: $color-primary !important;
+  }
+
+  .wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .label {
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    color: $color-primary !important;
+  }
+
+  .select {
+    background-color: $color-gray-dark !important;
+    color: white !important;
+    border: 1px solid $color-primary !important;
+    font-size: 0.95rem !important;
+    border-radius: 6px !important;
+    appearance: none !important;
+
+    &:focus {
+      outline: none !important;
+      border-color: $color-primary-dark !important;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.3) !important;
+    }
+
+    option {
+      background-color: $color-gray-dark !important;
+      color: white !important;
+    }
+  }
+
+  &--is-focused {
+    border-color: $color-primary !important;
+    box-shadow: 0 0 0 1px $color-primary !important;
+  }
+}
+
+.react-select__menu {
+  background-color: $color-gray-dark !important;
+  color: white !important;
+  z-index: 10 !important;
+}
+
+.react-select__option {
+  cursor: pointer !important;
+  background-color: transparent !important;
+  color: white !important;
+
+  &--is-focused {
+    background-color: rgba($color-primary, 0.2) !important;
+  }
+}
+
+.react-select__multi-value {
+  background-color: rgba($color-primary, 0.15) !important;
+}
+
+.react-select__multi-value__label {
+  color: $color-primary !important;
+}
+
+.react-select__multi-value__remove {
+  color: $color-primary !important;
+
+  &:hover {
+    background-color: rgba($color-primary, 0.3) !important;
+    color: white !important;
+  }
+}
+
+.react-select__placeholder {
+  color: #888;
+}
+
+.react-select__single-value {
+  color: white !important;
+}
+
+.react-select__control input {
+  color: white !important;
+}

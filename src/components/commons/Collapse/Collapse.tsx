@@ -1,40 +1,72 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
+import { useState } from 'react';
 import styles from './Collapse.module.scss';
-import { Button } from '@/components/commons/Button/Button';
 
-interface Props {
-  title: string;
+export interface CollapseProps {
+  image?: string;
+  imagePosition?: 'left' | 'right';
+  imageShape?: 'circle' | 'square';
+  label?: string;
+  labelPosition?: 'left' | 'right';
+  size?: 'sm' | 'md' | 'lg';
+  onToggle?: (isOpen: boolean) => void;
   children: React.ReactNode;
-  isOpenByDefault?: boolean;
-  icon?: React.ReactNode;
-  className?: string;
 }
 
-export const Collapse = ({
-  title,
+const Collapse: React.FC<CollapseProps> = ({
+  image,
+  imagePosition = 'left',
+  imageShape = 'square',
+  label,
+  labelPosition = 'left',
+  size = 'md',
+  onToggle,
   children,
-  isOpenByDefault = false,
-  icon,
-  className,
-}: Props) => {
-  const [isOpen, setIsOpen] = useState(isOpenByDefault);
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const handleToggle = () => {
+    const next = !open;
+    setOpen(next);
+    onToggle?.(next);
+  };
 
   return (
-    <div className={clsx(styles.wrapper, className)}>
-      <button
-        className={styles.header}
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span className={styles.title}>
-          {icon && <span className={styles.icon}>{icon}</span>}
-          {title}
-        </span>
-        <span className={styles.toggle}>{isOpen ? '−' : '+'}</span>
-      </button>
+    <div
+      className={`${styles.collapse} ${styles[size]} ${
+        open ? styles.open : ''
+      }`}
+    >
+      <div className={styles.header} onClick={handleToggle}>
+        {image && imagePosition === 'left' && (
+          <img
+            src={image}
+            className={`${styles.image} ${styles[imageShape]}`}
+            alt="collapse"
+          />
+        )}
 
-      {isOpen && <div className={styles.content}>{children}</div>}
+        {label && labelPosition === 'left' && (
+          <span className={styles.label}>{label}</span>
+        )}
+
+        <span className={styles.chevron}>{open ? '▲' : '▼'}</span>
+
+        {label && labelPosition === 'right' && (
+          <span className={styles.label}>{label}</span>
+        )}
+
+        {image && imagePosition === 'right' && (
+          <img
+            src={image}
+            className={`${styles.image} ${styles[imageShape]}`}
+            alt="collapse"
+          />
+        )}
+      </div>
+
+      {open && <div className={styles.content}>{children}</div>}
     </div>
   );
 };
+
+export default Collapse;
