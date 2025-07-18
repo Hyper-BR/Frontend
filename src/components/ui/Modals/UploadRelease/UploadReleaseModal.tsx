@@ -6,6 +6,7 @@ import TrackList from '../../Tracks/TrackList';
 import { Accordion } from '@/components/commons/Accordion';
 import { useUploadRelease } from './useUploadRelease';
 import styles from './UploadReleaseModal.module.scss';
+import Select from '@/components/commons/Select/Select';
 
 const UploadReleaseModal = () => {
   const {
@@ -63,11 +64,35 @@ const UploadReleaseModal = () => {
                   accept="image/*"
                   file={form.cover}
                 />
+
+                {releaseType != 'SINGLE' && (
+                  <div className={styles.releaseTypeSelect}>
+                    <Select
+                      value={
+                        form.type
+                          ? {
+                              value: form.type,
+                              label: form.type === 'EP' ? 'EP' : 'Álbum',
+                            }
+                          : null
+                      }
+                      onChange={(option) => {
+                        if (option) {
+                          setForm((prev) => ({ ...prev, type: option.value }));
+                        }
+                      }}
+                      options={[
+                        { value: 'EP', label: 'EP' },
+                        { value: 'ALBUM', label: 'Álbum' },
+                      ]}
+                      placeholder="Selecione o tipo de release"
+                    />
+                  </div>
+                )}
               </div>
 
               <div className={styles.form}>
                 <TrackForm
-                  isSingle={releaseType === 'SINGLE'}
                   track={form.tracks[selectedTrackIndex]}
                   onChange={(field, value) =>
                     setForm((prev) => {

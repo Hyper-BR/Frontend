@@ -13,7 +13,6 @@ interface TrackFormProps {
   collaboratorOptions: { value: string; label: string }[];
   onArtistSelect: (selected: ArtistDTO[]) => void;
   searchArtistName: string;
-  isSingle?: boolean;
   onSearchInput: (value: string) => void;
 }
 
@@ -25,7 +24,6 @@ const TrackForm: React.FC<TrackFormProps> = ({
   onArtistSelect,
   searchArtistName,
   onSearchInput,
-  isSingle = false,
 }) => {
   return (
     <div className={styles.editor}>
@@ -46,29 +44,12 @@ const TrackForm: React.FC<TrackFormProps> = ({
             onChange={(e) => onChange('genre', e.target.value)}
           />
         </div>
-
-        {!isSingle && (
-          <div className={styles.releaseTypeSelect}>
-            <Select
-              value={{
-                value: track.type,
-                label: track.type === 'EP' ? 'EP' : 'Álbum',
-              }}
-              onChange={(option) => {
-                if (option) onChange('type', option.value);
-              }}
-              options={[
-                { value: 'EP', label: 'EP' },
-                { value: 'ALBUM', label: 'Álbum' },
-              ]}
-            />
-          </div>
-        )}
       </div>
 
       <Input
         type="text"
-        label="Tags (separadas por vírgula)"
+        placeholder="Insira tags separadas por vírgula"
+        label="Tags"
         value={track.tags.join(', ')}
         onChange={(e) =>
           onChange(

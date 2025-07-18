@@ -29,6 +29,7 @@ export const useUploadRelease = () => {
     description: '',
     cover: null,
     tracks: [],
+    type: releaseType,
   });
 
   const collaboratorOptions = artistSearch.matched.map((artist) => ({
@@ -66,7 +67,7 @@ export const useUploadRelease = () => {
   const resetAndClose = () => {
     setUploadStarted(false);
     setReleaseType(null);
-    setForm({ description: '', cover: null, tracks: [] });
+    setForm({ description: '', cover: null, tracks: [], type: null });
     setSelectedTrackIndex(-1);
     setArtistSearch({ name: '', matched: [], visible: false });
     closeModal();
@@ -79,6 +80,7 @@ export const useUploadRelease = () => {
     try {
       const data = new FormData();
       data.append('description', form.description);
+      data.append('type', releaseType ?? 'SINGLE');
       if (form.cover) data.append('cover', form.cover);
 
       form.tracks.forEach((track, i) => {

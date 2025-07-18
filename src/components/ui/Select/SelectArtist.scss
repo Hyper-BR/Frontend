@@ -3,8 +3,6 @@
 .react-select__control {
   background-color: $color-gray-dark !important;
   border-color: $color-gray-dark !important;
-  min-height: 42px !important;
-  border-radius: 8px !important;
   font-size: 0.95rem !important;
 
   &:hover {
@@ -14,7 +12,6 @@
   .wrapper {
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.4rem !important;
   }
 
   .label {
@@ -27,7 +24,6 @@
     background-color: $color-gray-dark !important;
     color: white !important;
     border: 1px solid $color-primary !important;
-    padding: 0.6rem 0.8rem !important;
     font-size: 0.95rem !important;
     border-radius: 6px !important;
     appearance: none !important;
@@ -51,17 +47,13 @@
 }
 
 .react-select__menu {
-  min-height: 100px !important;
-
   background-color: $color-gray-dark !important;
   color: white !important;
-  border-radius: 8px !important;
   z-index: 10 !important;
 }
 
 .react-select__option {
   cursor: pointer !important;
-  padding: 8px 12px !important;
   background-color: transparent !important;
   color: white !important;
 
@@ -72,7 +64,6 @@
 
 .react-select__multi-value {
   background-color: rgba($color-primary, 0.15) !important;
-  border-radius: 4px !important;
 }
 
 .react-select__multi-value__label {
