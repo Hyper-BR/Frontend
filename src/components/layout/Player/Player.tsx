@@ -1,21 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
-import WavesurferPlayer from '@wavesurfer/react';
-import { Input } from '@/components/commons/Input/Input';
-import {
-  KeyboardIcon,
-  LineChartIcon,
-  ListMusic,
-  PauseIcon,
-  PlayIcon,
-  SkipBackIcon,
-  SkipForwardIcon,
-  VolumeIcon,
-} from 'lucide-react';
+import { KeyboardIcon, ListMusic, PauseIcon, PlayIcon, SkipBackIcon, SkipForwardIcon, VolumeIcon } from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import Waveform from '@/components/commons/Waveform/Waveform';
+import { formatTime } from '@/utils/formatTime';
 
 const Player = () => {
   const { track, isPlaying, togglePlay } = usePlayer();
@@ -23,11 +13,6 @@ const Player = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
   const wavesurferRef = useRef<any>(null);
-
-  const formatTime = (s: number) =>
-    `${Math.floor(s / 60)}:${Math.floor(s % 60)
-      .toString()
-      .padStart(2, '0')}`;
 
   const handleReady = (ws: any) => {
     wavesurferRef.current = ws;
@@ -38,12 +23,6 @@ const Player = () => {
 
   const handleTimeupdate = (ws: any) => {
     setCurrentTime(ws.getCurrentTime());
-  };
-
-  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const vol = parseFloat(e.target.value);
-    setVolume(vol);
-    wavesurferRef.current?.setVolume(vol);
   };
 
   useEffect(() => {
