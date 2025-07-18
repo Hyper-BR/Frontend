@@ -6,7 +6,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/commons/Button/Button';
 import { Modal } from '@/components/commons/Modal';
-import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylistModal';
+import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylist/CreatePlaylistModal';
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);

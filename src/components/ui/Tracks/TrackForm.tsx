@@ -1,9 +1,11 @@
 import { Input } from '@/components/commons/Input/Input';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
-import styles from './TrackForm.module.scss';
-import Select from '../../commons/Select/Select';
+import SelectArtist from '@/components/ui/Select/SelectArtist';
+import Select from '@/components/commons/Select/Select';
+import { Radio } from '@/components/commons/Radio/Radio';
 
+import styles from './TrackForm.module.scss';
 interface TrackFormProps {
   track: TrackDTO;
   onChange: (field: keyof TrackDTO, value: any) => void;
@@ -11,6 +13,7 @@ interface TrackFormProps {
   collaboratorOptions: { value: string; label: string }[];
   onArtistSelect: (selected: ArtistDTO[]) => void;
   searchArtistName: string;
+  isSingle?: boolean;
   onSearchInput: (value: string) => void;
 }
 
@@ -22,6 +25,7 @@ const TrackForm: React.FC<TrackFormProps> = ({
   onArtistSelect,
   searchArtistName,
   onSearchInput,
+  isSingle = false,
 }) => {
   return (
     <div className={styles.editor}>
@@ -33,12 +37,34 @@ const TrackForm: React.FC<TrackFormProps> = ({
         onChange={(e) => onChange('title', e.target.value)}
       />
 
-      <Input
-        type="text"
-        label="Gênero"
-        value={track.genre}
-        onChange={(e) => onChange('genre', e.target.value)}
-      />
+      <div className={styles.releaseType}>
+        <div className={styles.genre}>
+          <Input
+            type="text"
+            label="Gênero"
+            value={track.genre}
+            onChange={(e) => onChange('genre', e.target.value)}
+          />
+        </div>
+
+        {!isSingle && (
+          <div className={styles.releaseTypeSelect}>
+            <Select
+              value={{
+                value: track.type,
+                label: track.type === 'EP' ? 'EP' : 'Álbum',
+              }}
+              onChange={(option) => {
+                if (option) onChange('type', option.value);
+              }}
+              options={[
+                { value: 'EP', label: 'EP' },
+                { value: 'ALBUM', label: 'Álbum' },
+              ]}
+            />
+          </div>
+        )}
+      </div>
 
       <Input
         type="text"
@@ -55,26 +81,8 @@ const TrackForm: React.FC<TrackFormProps> = ({
         }
       />
 
-      <div className={styles.privacy}>
-        Privacidade
-        <Input
-          type="radio"
-          value="PUBLIC"
-          checked={track.privacy === 'PUBLIC'}
-          onChange={() => onChange('privacy', 'PUBLIC')}
-          label="Público"
-        />
-        <Input
-          type="radio"
-          value="PRIVATE"
-          checked={track.privacy === 'PRIVATE'}
-          onChange={() => onChange('privacy', 'PRIVATE')}
-          label="Privado"
-        />
-      </div>
-
       <div className={styles.artistSearch}>
-        <Select
+        <SelectArtist
           value={track.artists.map((artist) => ({
             value: artist.id,
             label: artist.username,
@@ -88,6 +96,22 @@ const TrackForm: React.FC<TrackFormProps> = ({
             onArtistSelect(selected);
           }}
           options={collaboratorOptions}
+        />
+      </div>
+
+      <div className={styles.privacy}>
+        Privacidade
+        <Radio
+          value="PUBLIC"
+          checked={track.privacy === 'PUBLIC'}
+          onChange={() => onChange('privacy', 'PUBLIC')}
+          label="Público"
+        />
+        <Radio
+          value="PRIVATE"
+          checked={track.privacy === 'PRIVATE'}
+          onChange={() => onChange('privacy', 'PRIVATE')}
+          label="Privado"
         />
       </div>
     </div>

@@ -6,21 +6,26 @@
   gap: 1.5rem;
 }
 
+.releaseType {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.genre {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
+.releaseTypeSelect {
+  min-width: 20%;
+}
+
 .privacy {
   display: flex;
   gap: $spacing-lg;
   margin-top: $spacing-md;
-
-  input[type='radio'] {
-    accent-color: $color-primary;
-    cursor: pointer;
-  }
-
-  label {
-    font-size: $font-size-sm;
-    color: $color-white;
-    cursor: pointer;
-  }
 }
 
 .artistSearch {

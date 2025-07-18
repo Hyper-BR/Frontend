@@ -2,36 +2,27 @@ import SelectReact from 'react-select';
 import './Select.scss';
 
 export interface SelectProps {
-  value: { value: string; label: string }[];
-  inputValue: string;
-  onInputChange: (value: string) => void;
-  onChange: (selectedOptions: { value: string; label: string }[]) => void;
+  value: { value: string; label: string } | null;
+  onChange: (option: { value: string; label: string } | null) => void;
   options: { value: string; label: string }[];
+  placeholder?: string;
 }
 
 const Select: React.FC<SelectProps> = ({
   value,
-  inputValue,
-  onInputChange,
   onChange,
   options,
+  placeholder = 'Selecione uma opção',
 }) => {
   return (
     <SelectReact
       value={value}
-      inputValue={inputValue}
-      onInputChange={onInputChange}
       onChange={onChange}
       options={options}
-      placeholder="Buscar colaboradores..."
-      noOptionsMessage={() =>
-        inputValue.length < 2
-          ? 'Digite pelo menos 2 letras'
-          : 'Nenhum artista encontrado'
-      }
-      isMulti
-      isClearable
-      isSearchable
+      placeholder={placeholder}
+      isMulti={false}
+      isSearchable={false}
+      isClearable={false}
       classNamePrefix="react-select"
     />
   );

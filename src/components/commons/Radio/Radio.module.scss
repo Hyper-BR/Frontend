@@ -1,0 +1,26 @@
+@use '@/styles/theme.scss' as *;
+
+.radio {
+  display: inline-block;
+
+  &.sm {
+    font-size: 0.85rem;
+  }
+  &.md {
+    font-size: 1rem;
+  }
+  &.lg {
+    font-size: 1.15rem;
+  }
+
+  input[type='radio'] {
+    accent-color: $color-primary;
+    cursor: pointer;
+  }
+
+  label {
+    font-size: $font-size-sm;
+    color: $color-white;
+    cursor: pointer;
+  }
+}

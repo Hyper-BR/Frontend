@@ -23,5 +23,6 @@ export type TrackDTO = {
   bpm?: string;
   file: File;
   price?: number;
+  type: string;
   artists: ArtistDTO[];
 };
