@@ -12,22 +12,21 @@ interface Props {
   direction?: 'row' | 'column';
 }
 
-export function TrackCard({
-  track,
-  size = 'md',
-  direction = 'row',
-  shape = 'square',
-  align,
-}: Props) {
+export function TrackCard({ track, size = 'md', direction = 'row', shape = 'square', align }: Props) {
   const { setTrackPlayer } = usePlayer();
+
+  const handlePlayClick = () => {
+    setTrackPlayer(track);
+  };
+
   return (
     <Card.Root
       direction={direction}
-      imageUrl={track?.coverUrl}
+      imageUrl={track.coverUrl}
       shape={shape}
       size={size}
       clickable
-      onClick={() => setTrackPlayer(track)}
+      onClick={handlePlayClick}
       align={align}
     >
       <div className={styles.imageWrapper}>
@@ -39,7 +38,7 @@ export function TrackCard({
               <path d="M8 5v14l11-7z" />
             </svg>
           }
-          onClick={() => setTrackPlayer(track)}
+          onClick={handlePlayClick}
         />
       </div>
 

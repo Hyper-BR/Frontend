@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import { KeyboardIcon, ListMusic, PauseIcon, PlayIcon, SkipBackIcon, SkipForwardIcon, VolumeIcon } from 'lucide-react';
@@ -8,16 +7,7 @@ import Waveform from '@/components/Waveform/Waveform';
 import { formatTime } from '@/utils/formatTime';
 
 const Player = () => {
-  const { track, isPlaying, togglePlay, currentTime, duration, volume, setCurrentTime, setDuration, setVolume } =
-    usePlayer();
-
-  const wavesurferRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (!wavesurferRef.current) return;
-    const ws = wavesurferRef.current;
-    isPlaying ? ws.play() : ws.pause();
-  }, [isPlaying]);
+  const { track, isPlaying, togglePlay, currentTime, duration, volume, setVolume } = usePlayer();
 
   if (!track) return null;
 
@@ -67,11 +57,9 @@ const Player = () => {
           <Button variant="ghost" className={styles.keyboard}>
             <KeyboardIcon />
           </Button>
-
           <Button variant="ghost" className={styles.volume}>
             <VolumeIcon />
           </Button>
-
           <Button variant="ghost" className={styles.inLine}>
             <ListMusic />
           </Button>

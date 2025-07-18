@@ -12,15 +12,10 @@ const Home = () => {
   const [tracks, setTracks] = useState<TrackDTO[]>([]);
   const [artists, setArtists] = useState<ArtistDTO[]>([]);
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [tracksResponse, artistsResponse] = await Promise.all([
-          getTracks(),
-          getArtists(),
-        ]);
+        const [tracksResponse, artistsResponse] = await Promise.all([getTracks(), getArtists()]);
 
         setTracks(tracksResponse.data.content);
         setArtists(artistsResponse.data.content);
@@ -38,12 +33,7 @@ const Home = () => {
         <h3>Faixas em destaque</h3>
         <div className={styles.carousel}>
           {tracks.map((track) => (
-            <TrackCard
-              key={track.id}
-              track={track}
-              size="md"
-              direction="column"
-            />
+            <TrackCard key={track.id} track={track} size="md" direction="column" />
           ))}
         </div>
       </section>
@@ -52,12 +42,7 @@ const Home = () => {
         <h3>Artistas em alta</h3>
         <div className={styles.carousel}>
           {artists.map((artist) => (
-            <ArtistCard
-              artist={artist}
-              size="md"
-              key={artist.id}
-              direction="column"
-            />
+            <ArtistCard artist={artist} size="md" key={artist.id} direction="column" />
           ))}
         </div>
       </section>

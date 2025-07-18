@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import WavesurferPlayer from '@wavesurfer/react';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import type WaveSurfer from 'wavesurfer.js';
@@ -12,37 +12,44 @@ interface WaveformProps {
 }
 
 const Waveform = ({ trackId, isPlaying, onFinish, height = 60 }: WaveformProps) => {
-  const { track, setCurrentTime, setDuration, volume, play, pause } = usePlayer();
+  const { setWaveformRef, setCurrentTime, setDuration, volume } = usePlayer();
 
-  const isSameTrack = track?.id === trackId;
+  const isSeekingRef = useRef(false);
+  const localRef = useRef<WaveSurfer | null>(null);
 
   useEffect(() => {
-    if (!isSameTrack) return;
-    isPlaying ? play() : pause();
-  }, [isSameTrack, isPlaying, play, pause]);
+    const ws = localRef.current;
+    if (!ws) return;
+    isPlaying ? ws.play().catch(console.warn) : ws.pause();
+  }, [isPlaying]);
 
   const handleReady = (ws: WaveSurfer) => {
-    if (isSameTrack) {
-      setDuration(ws.getDuration());
-      ws.setVolume(volume);
-    }
+    localRef.current = ws;
+    setWaveformRef(ws);
+    setDuration(ws.getDuration());
+    ws.setVolume(volume);
   };
 
   const handleTimeUpdate = (ws: WaveSurfer) => {
-    if (isSameTrack) {
-      setCurrentTime(ws.getCurrentTime());
+    if (!isSeekingRef.current) {
+      const time = ws.getCurrentTime();
+      isSeekingRef.current = true;
+      setCurrentTime(time);
+      setTimeout(() => {
+        isSeekingRef.current = false;
+      }, 50);
     }
   };
 
   return (
     <WavesurferPlayer
       height={height}
+      url={buildFullUrl(`/track/play/${trackId}`)}
       progressColor="#b41414"
       waveColor="#ddd"
       cursorColor="#b41414"
       normalize
       backend="MediaElement"
-      url={buildFullUrl(`/track/play/${trackId}`)}
       onReady={handleReady}
       onTimeupdate={handleTimeUpdate}
       onFinish={onFinish}
