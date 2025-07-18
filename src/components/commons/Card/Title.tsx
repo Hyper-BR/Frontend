@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { clsx } from 'clsx';
 import styles from './Card.module.scss';
 
 interface Props {
@@ -9,29 +10,19 @@ interface Props {
 }
 
 export function Title({ text, href, onClick, color = 'default' }: Props) {
-  const className = `${styles.title} ${
-    color === 'primary' ? styles.primary : ''
-  }`;
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClick?.();
+  };
+
+  const className = clsx(styles.title, color === 'primary' && styles.primary);
 
   return href ? (
-    <Link
-      to={href}
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick?.();
-      }}
-      className={className}
-    >
+    <Link to={href} onClick={handleClick} className={className}>
       {text}
     </Link>
   ) : (
-    <span
-      className={className}
-      onClick={(e) => {
-        e.stopPropagation();
-        onClick?.();
-      }}
-    >
+    <span onClick={handleClick} className={className}>
       {text}
     </span>
   );

@@ -10,6 +10,8 @@
   min-width: 180px;
   z-index: 99999 !important;
   animation: fadeIn 0.15s ease-out;
+  justify-content: center;
+  align-items: center;
 
   &.sm {
     min-width: 140px;
@@ -30,6 +32,8 @@
     outline: none;
     border-radius: $radius-sm;
   }
+
+  max-width: 240px;
 }
 
 .submenu {
@@ -54,8 +58,6 @@
   color: $color-white;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   transition: background-color 0.15s;
 
   &:focus {
@@ -78,6 +80,14 @@
   margin-left: 8px;
   font-size: 0.75rem;
   color: $color-primary;
+}
+
+.image {
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: $radius-sm;
+  margin-right: 8px;
 }
 
 .trigger {

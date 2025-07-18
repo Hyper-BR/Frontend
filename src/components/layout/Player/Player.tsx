@@ -1,7 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
-import { KeyboardIcon, ListMusic, PauseIcon, PlayIcon, SkipBackIcon, SkipForwardIcon, VolumeIcon } from 'lucide-react';
+import {
+  KeyboardIcon,
+  ListMusic,
+  PauseIcon,
+  PlayIcon,
+  SkipBackIcon,
+  SkipForwardIcon,
+  SpaceIcon,
+  VolumeIcon,
+} from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import Waveform from '@/components/commons/Waveform/Waveform';
@@ -9,7 +18,7 @@ import { formatTime } from '@/utils/formatTime';
 import { Dropdown } from '@/components/commons/Dropdown';
 
 const Player = () => {
-  const { currentTrack, isPlaying, togglePlay, next, prev } = usePlayer();
+  const { currentTrack, isPlaying, togglePlay, next, prev, trackList, setTrackPlayer } = usePlayer();
 
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -106,8 +115,8 @@ const Player = () => {
                   </Button>
                 </Dropdown.Trigger>
 
-                <Dropdown.Content>
-                  <Dropdown.Item label="Atalhos de teclado" />
+                <Dropdown.Content size="sm" side="top">
+                  <Dropdown.Item label="Play / Pause" rightIcon={<SpaceIcon />} />
                 </Dropdown.Content>
               </Dropdown.Root>
 
@@ -118,7 +127,7 @@ const Player = () => {
                   </Button>
                 </Dropdown.Trigger>
 
-                <Dropdown.Content>
+                <Dropdown.Content size="sm" side="top">
                   <Dropdown.Item label="Volume" />
                 </Dropdown.Content>
               </Dropdown.Root>
@@ -130,8 +139,15 @@ const Player = () => {
                   </Button>
                 </Dropdown.Trigger>
 
-                <Dropdown.Content>
-                  <Dropdown.Item label="queue" />
+                <Dropdown.Content side="top" size="sm">
+                  {trackList.map((track) => (
+                    <Dropdown.Item
+                      leftImage={track.coverUrl}
+                      key={track.id}
+                      label={track.title}
+                      onClick={() => setTrackPlayer(track)}
+                    />
+                  ))}
                 </Dropdown.Content>
               </Dropdown.Root>
             </div>
