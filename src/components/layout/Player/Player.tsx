@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import {
@@ -16,14 +16,16 @@ import { buildFullUrl } from '@/utils/buildFullUrl';
 import Waveform from '@/components/commons/Waveform/Waveform';
 import { formatTime } from '@/utils/formatTime';
 import { Dropdown } from '@/components/commons/Dropdown';
+import { ScrollingSpan } from '@/components/commons/Span/ScrollingSpan';
 
 const Player = () => {
-  const { currentTrack, isPlaying, togglePlay, next, prev, trackList, setTrackPlayer } = usePlayer();
-
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
+
   const wavesurferRef = useRef<any>(null);
+
+  const { currentTrack, isPlaying, togglePlay, next, prev, trackList, setTrackPlayer } = usePlayer();
 
   const handleReady = (ws: any) => {
     wavesurferRef.current = ws;
@@ -116,7 +118,7 @@ const Player = () => {
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="sm" side="top">
-                  <Dropdown.Item label="Play / Pause" rightIcon={<SpaceIcon />} />
+                  <Dropdown.Item rightIcon={<SpaceIcon />}>Play / Pause</Dropdown.Item>
                 </Dropdown.Content>
               </Dropdown.Root>
 
@@ -128,7 +130,7 @@ const Player = () => {
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="sm" side="top">
-                  <Dropdown.Item label="Volume" />
+                  <Dropdown.Item>Volume</Dropdown.Item>
                 </Dropdown.Content>
               </Dropdown.Root>
 
@@ -139,14 +141,20 @@ const Player = () => {
                   </Button>
                 </Dropdown.Trigger>
 
-                <Dropdown.Content side="top" size="sm">
+                <Dropdown.Content side="top" size="lg">
                   {trackList.map((track) => (
                     <Dropdown.Item
                       leftImage={track.coverUrl}
-                      key={track.id}
-                      label={track.title}
                       onClick={() => setTrackPlayer(track)}
-                    />
+                      className={styles.queueItem}
+                    >
+                      <div className={styles.queueInfo}>
+                        <ScrollingSpan align="left" text={track.title} className="scrolling-text" />
+                        <span>{track.key}</span>
+                        <span>{track.bpm} bpm</span>
+                        <span>{formatTime(track.duration)}</span>
+                      </div>
+                    </Dropdown.Item>
                   ))}
                 </Dropdown.Content>
               </Dropdown.Root>

@@ -3,7 +3,7 @@ import styles from './Dropdown.module.scss';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 
 interface Props {
-  label: string;
+  children: React.ReactNode | string;
   onSelect?: () => void;
   disabled?: boolean;
   rightIcon?: React.ReactNode;
@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export function Item({ label, onSelect, disabled, rightIcon, onClick, leftImage, className }: Props) {
+export function Item({ children, onSelect, disabled, rightIcon, onClick, leftImage, className }: Props) {
   return (
     <DropdownMenu.Item
       className={`${styles.item} ${className ?? ''}`}
@@ -21,7 +21,7 @@ export function Item({ label, onSelect, disabled, rightIcon, onClick, leftImage,
       onClick={onClick}
     >
       {leftImage && <img className={styles.image} src={buildFullUrl(leftImage)} />}
-      <span>{label}</span>
+      {children}
       {rightIcon && <span className={styles.icon}>{rightIcon}</span>}
     </DropdownMenu.Item>
   );
