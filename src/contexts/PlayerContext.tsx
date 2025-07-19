@@ -1,7 +1,11 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { TrackDTO } from '@/services/track/types';
+import type WaveSurfer from 'wavesurfer.js';
 
 export type PlayerContextType = {
+  trackList: TrackDTO[];
+  currentIndex: number;
+  currentTrack: TrackDTO | null;
   trackList: TrackDTO[];
   currentIndex: number;
   currentTrack: TrackDTO | null;
@@ -20,6 +24,8 @@ export type PlayerContextType = {
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
 
 export const PlayerProvider = ({ children }: { children: ReactNode }) => {
+  const [trackList, setTrackListState] = useState<TrackDTO[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [trackList, setTrackListState] = useState<TrackDTO[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -48,12 +54,18 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const play = useCallback(() => {
-    setIsPlaying(true);
-  }, []);
+    if (waveformRef) {
+      waveformRef.play().catch(console.warn);
+      setIsPlaying(true);
+    }
+  }, [waveformRef]);
 
   const pause = useCallback(() => {
-    setIsPlaying(false);
-  }, []);
+    if (waveformRef) {
+      waveformRef.pause();
+      setIsPlaying(false);
+    }
+  }, [waveformRef]);
 
   const togglePlay = useCallback(() => {
     setIsPlaying((prev) => !prev);
@@ -77,6 +89,9 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
         trackList,
         currentIndex,
         currentTrack,
+        trackList,
+        currentIndex,
+        currentTrack,
         isPlaying,
         setTrackPlayer,
         setTrackList,
@@ -93,9 +108,10 @@ export const PlayerProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const usePlayer = (): PlayerContextType => {
+export const usePlayer = (): PlayerContextType => {
   const ctx = useContext(PlayerContext);
   if (!ctx) {
-    throw new Error('usePlayer deve estar dentro de <PlayerProvider>');
+    throw new Error('usePlayer must be used within <PlayerProvider>');
   }
   return ctx;
 };

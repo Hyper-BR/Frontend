@@ -12,22 +12,30 @@ interface Props {
   direction?: 'row' | 'column';
 }
 
-export function TrackCard({
-  track,
-  size = 'md',
-  direction = 'row',
-  shape = 'square',
-  align,
-}: Props) {
-  const { setTrackPlayer } = usePlayer();
+export function TrackCard({ track, size = 'md', direction = 'row', shape = 'square', align }: Props) {
+  const { currentTrack, setTrackList, trackList, play } = usePlayer();
+
+  const handlePlayClick = () => {
+    const isAlreadyPlayingThis = currentTrack?.id === track.id;
+    const isTrackInList = trackList.some((t) => t.id === track.id);
+
+    if (!isAlreadyPlayingThis) {
+      // ✅ define a fila com apenas essa track (ou adicione à fila se preferir)
+      const newList = isTrackInList ? trackList : [track];
+      const index = newList.findIndex((t) => t.id === track.id);
+      setTrackList(newList, index);
+      play(); // ✅ inicia reprodução
+    }
+  };
+
   return (
     <Card.Root
       direction={direction}
-      imageUrl={track?.coverUrl}
+      imageUrl={track.coverUrl}
       shape={shape}
       size={size}
       clickable
-      onClick={() => setTrackPlayer(track)}
+      onClick={handlePlayClick}
       align={align}
     >
       <div className={styles.imageWrapper}>
@@ -39,7 +47,7 @@ export function TrackCard({
               <path d="M8 5v14l11-7z" />
             </svg>
           }
-          onClick={() => setTrackPlayer(track)}
+          onClick={handlePlayClick}
         />
       </div>
 
