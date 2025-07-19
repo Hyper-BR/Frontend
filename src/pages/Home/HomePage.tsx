@@ -36,7 +36,6 @@ const Home = () => {
         <div className={styles.carousel}>
           {tracks.map((track) => (
             <TrackCard key={track.id} track={track} size="md" direction="column" />
-            <TrackCard key={track.id} track={track} size="md" direction="column" />
           ))}
         </div>
       </section>
@@ -45,7 +44,6 @@ const Home = () => {
         <h3>Artistas em alta</h3>
         <div className={styles.carousel}>
           {artists.map((artist) => (
-            <ArtistCard artist={artist} size="md" key={artist.id} direction="column" />
             <ArtistCard artist={artist} size="md" key={artist.id} direction="column" />
           ))}
         </div>

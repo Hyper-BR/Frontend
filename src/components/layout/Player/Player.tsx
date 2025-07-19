@@ -47,7 +47,6 @@ const Player = () => {
 
   return (
     <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
-    <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
       <div className={styles.songInfo}>
         {currentTrack && <img src={buildFullUrl(currentTrack?.coverUrl)} alt="Cover" className={styles.image} />}
         <div>

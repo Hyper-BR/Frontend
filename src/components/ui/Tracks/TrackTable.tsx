@@ -27,17 +27,14 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
   }, []);
 
   const toggleInPlaylist = async (trackId: string, playlist: PlaylistDTO, isMember: boolean) => {
-  const toggleInPlaylist = async (trackId: string, playlist: PlaylistDTO, isMember: boolean) => {
     if (isMember) {
       await removeTrackFromPlaylist(playlist.id, trackId);
       setPlaylists((prev) =>
-        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: pl.tracks.filter((t) => t.id !== trackId) } : pl)),
         prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: pl.tracks.filter((t) => t.id !== trackId) } : pl)),
       );
     } else {
       await addTrackToPlaylist(playlist.id, trackId);
       setPlaylists((prev) =>
-        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: [...pl.tracks, { id: trackId } as any] } : pl)),
         prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: [...pl.tracks, { id: trackId } as any] } : pl)),
       );
     }
@@ -45,7 +42,6 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
 
   return (
     <Table.Root>
-      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']} />
       <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']} />
 
       <Table.Body>
