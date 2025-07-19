@@ -41,11 +41,7 @@ export default function TrackPage() {
     <main className={styles.page}>
       <section className={styles.playerWrapper}>
         <div className={styles.coverContainer}>
-          <img
-            src={track.coverUrl}
-            alt={track.title}
-            className={styles.cover}
-          />
+          <img src={track.coverUrl} alt={track.title} className={styles.cover} />
         </div>
         <div className={styles.waveformContainer}>
           <WavesurferPlayer
@@ -66,9 +62,7 @@ export default function TrackPage() {
 
       <section className={styles.info}>
         <h1>{track.title}</h1>
-        <p className={styles.artist}>
-          {track.artists?.map((a) => a.username).join(', ')}
-        </p>
+        <p className={styles.artist}>{track.artists?.map((a) => a.username).join(', ')}</p>
         <p className={styles.meta}>{track.genre} · 200 reproduções</p>
       </section>
     </main>

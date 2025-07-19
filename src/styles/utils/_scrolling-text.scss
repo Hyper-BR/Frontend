@@ -1,0 +1,28 @@
+.scrolling-text-container {
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.scrolling-text {
+  display: inline-block;
+  padding-right: 32px;
+  transform: translateX(0);
+}
+
+.scroll-animate {
+  animation: scrollTextSlow 10s ease-in-out infinite alternate;
+}
+
+@keyframes scrollTextSlow {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(calc(-100% + 220px));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

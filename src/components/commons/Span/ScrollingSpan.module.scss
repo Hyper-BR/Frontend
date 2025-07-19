@@ -1,0 +1,27 @@
+.container {
+  max-width: 220px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.text {
+  display: inline-block;
+  padding-right: 32px;
+  transform: translateX(0);
+}
+
+.align-left {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.align-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.align-right {
+  text-align: right;
+  justify-content: flex-end;
+}

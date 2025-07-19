@@ -39,22 +39,14 @@ const Navbar = () => {
               )}
 
               {!isArtist && (
-                <Button
-                  className={styles.loginButton}
-                  onClick={() => navigate('/plans')}
-                  variant="ghost"
-                >
+                <Button className={styles.loginButton} onClick={() => navigate('/plans')} variant="ghost">
                   Ver planos
                 </Button>
               )}
 
               {customer?.artistProfile == null && (
                 <>
-                  <Button
-                    className={styles.loginButton}
-                    onClick={() => navigate('/becomeArtist')}
-                    variant="ghost"
-                  >
+                  <Button className={styles.loginButton} onClick={() => navigate('/becomeArtist')} variant="ghost">
                     Sou artista
                   </Button>
                 </>
@@ -63,29 +55,18 @@ const Navbar = () => {
               <div className={styles.avatarDropdown}>
                 <Dropdown.Root>
                   <Dropdown.Trigger>
-                    <img
-                      src={buildFullUrl(customer?.avatarUrl)}
-                      alt="avatar"
-                      className={styles.avatar}
-                    />
+                    <img src={buildFullUrl(customer?.avatarUrl)} alt="avatar" className={styles.avatar} />
                   </Dropdown.Trigger>
 
                   <Dropdown.Content size="sm">
-                    <Dropdown.Item
-                      label="Perfil"
-                      onSelect={() => navigate('/profile')}
-                    />
-                    <Dropdown.Item label="Sair" onSelect={signOut} />
+                    <Dropdown.Item onSelect={() => navigate('/profile')}>Perfil</Dropdown.Item>
+                    <Dropdown.Item onSelect={signOut}>Sair</Dropdown.Item>
                   </Dropdown.Content>
                 </Dropdown.Root>
               </div>
             </>
           ) : (
-            <Button
-              variant="ghost"
-              className={styles.loginButton}
-              onClick={() => navigate('/login')}
-            >
+            <Button variant="ghost" className={styles.loginButton} onClick={() => navigate('/login')}>
               Login
             </Button>
           )}

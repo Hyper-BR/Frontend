@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/commons/Button/Button';
-import { usePlayer } from '@/contexts/PlayerContext';
-import {
-  getPlaylistsCustomer,
-  addTrackToPlaylist,
-  removeTrackFromPlaylist,
-} from '@/services/playlist';
+import { getPlaylistsCustomer, addTrackToPlaylist, removeTrackFromPlaylist } from '@/services/playlist';
 import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
@@ -18,7 +13,6 @@ type Props = {
 
 const TrackTable: React.FC<Props> = ({ tracks }) => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
-  const { setTrackPlayer } = usePlayer();
 
   useEffect(() => {
     async function fetchPlaylists() {
@@ -32,37 +26,23 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
     fetchPlaylists();
   }, []);
 
-  const toggleInPlaylist = async (
-    trackId: string,
-    playlist: PlaylistDTO,
-    isMember: boolean,
-  ) => {
+  const toggleInPlaylist = async (trackId: string, playlist: PlaylistDTO, isMember: boolean) => {
     if (isMember) {
       await removeTrackFromPlaylist(playlist.id, trackId);
       setPlaylists((prev) =>
-        prev.map((pl) =>
-          pl.id === playlist.id
-            ? { ...pl, tracks: pl.tracks.filter((t) => t.id !== trackId) }
-            : pl,
-        ),
+        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: pl.tracks.filter((t) => t.id !== trackId) } : pl)),
       );
     } else {
       await addTrackToPlaylist(playlist.id, trackId);
       setPlaylists((prev) =>
-        prev.map((pl) =>
-          pl.id === playlist.id
-            ? { ...pl, tracks: [...pl.tracks, { id: trackId } as any] }
-            : pl,
-        ),
+        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: [...pl.tracks, { id: trackId } as any] } : pl)),
       );
     }
   };
 
   return (
     <Table.Root>
-      <Table.Header
-        columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']}
-      />
+      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']} />
 
       <Table.Body>
         {tracks.map((track) => (
@@ -83,8 +63,8 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="md">
-                  <Dropdown.Item label="Editar" onSelect={() => {}} />
-                  <Dropdown.Item label="Compartilhar" onSelect={() => {}} />
+                  <Dropdown.Item onSelect={() => {}}>Editar</Dropdown.Item>
+                  <Dropdown.Item onSelect={() => {}}>Compartilhar</Dropdown.Item>
 
                   <Dropdown.Submenu label="Adicionar à playlist +">
                     {playlists.map((pl) => {
@@ -92,12 +72,11 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                       return (
                         <Dropdown.Item
                           key={pl.id}
-                          label={pl.name}
-                          onSelect={() =>
-                            toggleInPlaylist(track.id, pl, isMember)
-                          }
+                          onSelect={() => toggleInPlaylist(track.id, pl, isMember)}
                           rightIcon={isMember ? '✓' : '+'}
-                        />
+                        >
+                          {pl.name}
+                        </Dropdown.Item>
                       );
                     })}
                   </Dropdown.Submenu>
