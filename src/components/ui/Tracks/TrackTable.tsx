@@ -6,6 +6,7 @@ import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { TrackCard } from '../Cards/TrackCard';
+import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
 
 type Props = {
   tracks: TrackDTO[];
@@ -51,10 +52,10 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
               <TrackCard track={track} size="xs" direction="row" align="left" />
             </Table.Cell>
 
-            <Table.Cell>{track.bpm ?? '--'}</Table.Cell>
+            <Table.Cell>{track.key ?? '--'}</Table.Cell>
             <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
-            <Table.Cell>{track.duration ?? '—'}</Table.Cell>
-            <Table.Cell>{track.createdDate ?? '—'}</Table.Cell>
+            <Table.Cell>{formatSecondsTime(track.duration) ?? '—'}</Table.Cell>
+            <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
 
             <Table.Cell>
               <Dropdown.Root>

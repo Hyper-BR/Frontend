@@ -19,7 +19,7 @@ import {
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import Waveform from '@/components/commons/Waveform/Waveform';
-import { formatTime } from '@/utils/formatTime';
+import { formatSecondsTime } from '@/utils/formatTime';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { ScrollingSpan } from '@/components/commons/Span/ScrollingSpan';
 import { Slider } from '@/components/commons/Slider/Slider';
@@ -137,7 +137,7 @@ const Player = () => {
 
           <div className={styles.buttons}>
             <div className={styles.infoBox}>
-              <span>{`${formatTime(currentTime)} / ${formatTime(duration)}`}</span>
+              <span>{`${formatSecondsTime(currentTime)} / ${formatSecondsTime(duration)}`}</span>
 
               {currentTrack?.bpm && <span>{currentTrack.bpm} bpm</span>}
 
@@ -221,7 +221,7 @@ const Player = () => {
                         <ScrollingSpan align="left" text={track.title} className="scrolling-text" />
                         <span>{track.key}</span>
                         <span>{track.bpm} bpm</span>
-                        <span>{formatTime(track.duration)}</span>
+                        <span>{formatSecondsTime(track.duration)}</span>
                       </div>
                     </Dropdown.Item>
                   ))}
