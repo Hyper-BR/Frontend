@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { forwardRef } from 'react';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'ghost' | 'transparent' | 'black';
+  variant?: 'primary' | 'ghost' | 'muted' | 'black';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   icon?: React.ReactNode;

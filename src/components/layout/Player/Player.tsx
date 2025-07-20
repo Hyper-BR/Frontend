@@ -112,15 +112,15 @@ const Player = () => {
       {currentTrack && (
         <>
           <div className={styles.controls}>
-            <Button onClick={prev} disabled={!currentTrack} variant="transparent">
+            <Button onClick={prev} disabled={!currentTrack} variant="muted">
               <SkipBackIcon />
             </Button>
 
-            <Button onClick={togglePlay} disabled={!currentTrack} variant="transparent">
+            <Button onClick={togglePlay} disabled={!currentTrack} variant="muted">
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
             </Button>
 
-            <Button onClick={next} disabled={!currentTrack} variant="transparent">
+            <Button onClick={next} disabled={!currentTrack} variant="muted">
               <SkipForwardIcon />
             </Button>
           </div>

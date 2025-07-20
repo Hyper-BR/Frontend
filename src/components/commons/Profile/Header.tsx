@@ -4,11 +4,10 @@ import { Modal } from '../Modal';
 import { PlanCard } from '@/components/ui/Cards/PlanCard';
 import { Profile } from '.';
 import { useAuth } from '@/hooks/useAuth';
-import { ImageCropEditor } from '../ImageCrop/ImageCropEditor';
-import { PencilIcon } from 'lucide-react';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
 import { EditImageModal } from '@/components/ui/Modals/EditImage/EditImageModal';
+import { Dropdown } from '../Dropdown';
 
 interface Props {
   avatarUrl: string;
@@ -48,12 +47,20 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
           <img src={coverUrl} alt="Capa" className={styles.coverImage} />
 
           {onEdit && (
-            <Modal.Trigger modal="editCover">
-              <Button className={styles.editCoverBtn} variant="black" size="sm" onClick={() => openModal('editAvatar')}>
-                <PencilIcon size={16} />
-                <span>Editar imagem</span>
-              </Button>
-            </Modal.Trigger>
+            <div className={styles.editCoverBtn}>
+              <Dropdown.Root key="avatar">
+                <Dropdown.Trigger>
+                  <Button size="sm" variant="muted">
+                    Editar imagem
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content size="xs">
+                  <Dropdown.Item>Substituir</Dropdown.Item>
+                  <Dropdown.Item>Excluir</Dropdown.Item>
+                </Dropdown.Content>
+              </Dropdown.Root>
+            </div>
           )}
         </div>
 
@@ -63,17 +70,20 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
               <img src={buildFullUrl(customer?.avatarUrl)} alt="avatar" className={styles.avatar} />
 
               {onEdit && (
-                <Modal.Trigger modal="editAvatar">
-                  <Button
-                    className={styles.editAvatarBtn}
-                    variant="black"
-                    size="sm"
-                    onClick={() => openModal('editAvatar')}
-                  >
-                    <PencilIcon size={14} />
-                    <span>Editar imagem</span>
-                  </Button>
-                </Modal.Trigger>
+                <div className={styles.editAvatarBtn}>
+                  <Dropdown.Root key="cover">
+                    <Dropdown.Trigger>
+                      <Button size="sm" variant="black">
+                        Editar imagem
+                      </Button>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content size="xs">
+                      <Dropdown.Item>Substituir</Dropdown.Item>
+                      <Dropdown.Item>Excluir</Dropdown.Item>
+                    </Dropdown.Content>
+                  </Dropdown.Root>
+                </div>
               )}
             </div>
 

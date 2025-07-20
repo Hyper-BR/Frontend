@@ -1,12 +1,7 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 
-export const tabs = [
-  'Faixas',
-  'Playlists',
-  'Álbuns',
-  'Artistas relacionados',
-] as const;
+export const tabs = ['Faixas', 'Playlists', 'Álbuns', 'Artistas relacionados'] as const;
 export type Tab = (typeof tabs)[number];
 
 interface Props {
@@ -20,7 +15,7 @@ export function Tabs({ active, setActive }: Props) {
       {tabs.map((tab) => (
         <Button
           key={tab}
-          variant="transparent"
+          variant="muted"
           onClick={() => setActive(tab)}
           className={tab === active ? styles.activeTab : styles.tab}
         >

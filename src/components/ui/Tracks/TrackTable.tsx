@@ -60,7 +60,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
             <Table.Cell>
               <Dropdown.Root>
                 <Dropdown.Trigger>
-                  <Button variant="transparent" icon="⋯" />
+                  <Button variant="muted" icon="⋯" />
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="md">
