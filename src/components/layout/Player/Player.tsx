@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { usePlayer } from '@/contexts/PlayerContext';
 import styles from './Player.module.scss';
 import {
+  Check,
   KeyboardIcon,
   ListMusic,
   PauseIcon,
   PlayIcon,
+  Plus,
   SkipBackIcon,
   SkipForwardIcon,
   SpaceIcon,
@@ -23,11 +25,14 @@ import { ScrollingSpan } from '@/components/commons/Span/ScrollingSpan';
 import { Slider } from '@/components/commons/Slider/Slider';
 import { TrackLink } from '@/components/commons/Link/TrackLink';
 import { ArtistLinkGroup } from '@/components/commons/Link/ArtistLinkGroup';
+import { PlaylistDTO } from '@/services/playlist/types';
+import { addTrackToPlaylist, getPlaylistsCustomer, removeTrackFromPlaylist } from '@/services/playlist';
 
 const Player = () => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [volume, setVolume] = useState(1);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
 
   const wavesurferRef = useRef<any>(null);
 
@@ -63,6 +68,32 @@ const Player = () => {
       wavesurferRef.current.setVolume(Math.min(volume, 1));
     }
   }, [volume]);
+
+  useEffect(() => {
+    async function fetchPlaylists() {
+      try {
+        const resp = await getPlaylistsCustomer();
+        setPlaylists(resp.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    fetchPlaylists();
+  }, []);
+
+  const toggleInPlaylist = async (trackId: string, playlist: PlaylistDTO, isMember: boolean) => {
+    if (isMember) {
+      await removeTrackFromPlaylist(playlist.id, trackId);
+      setPlaylists((prev) =>
+        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: pl.tracks.filter((t) => t.id !== trackId) } : pl)),
+      );
+    } else {
+      await addTrackToPlaylist(playlist.id, trackId);
+      setPlaylists((prev) =>
+        prev.map((pl) => (pl.id === playlist.id ? { ...pl, tracks: [...pl.tracks, { id: trackId } as any] } : pl)),
+      );
+    }
+  };
 
   return (
     <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
@@ -114,15 +145,30 @@ const Player = () => {
             </div>
 
             <div className={styles.trackInfo}>
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  // Aqui você pode chamar uma função como addToPlaylist(track.id)
-                  console.log('Adicionar à playlist:', currentTrack.id);
-                }}
-              >
-                +
-              </Button>
+              <Dropdown.Root key={'playlists'}>
+                <Dropdown.Trigger>
+                  <Button variant="ghost">+</Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content size="md" side="top">
+                  {playlists.map((playlist) => {
+                    const isMember = playlist.tracks.some((track) => track.id === currentTrack.id);
+                    return (
+                      <>
+                        <Dropdown.Item
+                          key={playlist.id}
+                          onClick={() => toggleInPlaylist(currentTrack.id, playlist, isMember)}
+                          rightIcon={isMember ? <Check size={12} /> : <Plus size={12} />}
+                          className={styles.playlistItem}
+                        >
+                          <ScrollingSpan text={playlist.name} />
+                        </Dropdown.Item>
+                      </>
+                    );
+                  })}
+                </Dropdown.Content>
+              </Dropdown.Root>
+
               <Button
                 onClick={() => {
                   window.open(`/track/${currentTrack.id}/buy`, '_blank');
@@ -132,7 +178,7 @@ const Player = () => {
               </Button>
             </div>
 
-            <div className={styles.musicControls}>
+            <div>
               <Dropdown.Root key={'keyboard'}>
                 <Dropdown.Trigger>
                   <Button variant="ghost" className={styles.keyboard}>
@@ -149,9 +195,7 @@ const Player = () => {
 
               <Dropdown.Root key={'volume'}>
                 <Dropdown.Trigger>
-                  <Button variant="ghost" className={styles.volume}>
-                    {getVolumeIcon(volume)}
-                  </Button>
+                  <Button variant="ghost">{getVolumeIcon(volume)}</Button>
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="xs" side="top">

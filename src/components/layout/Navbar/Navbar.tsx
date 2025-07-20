@@ -59,8 +59,8 @@ const Navbar = () => {
                   </Dropdown.Trigger>
 
                   <Dropdown.Content size="sm">
-                    <Dropdown.Item onSelect={() => navigate('/profile')}>Perfil</Dropdown.Item>
-                    <Dropdown.Item onSelect={signOut}>Sair</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate('/profile')}>Perfil</Dropdown.Item>
+                    <Dropdown.Item onClick={signOut}>Sair</Dropdown.Item>
                   </Dropdown.Content>
                 </Dropdown.Root>
               </div>

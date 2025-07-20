@@ -66,6 +66,10 @@
   cursor: pointer;
   display: flex;
   transition: background-color 0.15s;
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 
   &:focus {
     outline: none;
@@ -84,8 +88,6 @@
 }
 
 .icon {
-  margin-left: $spacing-sm;
-  font-size: 0.75rem;
   color: $color-primary;
 }
 

@@ -63,8 +63,8 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="md">
-                  <Dropdown.Item onSelect={() => {}}>Editar</Dropdown.Item>
-                  <Dropdown.Item onSelect={() => {}}>Compartilhar</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {}}>Editar</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {}}>Compartilhar</Dropdown.Item>
 
                   <Dropdown.Submenu label="Adicionar à playlist +">
                     {playlists.map((pl) => {
@@ -72,7 +72,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                       return (
                         <Dropdown.Item
                           key={pl.id}
-                          onSelect={() => toggleInPlaylist(track.id, pl, isMember)}
+                          onClick={() => toggleInPlaylist(track.id, pl, isMember)}
                           rightIcon={isMember ? '✓' : '+'}
                         >
                           {pl.name}
