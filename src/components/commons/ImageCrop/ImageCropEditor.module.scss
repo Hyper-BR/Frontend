@@ -1,9 +1,12 @@
 @use '@/styles/theme.scss' as *;
 
 .cropContainer {
-  width: 100%;
-  max-width: 320px;
-  height: 320px;
-  margin: 0 auto;
   position: relative;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.zoom {
+  margin: auto;
+  width: 25%;
 }

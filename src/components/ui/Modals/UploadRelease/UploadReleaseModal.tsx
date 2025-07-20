@@ -30,14 +30,8 @@ const UploadReleaseModal = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Modal.Root modal="upload" size="lg" onClose={resetAndClose}>
-        <Modal.Header
-          title={
-            releaseType === 'SINGLE'
-              ? 'Upload de Faixa'
-              : 'Upload de EP / Álbum'
-          }
-        />
+      <Modal.Root modal="upload" size="xl" onClose={resetAndClose}>
+        <Modal.Header title={releaseType === 'SINGLE' ? 'Upload de Faixa' : 'Upload de EP / Álbum'} />
 
         <Modal.Content>
           {!uploadStarted && (
@@ -114,9 +108,7 @@ const UploadReleaseModal = () => {
                     })
                   }
                   searchArtistName={artistSearch.name}
-                  onSearchInput={(name) =>
-                    setArtistSearch((prev) => ({ ...prev, name }))
-                  }
+                  onSearchInput={(name) => setArtistSearch((prev) => ({ ...prev, name }))}
                 />
               </div>
 

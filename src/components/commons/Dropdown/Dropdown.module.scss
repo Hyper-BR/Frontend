@@ -3,7 +3,6 @@
 
 .menu {
   max-height: calc(8 * 40px);
-  overflow-y: auto;
   scrollbar-width: thin;
   background: rgba($color-gray-dark, 0.95);
   border-radius: $radius-sm;
