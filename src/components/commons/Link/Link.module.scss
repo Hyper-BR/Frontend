@@ -42,6 +42,14 @@
   }
 
   &.lg {
+    font-size: 0.925rem;
+  }
+
+  &.xl {
     font-size: 1.05rem;
   }
+}
+
+.artistLinkGroup {
+  color: $color-muted;
 }

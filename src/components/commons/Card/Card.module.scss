@@ -54,18 +54,18 @@
   }
 
   &.sm {
-    min-width: 60px;
-    max-width: 60px;
-  }
-
-  &.md {
     min-width: 80px;
     max-width: 80px;
   }
 
-  &.lg {
+  &.md {
     min-width: 100px;
     max-width: 100px;
+  }
+
+  &.lg {
+    min-width: 120px;
+    max-width: 120px;
   }
 
   &.round {

@@ -14,4 +14,6 @@ export type CustomerDTO = {
   artistProfile?: ArtistDTO;
   artist?: boolean;
   label?: boolean;
+  coverUrl?: string;
+  cover?: File;
 };

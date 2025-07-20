@@ -35,7 +35,7 @@ const Home = () => {
         <h3>Faixas em destaque</h3>
         <div className={styles.carousel}>
           {tracks.map((track) => (
-            <TrackCard key={track.id} track={track} size="lg" direction="column" linkSize="lg" />
+            <TrackCard key={track.id} track={track} size="lg" direction="column" firstLinkSize="lg" />
           ))}
         </div>
       </section>

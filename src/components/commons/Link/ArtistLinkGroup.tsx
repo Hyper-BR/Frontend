@@ -1,5 +1,6 @@
 import { ArtistDTO } from '@/services/artist/types';
 import { ArtistLink } from './ArtistLink';
+import styles from './Link.module.scss';
 
 interface Props {
   artists: ArtistDTO[];
@@ -10,7 +11,7 @@ interface Props {
 
 export function ArtistLinkGroup({ artists = [], size = 'sm', color = 'white', onClick }: Props) {
   return (
-    <>
+    <div className={styles.artistLinkGroup}>
       {artists.map((artist, index) => (
         <span key={artist.id}>
           <ArtistLink
@@ -23,6 +24,6 @@ export function ArtistLinkGroup({ artists = [], size = 'sm', color = 'white', on
           {index < artists.length - 1 && ', '}
         </span>
       ))}
-    </>
+    </div>
   );
 }
