@@ -9,7 +9,10 @@ import {
   SkipBackIcon,
   SkipForwardIcon,
   SpaceIcon,
-  VolumeIcon,
+  Volume,
+  Volume1,
+  Volume2,
+  VolumeX,
 } from 'lucide-react';
 import { Button } from '@/components/commons/Button/Button';
 import { buildFullUrl } from '@/utils/buildFullUrl';
@@ -17,6 +20,7 @@ import Waveform from '@/components/commons/Waveform/Waveform';
 import { formatTime } from '@/utils/formatTime';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { ScrollingSpan } from '@/components/commons/Span/ScrollingSpan';
+import { Slider } from '@/components/commons/Slider/Slider';
 
 const Player = () => {
   const [duration, setDuration] = useState(0);
@@ -38,12 +42,25 @@ const Player = () => {
     setCurrentTime(ws.getCurrentTime());
   };
 
+  function getVolumeIcon(volume: number) {
+    if (volume === 0) return <VolumeX />;
+    if (volume < 0.3) return <Volume />;
+    if (volume < 0.7) return <Volume1 />;
+    return <Volume2 />;
+  }
+
   useEffect(() => {
     if (!wavesurferRef.current) return;
     const ws = wavesurferRef.current;
     if (isPlaying) ws.play();
     else ws.pause();
   }, [isPlaying]);
+
+  useEffect(() => {
+    if (wavesurferRef.current) {
+      wavesurferRef.current.setVolume(Math.min(volume, 1));
+    }
+  }, [volume]);
 
   return (
     <footer className={`${styles.player} ${!currentTrack ? styles.disabled : ''}`}>
@@ -118,19 +135,21 @@ const Player = () => {
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="sm" side="top">
-                  <Dropdown.Item rightIcon={<SpaceIcon />}>Play / Pause</Dropdown.Item>
+                  <Dropdown.Item onClick={togglePlay} rightIcon={<SpaceIcon />}>
+                    Play / Pause
+                  </Dropdown.Item>
                 </Dropdown.Content>
               </Dropdown.Root>
 
               <Dropdown.Root key={'volume'}>
                 <Dropdown.Trigger>
                   <Button variant="ghost" className={styles.volume}>
-                    <VolumeIcon />
+                    {getVolumeIcon(volume)}
                   </Button>
                 </Dropdown.Trigger>
 
-                <Dropdown.Content size="sm" side="top">
-                  <Dropdown.Item>Volume</Dropdown.Item>
+                <Dropdown.Content size="xs" side="top">
+                  <Slider value={volume * 100} onChange={(val) => setVolume(val / 100)} vertical />
                 </Dropdown.Content>
               </Dropdown.Root>
 

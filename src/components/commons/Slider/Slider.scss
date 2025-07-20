@@ -1,0 +1,54 @@
+@use '@/styles/theme.scss' as *;
+
+.slider {
+  height: 130px;
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+
+  .vertical {
+    transform: rotate(-90deg);
+  }
+}
+
+.slider-thumb {
+  height: 4px; // ✅ trilha ainda mais fina
+  -webkit-appearance: none;
+  background: $color-primary-dark;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid $color-primary;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba($color-primary, 0.5);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 0 8px rgba($color-primary-dark, 0.8);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid $color-primary;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba($color-primary, 0.5);
+  }
+
+  &::-moz-range-track {
+    background: $color-primary-dark;
+    height: 6px;
+    border-radius: 4px;
+  }
+}
