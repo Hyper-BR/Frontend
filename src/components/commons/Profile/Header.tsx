@@ -14,15 +14,7 @@ interface Props {
   analytics?: { plays: string };
 }
 
-export function Header({
-  avatarUrl,
-  name,
-  email,
-  onEdit,
-  owner,
-  stats,
-  analytics,
-}: Props) {
+export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics }: Props) {
   return (
     <div className={styles.cover}>
       <header className={styles.header}>
@@ -47,9 +39,11 @@ export function Header({
         </div>
 
         {owner && (
-          <div className={styles.planSection}>
-            <PlanCard title="Plano Premium" />
-          </div>
+          <>
+            <div className={styles.planSection}>
+              <PlanCard title="Plano Premium" />
+            </div>
+          </>
         )}
       </header>
     </div>
