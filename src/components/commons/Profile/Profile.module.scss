@@ -29,13 +29,11 @@
 .userInfo {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $spacing-md;
-  flex: 1;
 }
 
 .details {
-  flex: 1;
-
   h2 {
     font-size: $font-size-lg;
     color: $color-white;
@@ -65,21 +63,23 @@
 .cover {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   padding: $spacing-xl $spacing-md;
   background: linear-gradient(to right, $color-muted, $color-gray-dark);
   background-size: cover;
   background-position: center;
-  border-bottom: 1px solid rgba($color-white, 0.1);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  margin-bottom: 0;
   overflow: hidden;
   height: 100px;
+  justify-content: center;
 }
 
 .coverImageWrapper {
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
 }
 
 .coverImage {
@@ -100,6 +100,7 @@
   border: none;
   cursor: pointer;
   z-index: 2;
+  object-position: center;
 
   &:hover {
     background-color: rgba($color-primary, 0.7);
@@ -108,17 +109,13 @@
 
 .avatarWrapper {
   position: relative;
-  width: 100px;
-  height: 100px;
   border-radius: 50%;
   overflow: hidden;
   border: 2px solid $color-primary-dark;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  width: 100px;
-  height: 100px;
-  min-width: 80px;
-  min-height: 80px;
+  min-width: 140px;
   max-width: 140px;
+  min-height: 140px;
   max-height: 140px;
 }
 
