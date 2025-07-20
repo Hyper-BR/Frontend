@@ -1,5 +1,5 @@
 import { Card } from '@/components/commons/Card';
-import { useAuth } from '@/hooks/useAuth';
+import { ArtistLink } from '@/components/commons/Link/ArtistLink';
 import { ArtistDTO } from '@/services/artist/types';
 
 interface Props {
@@ -10,27 +10,12 @@ interface Props {
   direction?: 'row' | 'column';
 }
 
-export function ArtistCard({
-  artist,
-  size = 'md',
-  direction = 'row',
-  shape = 'square',
-  align,
-}: Props) {
+export function ArtistCard({ artist, size = 'md', direction = 'row' }: Props) {
   return (
-    <Card.Root
-      imageUrl={artist.avatarUrl}
-      shape="round"
-      size={size}
-      clickable
-      align="center"
-      direction={direction}
-    >
-      <Card.Title
-        text={artist.username}
-        href={`/artist/${artist.id}`}
-        color="primary"
-      />
+    <Card.Root imageUrl={artist.avatarUrl} shape="round" size={size} clickable align="center" direction={direction}>
+      <Card.Title>
+        <ArtistLink name={artist.username} id={artist.id} onClick={() => {}} size="lg" />
+      </Card.Title>
     </Card.Root>
   );
 }

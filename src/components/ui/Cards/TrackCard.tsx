@@ -1,8 +1,9 @@
-import styles from './TrackCard.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
 import { Card } from '@/components/commons/Card';
 import { Button } from '@/components/commons/Button/Button';
+import { TrackLink } from '@/components/commons/Link/TrackLink';
+import { ArtistLink } from '@/components/commons/Link/ArtistLink';
 
 interface Props {
   track: TrackDTO;
@@ -20,11 +21,10 @@ export function TrackCard({ track, size = 'md', direction = 'row', shape = 'squa
     const isTrackInList = trackList.some((t) => t.id === track.id);
 
     if (!isAlreadyPlayingThis) {
-      // ✅ define a fila com apenas essa track (ou adicione à fila se preferir)
       const newList = isTrackInList ? trackList : [track];
       const index = newList.findIndex((t) => t.id === track.id);
       setTrackList(newList, index);
-      play(); // ✅ inicia reprodução
+      play();
     }
   };
 
@@ -38,26 +38,21 @@ export function TrackCard({ track, size = 'md', direction = 'row', shape = 'squa
       onClick={handlePlayClick}
       align={align}
     >
-      <div className={styles.imageWrapper}>
-        <Button
-          className={styles.playButton}
-          variant="transparent"
-          icon={
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          }
-          onClick={handlePlayClick}
-        />
-      </div>
-
-      <Card.Title text={track.title} href={`/track/${track.id}`} />
-      <Card.Subtitle
-        items={track.artists.map((a) => ({
-          text: a.username,
-          href: `/artist/${a.id}`,
-        }))}
-      />
+      <Card.Title>
+        <TrackLink title={track.title} id={track.id} onClick={() => {}} size="lg" color="white" />
+      </Card.Title>
+      <Card.Subtitle>
+        {track.artists.map((artist) => (
+          <ArtistLink
+            key={artist.id}
+            name={artist.username}
+            id={artist.id}
+            onClick={() => {}}
+            size="md"
+            color="muted"
+          />
+        ))}
+      </Card.Subtitle>
     </Card.Root>
   );
 }

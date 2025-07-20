@@ -21,6 +21,8 @@ import { formatTime } from '@/utils/formatTime';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { ScrollingSpan } from '@/components/commons/Span/ScrollingSpan';
 import { Slider } from '@/components/commons/Slider/Slider';
+import { TrackLink } from '@/components/commons/Link/TrackLink';
+import { ArtistLinkGroup } from '@/components/commons/Link/ArtistLinkGroup';
 
 const Player = () => {
   const [duration, setDuration] = useState(0);
@@ -67,8 +69,12 @@ const Player = () => {
       <div className={styles.songInfo}>
         {currentTrack && <img src={buildFullUrl(currentTrack?.coverUrl)} alt="Cover" className={styles.image} />}
         <div>
-          <p className={styles.title}>{currentTrack?.title}</p>
-          <p className={styles.artist}>{currentTrack?.artists.map((a) => a.username).join(', ') || ''}</p>
+          <div>
+            <TrackLink title={currentTrack?.title} id={currentTrack?.id} size="lg" />
+          </div>
+          <div>
+            <ArtistLinkGroup artists={currentTrack?.artists} size="sm" color="muted" />
+          </div>
         </div>
       </div>
 

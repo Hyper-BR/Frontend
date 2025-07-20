@@ -89,36 +89,3 @@
   flex-direction: column;
   gap: 4px;
 }
-
-.title {
-  font-size: 0.95rem;
-  color: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-decoration: none;
-  transition: color $transition, text-decoration 0.2s ease;
-  cursor: pointer;
-  max-width: 120px;
-
-  &:hover {
-    color: $color-white;
-    text-decoration: underline;
-  }
-}
-
-.subtitleLink {
-  font-size: 0.85rem;
-  color: $color-muted;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-decoration: none;
-  transition: color $transition, text-decoration 0.2s ease;
-  cursor: pointer;
-
-  &:hover {
-    color: $color-white;
-    text-decoration: underline;
-  }
-}
