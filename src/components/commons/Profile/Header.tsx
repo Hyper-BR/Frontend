@@ -8,6 +8,7 @@ import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
 import { EditImageModal } from '@/components/ui/Modals/EditImage/EditImageModal';
 import { Dropdown } from '../Dropdown';
+import { useState } from 'react';
 
 interface Props {
   avatarUrl: string;
@@ -24,19 +25,25 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
   const { customer } = useAuth();
   const { closeModal, openModal } = useModal();
 
+  const [previewAvatar, setPreviewAvatar] = useState<string | null>(null);
+  const [previewCover, setPreviewCover] = useState<string | null>(null);
+
   const handleSelectImage = async (type: 'cover' | 'avatar') => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.onchange = async (e: any) => {
+
+    input.onchange = (e: any) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('type', type);
+      const url = URL.createObjectURL(file);
+      const modalId = type === 'cover' ? 'editCover' : 'editAvatar';
 
-      openModal(type === 'cover' ? 'editCover' : 'editAvatar');
+      if (type === 'cover') setPreviewCover(url);
+      if (type === 'avatar') setPreviewAvatar(url);
+
+      openModal(modalId);
     };
 
     input.click();
@@ -48,6 +55,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
         modalId="editAvatar"
         title="Editar avatar"
         aspect={1}
+        image={previewAvatar}
         onApply={(data, area) => console.log('Avatar editado:', data)}
         onClose={closeModal}
       />
@@ -56,6 +64,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
         modalId="editCover"
         title="Editar capa"
         aspect={16 / 9}
+        image={previewCover}
         onApply={(data, area) => console.log('Capa editada:', data)}
         onClose={closeModal}
       />
