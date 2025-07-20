@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { forwardRef } from 'react';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'ghost' | 'transparent';
+  variant?: 'primary' | 'ghost' | 'transparent' | 'black';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
   icon?: React.ReactNode;
@@ -12,16 +12,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = forwardRef<HTMLButtonElement, Props>(
   (
-    {
-      variant = 'primary',
-      size = 'md',
-      loading = false,
-      icon,
-      children,
-      className,
-      type = 'button',
-      ...props
-    },
+    { variant = 'primary', size = 'md', loading = false, icon, children, className, type = 'button', ...props },
     ref,
   ) => {
     return (
@@ -32,11 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
         disabled={props.disabled || loading}
         {...props}
       >
-        {loading ? (
-          '...'
-        ) : icon ? (
-          <span className={styles.icon}>{icon}</span>
-        ) : null}
+        {loading ? '...' : icon ? <span className={styles.icon}>{icon}</span> : null}
         <span>{children}</span>
       </button>
     );

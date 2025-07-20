@@ -8,6 +8,7 @@ import { ImageCropEditor } from '../ImageCrop/ImageCropEditor';
 import { PencilIcon } from 'lucide-react';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
+import { EditImageModal } from '@/components/ui/Modals/EditImage/EditImageModal';
 
 interface Props {
   avatarUrl: string;
@@ -22,58 +23,36 @@ interface Props {
 
 export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics, coverUrl }: Props) {
   const { customer } = useAuth();
-  const { closeModal } = useModal();
+  const { closeModal, openModal } = useModal();
 
   return (
     <>
-      <Modal.Root modal="editCover" size="lg" onClose={closeModal}>
-        <Modal.Header title="Editar capa" />
-        <Modal.Content>
-          <ImageCropEditor
-            image={coverUrl || ''}
-            aspect={16 / 9}
-            onCropComplete={(area) => console.log('Capa:', area)}
-          />
-        </Modal.Content>
-        <Modal.Footer
-          cancelButton={
-            <Button variant="ghost" onClick={closeModal}>
-              Cancelar
-            </Button>
-          }
-          submitButton={<Button>Aplicar</Button>}
-        />
-      </Modal.Root>
+      <EditImageModal
+        modalId="editAvatar"
+        title="Editar avatar"
+        aspect={1}
+        onApply={(data, area) => console.log('Avatar editado:', data)}
+        onClose={closeModal}
+      />
 
-      {/* ✅ Modal para editar avatar */}
-      <Modal.Root modal="editAvatar" size="sm" onClose={closeModal}>
-        <Modal.Header title="Editar avatar" />
-        <Modal.Content>
-          <ImageCropEditor
-            image={buildFullUrl(customer?.avatarUrl)}
-            aspect={1}
-            onCropComplete={(area) => console.log('Avatar:', area)}
-          />
-        </Modal.Content>
-        <Modal.Footer
-          cancelButton={
-            <Button variant="ghost" onClick={closeModal}>
-              Cancelar
-            </Button>
-          }
-          submitButton={<Button>Aplicar</Button>}
-        />
-      </Modal.Root>
+      <EditImageModal
+        modalId="editCover"
+        title="Editar capa"
+        aspect={16 / 9}
+        onApply={(data, area) => console.log('Capa editada:', data)}
+        onClose={closeModal}
+      />
+
       <div className={styles.cover}>
         <div className={styles.coverImageWrapper}>
           <img src={coverUrl} alt="Capa" className={styles.coverImage} />
 
           {onEdit && (
             <Modal.Trigger modal="editCover">
-              <button className={styles.editCoverBtn}>
+              <Button className={styles.editCoverBtn} variant="black" size="sm" onClick={() => openModal('editAvatar')}>
                 <PencilIcon size={16} />
                 <span>Editar imagem</span>
-              </button>
+              </Button>
             </Modal.Trigger>
           )}
         </div>
@@ -85,10 +64,15 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
               {onEdit && (
                 <Modal.Trigger modal="editAvatar">
-                  <button className={styles.editAvatarBtn}>
+                  <Button
+                    className={styles.editAvatarBtn}
+                    variant="black"
+                    size="sm"
+                    onClick={() => openModal('editAvatar')}
+                  >
                     <PencilIcon size={14} />
                     <span>Editar imagem</span>
-                  </button>
+                  </Button>
                 </Modal.Trigger>
               )}
             </div>
