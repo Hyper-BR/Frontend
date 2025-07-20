@@ -11,9 +11,10 @@ interface Props {
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
+  linkSize?: 'sm' | 'md' | 'lg';
 }
 
-export function TrackCard({ track, size = 'md', direction = 'row', shape = 'square', align }: Props) {
+export function TrackCard({ track, size = 'md', direction = 'row', shape = 'square', align, linkSize = 'md' }: Props) {
   const { currentTrack, setTrackList, trackList, play } = usePlayer();
 
   const handlePlayClick = () => {
@@ -39,18 +40,11 @@ export function TrackCard({ track, size = 'md', direction = 'row', shape = 'squa
       align={align}
     >
       <Card.Title>
-        <TrackLink title={track.title} id={track.id} onClick={() => {}} size="lg" color="white" />
+        <TrackLink title={track.title} id={track.id} onClick={() => {}} size={linkSize} color="white" />
       </Card.Title>
       <Card.Subtitle>
         {track.artists.map((artist) => (
-          <ArtistLink
-            key={artist.id}
-            name={artist.username}
-            id={artist.id}
-            onClick={() => {}}
-            size="md"
-            color="muted"
-          />
+          <ArtistLink key={artist.id} name={artist.username} id={artist.id} size="md" color="muted" />
         ))}
       </Card.Subtitle>
     </Card.Root>

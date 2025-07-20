@@ -8,7 +8,7 @@ interface Props {
   onClick?: (id: string) => void;
 }
 
-export function ArtistLinkGroup({ artists = [], size = 'md', color = 'white', onClick }: Props) {
+export function ArtistLinkGroup({ artists = [], size = 'sm', color = 'white', onClick }: Props) {
   return (
     <>
       {artists.map((artist, index) => (

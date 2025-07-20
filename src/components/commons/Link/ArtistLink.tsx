@@ -10,7 +10,7 @@ interface Props {
   onClick?: () => void;
 }
 
-export function ArtistLink({ name, id, onClick, size = 'md', color = 'white' }: Props) {
+export function ArtistLink({ name, id, onClick, size = 'sm', color = 'white' }: Props) {
   return (
     <Link
       to={`/artist/${id}`}
