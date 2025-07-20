@@ -24,6 +24,24 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
   const { customer } = useAuth();
   const { closeModal, openModal } = useModal();
 
+  const handleSelectImage = async (type: 'cover' | 'avatar') => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e: any) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', type);
+
+      openModal(type === 'cover' ? 'editCover' : 'editAvatar');
+    };
+
+    input.click();
+  };
+
   return (
     <>
       <EditImageModal
@@ -48,7 +66,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
           {onEdit && (
             <div className={styles.editCoverBtn}>
-              <Dropdown.Root key="avatar">
+              <Dropdown.Root key="cover">
                 <Dropdown.Trigger>
                   <Button size="sm" variant="muted">
                     Editar imagem
@@ -56,8 +74,8 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="xs">
-                  <Dropdown.Item>Substituir</Dropdown.Item>
-                  <Dropdown.Item>Excluir</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleSelectImage('cover')}>Substituir</Dropdown.Item>
+                  <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
                 </Dropdown.Content>
               </Dropdown.Root>
             </div>
@@ -71,7 +89,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
               {onEdit && (
                 <div className={styles.editAvatarBtn}>
-                  <Dropdown.Root key="cover">
+                  <Dropdown.Root key="avatar">
                     <Dropdown.Trigger>
                       <Button size="sm" variant="black">
                         Editar imagem
@@ -79,8 +97,8 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
                     </Dropdown.Trigger>
 
                     <Dropdown.Content size="xs">
-                      <Dropdown.Item>Substituir</Dropdown.Item>
-                      <Dropdown.Item>Excluir</Dropdown.Item>
+                      <Dropdown.Item onClick={() => handleSelectImage('avatar')}>Substituir</Dropdown.Item>
+                      <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
                     </Dropdown.Content>
                   </Dropdown.Root>
                 </div>

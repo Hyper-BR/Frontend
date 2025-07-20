@@ -39,7 +39,7 @@ export function EditImageModal({ modalId, title, aspect = 1, onApply, onClose }:
   };
 
   return (
-    <Modal.Root modal={modalId} size="lg" onClose={onClose}>
+    <Modal.Root modal={modalId} size="md" onClose={onClose}>
       <Modal.Header title={title} />
 
       <Modal.Content>
