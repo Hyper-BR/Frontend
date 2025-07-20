@@ -3,7 +3,6 @@ import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import { ImageCropEditor } from '@/components/commons/ImageCrop/ImageCropEditor';
 import { getCroppedImage } from '@/utils/getCroppedImage';
-import styles from './EditImageModal.module.scss';
 
 interface Props {
   modalId: string;
@@ -26,22 +25,20 @@ export function EditImageModal({ modalId, title, aspect = 1, onApply, onClose, i
   };
 
   return (
-    <Modal.Root modal={modalId} size="lg" onClose={onClose}>
+    <Modal.Root modal={modalId} size="xs" onClose={onClose}>
       <Modal.Header title={title} />
 
       <Modal.Content>
-        <div className={styles.content}>
-          <ImageCropEditor
-            image={image}
-            aspect={1}
-            cropShape="round"
-            initialZoom={1.4}
-            zoomRange={[1, 3]}
-            showZoom={true}
-            containerSize={{ width: 320, height: 320 }}
-            onCropComplete={(pixels) => console.log('Área recortada:', pixels)}
-          />
-        </div>
+        <ImageCropEditor
+          image={image}
+          aspect={1}
+          cropShape="round"
+          initialZoom={1.4}
+          zoomRange={[1, 3]}
+          showZoom={true}
+          containerSize={{ width: 320, height: 320 }}
+          onCropComplete={(pixels) => console.log('Área recortada:', pixels)}
+        />
       </Modal.Content>
 
       <Modal.Footer

@@ -4,6 +4,22 @@
   position: relative;
   overflow: hidden;
   border-radius: 50%;
+
+  :global(.reactEasyCrop_Container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+  }
+
+  :global(.reactEasyCrop_Image) {
+    object-fit: cover;
+  }
+
+  :global(.reactEasyCrop_CropArea) {
+    border: none;
+    box-shadow: none !important;
+  }
 }
 
 .zoom {
