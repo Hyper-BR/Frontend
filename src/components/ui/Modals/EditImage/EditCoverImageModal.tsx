@@ -45,19 +45,14 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
     <Modal.Root modal={modalId} size="lg" onClose={onClose}>
       <Modal.Header title={title} />
       <Modal.Content>
-        <div className={styles.container}>
-          <ImageCropEditor
-            image={image}
-            aspect={4.77 / 1}
-            cropShape="rect"
-            showZoom={false}
-            containerSize={{ width: 2480, height: 520 }}
-            onCropComplete={setCroppedAreaPixels}
-          />
-          <div className={styles.avatarPreview}>
-            <img src={buildFullUrl(customer.avatarUrl)} alt="Avatar" />
-          </div>
-        </div>
+        <ImageCropEditor
+          image={image}
+          aspect={4.77 / 1}
+          cropShape="rect"
+          showZoom={false}
+          containerSize={{ width: 2480, height: 520 }}
+          onCropComplete={setCroppedAreaPixels}
+        />
       </Modal.Content>
       <Modal.Footer
         cancelButton={
