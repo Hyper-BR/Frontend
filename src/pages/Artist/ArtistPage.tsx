@@ -4,10 +4,11 @@ import { getArtistById } from '@/services/artist';
 import { getTracksByArtist } from '@/services/track';
 import ProfileLayout from '@/components/ui/Profile/ProfileLayout';
 import { TrackPageDTO } from '@/services/track/types';
+import { ArtistDTO } from '@/services/artist/types';
 
 export default function ArtistPage() {
   const { id } = useParams();
-  const [artist, setArtist] = useState(null);
+  const [artist, setArtist] = useState<ArtistDTO>(null);
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
 
   const fetchData = () => {
@@ -26,6 +27,7 @@ export default function ArtistPage() {
   return (
     <ProfileLayout
       avatarUrl={artist?.avatarUrl}
+      coverUrl={artist?.coverUrl}
       stats={{ followers: '120', following: '87' }}
       name={artist?.username}
       tracks={tracks}

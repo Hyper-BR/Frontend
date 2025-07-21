@@ -13,13 +13,13 @@ import { EditCoverImageModal } from '@/components/ui/Modals/EditImage/EditCoverI
 
 interface Props {
   avatarUrl: string;
+  coverUrl: string;
   name: string;
   email?: string;
   onEdit?: boolean;
   owner?: boolean;
   stats: { followers: string; following: string };
   analytics?: { plays: string };
-  coverUrl?: string;
 }
 
 export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics, coverUrl }: Props) {
@@ -53,86 +53,80 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
   return (
     <>
       <EditAvatarImageModal modalId="editAvatar" title="Editar avatar" image={previewAvatar} onClose={closeModal} />
-
-      <EditCoverImageModal
-        modalId="editCover"
-        title="Editar capa"
-        image={previewCover}
-        onApply={(data, area) => console.log('Capa editada:', data)}
-        onClose={closeModal}
-      />
+      <EditCoverImageModal modalId="editCover" title="Editar capa" image={previewCover} onClose={closeModal} />
 
       <div className={styles.cover}>
         <div className={styles.coverImageWrapper}>
           <img src={buildFullUrl(coverUrl)} alt="cover" className={styles.coverImage} />
-
-          {onEdit && (
-            <div className={styles.editCoverBtn}>
-              <Dropdown.Root key="cover">
-                <Dropdown.Trigger>
-                  <Button size="sm" variant="muted">
-                    Editar imagem
-                  </Button>
-                </Dropdown.Trigger>
-
-                <Dropdown.Content size="xs">
-                  <Dropdown.Item onClick={() => handleSelectImage('cover')}>Substituir</Dropdown.Item>
-                  <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
-                </Dropdown.Content>
-              </Dropdown.Root>
-            </div>
-          )}
-        </div>
-
-        <header className={styles.header}>
-          <div className={styles.userInfo}>
-            <div className={styles.avatarWrapper}>
-              <img src={buildFullUrl(avatarUrl)} alt="avatar" className={styles.avatar} />
-
-              {onEdit && (
-                <div className={styles.editAvatarBtn}>
-                  <Dropdown.Root key="avatar">
-                    <Dropdown.Trigger>
-                      <Button size="sm" variant="black">
-                        Editar imagem
-                      </Button>
-                    </Dropdown.Trigger>
-
-                    <Dropdown.Content size="xs">
-                      <Dropdown.Item onClick={() => handleSelectImage('avatar')}>Substituir</Dropdown.Item>
-                      <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
-                    </Dropdown.Content>
-                  </Dropdown.Root>
-                </div>
-              )}
-            </div>
-
-            <div className={styles.details}>
-              <h2>{name}</h2>
-              {email && <p className={styles.email}>{email}</p>}
-
-              {onEdit && (
-                <div className={styles.editProfile}>
-                  <Modal.Trigger modal="editProfile">
-                    <Button className={styles.editBtn} variant="ghost">
-                      Editar perfil
+          <div className={styles.overlayContent}>
+            {onEdit && (
+              <div className={styles.editCoverBtn}>
+                <Dropdown.Root key="cover">
+                  <Dropdown.Trigger>
+                    <Button size="sm" variant="muted">
+                      Editar imagem
                     </Button>
-                  </Modal.Trigger>
+                  </Dropdown.Trigger>
+
+                  <Dropdown.Content size="xs">
+                    <Dropdown.Item onClick={() => handleSelectImage('cover')}>Substituir</Dropdown.Item>
+                    <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
+                  </Dropdown.Content>
+                </Dropdown.Root>
+              </div>
+            )}
+
+            <header className={styles.header}>
+              <div className={styles.userInfo}>
+                <div className={styles.avatarWrapper}>
+                  <img src={buildFullUrl(avatarUrl)} alt="avatar" className={styles.avatar} />
+
+                  {onEdit && (
+                    <div className={styles.editAvatarBtn}>
+                      <Dropdown.Root key="avatar">
+                        <Dropdown.Trigger>
+                          <Button size="sm" variant="black">
+                            Editar imagem
+                          </Button>
+                        </Dropdown.Trigger>
+
+                        <Dropdown.Content size="xs">
+                          <Dropdown.Item onClick={() => handleSelectImage('avatar')}>Substituir</Dropdown.Item>
+                          <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
+                        </Dropdown.Content>
+                      </Dropdown.Root>
+                    </div>
+                  )}
+                </div>
+
+                <div className={styles.details}>
+                  <h2>{name}</h2>
+                  {email && <p className={styles.email}>{email}</p>}
+
+                  {onEdit && (
+                    <div className={styles.editProfile}>
+                      <Modal.Trigger modal="editProfile">
+                        <Button className={styles.editBtn} variant="ghost">
+                          Editar perfil
+                        </Button>
+                      </Modal.Trigger>
+                    </div>
+                  )}
+
+                  <div className={styles.stats}>
+                    <Profile.Stats stats={stats} analytics={analytics} />
+                  </div>
+                </div>
+              </div>
+
+              {owner && (
+                <div className={styles.planSection}>
+                  <PlanCard title={customer.subscription.name} />
                 </div>
               )}
-
-              <div className={styles.stats}>
-                <Profile.Stats stats={stats} analytics={analytics} />
-              </div>
-            </div>
+            </header>
           </div>
-
-          {owner && (
-            <div className={styles.planSection}>
-              <PlanCard title={customer.subscription.name} />
-            </div>
-          )}
-        </header>
+        </div>
       </div>
     </>
   );

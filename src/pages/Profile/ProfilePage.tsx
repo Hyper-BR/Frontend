@@ -30,11 +30,8 @@ export default function ProfilePage() {
   return (
     <ProfileLayout
       avatarUrl={customer?.avatarUrl}
-      name={
-        customer.artistProfile != null
-          ? customer?.artistProfile?.username
-          : customer.name
-      }
+      coverUrl={customer?.coverUrl}
+      name={customer.artistProfile != null ? customer?.artistProfile?.username : customer.name}
       email={customer.email}
       stats={{ followers: '120', following: '87' }}
       analytics={null}

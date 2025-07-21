@@ -61,28 +61,29 @@
 }
 
 .cover {
-  display: flex;
-  flex-direction: column;
-  padding: $spacing-xl $spacing-md;
-  background: linear-gradient(to right, $color-muted, $color-gray-dark);
-  background-size: cover;
-  background-position: center;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  position: relative;
+  min-width: 100%;
+  min-height: 280px;
+  max-height: 280px;
   overflow: hidden;
-  height: 100px;
-  justify-content: center;
-}
-
-.coverImageWrapper {
-  height: auto;
 }
 
 .coverImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  position: absolute;
+}
+
+.overlayContent {
+  position: relative;
+  z-index: 2;
+  padding: $spacing-xl $spacing-md;
+}
+
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(#000, 0.4), rgba(#000, 0));
+  z-index: 1;
 }
 
 .editCoverBtn {

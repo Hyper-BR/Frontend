@@ -11,6 +11,7 @@ import { Content } from '../../commons/Profile/Content';
 
 interface Props {
   avatarUrl: string;
+  coverUrl: string;
   name: string;
   email?: string;
   stats: { followers: string; following: string };
@@ -23,6 +24,7 @@ interface Props {
 
 export default function ProfileLayout({
   avatarUrl,
+  coverUrl,
   name,
   email,
   stats,
@@ -46,6 +48,7 @@ export default function ProfileLayout({
           owner={owner}
           stats={stats}
           analytics={analytics}
+          coverUrl={coverUrl}
         />
         <Tabs active={activeTab} setActive={setActiveTab} />
         <Content tab={activeTab} tracks={tracks?.content} />

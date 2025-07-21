@@ -14,10 +14,7 @@ export function useService() {
   }
 
   function put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): AxiosPromise<T> {
-    const headers = hasFile(data)
-      ? { 'Content-Type': 'multipart/form-data' }
-      : { 'Content-Type': 'multipart/form-data' };
-    console.log(headers);
+    const headers = hasFile(data) ? { 'Content-Type': 'multipart/form-data' } : { 'Content-Type': 'application/json' };
 
     return api.put<T>(url, data, { headers, ...config });
   }

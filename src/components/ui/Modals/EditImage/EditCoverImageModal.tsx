@@ -13,11 +13,10 @@ interface Props {
   modalId: string;
   title: string;
   image: string;
-  onApply: (imageData: string, crop: any) => void;
   onClose: () => void;
 }
 
-export function EditCoverImageModal({ modalId, title, image, onApply, onClose }: Props) {
+export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
   const navigate = useNavigate();
 
@@ -32,10 +31,10 @@ export function EditCoverImageModal({ modalId, title, image, onApply, onClose }:
       const blob = await (await fetch(imageData)).blob();
 
       const formData = new FormData();
-      formData.append('cover', blob, 'cover.png');
-      formData.append('avatar', blob, 'avatar.png');
+      formData.append('cover', blob, 'cover.jpg');
 
-      await updateCustomer(customer.id, formData);
+      const response = await updateCustomer(customer.id, formData);
+      console.log(response);
       onClose();
       navigate(0);
     } catch (err) {
