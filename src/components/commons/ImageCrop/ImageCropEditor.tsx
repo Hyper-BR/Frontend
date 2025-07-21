@@ -47,7 +47,7 @@ export function ImageCropEditor({
   return (
     <>
       <div
-        className={styles.cropContainer}
+        className={`${styles.cropContainer} ${styles[cropShape]}`}
         style={{
           width: containerSize.width,
           height: containerSize.height,

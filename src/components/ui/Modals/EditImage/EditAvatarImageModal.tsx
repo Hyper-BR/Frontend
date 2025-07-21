@@ -5,19 +5,21 @@ import { ImageCropEditor } from '@/components/commons/ImageCrop/ImageCropEditor'
 import { getCroppedImage } from '@/utils/getCroppedImage';
 import { updateCustomer } from '@/services/customer';
 import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   modalId: string;
   title: string;
   image: string;
-  onApply: (imageData: string, crop: any) => void;
   onClose: () => void;
 }
 
-export function EditArtistImageModal({ modalId, title, image, onApply, onClose }: Props) {
+export function EditAvatarImageModal({ modalId, title, image, onClose }: Props) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const navigate = useNavigate();
 
   const { customer } = useAuth();
+
   const handleApply = async () => {
     if (!image || !croppedAreaPixels) return;
 
@@ -29,11 +31,9 @@ export function EditArtistImageModal({ modalId, title, image, onApply, onClose }
       const formData = new FormData();
       formData.append('avatar', blob, 'avatar.png');
 
-      const response = await updateCustomer(customer.id, formData);
-      console.log('Avatar enviado:', response);
-
-      onApply(imageData, croppedAreaPixels);
+      await updateCustomer(customer.id, formData);
       onClose();
+      navigate(0);
     } catch (err) {
       console.error('Erro ao enviar avatar:', err);
     }

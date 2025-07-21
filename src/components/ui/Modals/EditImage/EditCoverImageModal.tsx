@@ -3,6 +3,9 @@ import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import { ImageCropEditor } from '@/components/commons/ImageCrop/ImageCropEditor';
 import { getCroppedImage } from '@/utils/getCroppedImage';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { updateCustomer } from '@/services/customer';
 
 interface Props {
   modalId: string;
@@ -13,28 +16,27 @@ interface Props {
 }
 
 export function EditCoverImageModal({ modalId, title, image, onApply, onClose }: Props) {
-  const [crop, setCrop] = useState<any>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const navigate = useNavigate();
+
+  const { customer } = useAuth();
 
   const handleApply = async () => {
-    if (!image || !crop) return;
+    if (!image || !croppedAreaPixels) return;
+
     try {
-      const imageData = await getCroppedImage(image, crop);
+      const imageData = await getCroppedImage(image, croppedAreaPixels);
+
       const blob = await (await fetch(imageData)).blob();
+
       const formData = new FormData();
-      formData.append('file', blob);
+      formData.append('cover', blob, 'avatar.png');
 
-      const res = await fetch('/api/profile/cover', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await res.json();
-      console.log('Capa enviada:', result);
-
-      onApply(imageData, crop);
+      await updateCustomer(customer.id, formData);
       onClose();
+      navigate(0);
     } catch (err) {
-      console.error('Erro ao enviar capa:', err);
+      console.error('Erro ao enviar avatar:', err);
     }
   };
 
@@ -50,7 +52,7 @@ export function EditCoverImageModal({ modalId, title, image, onApply, onClose }:
           zoomRange={[1, 3]}
           showZoom={true}
           containerSize={{ width: 640, height: 360 }}
-          onCropComplete={setCrop}
+          onCropComplete={setCroppedAreaPixels}
         />
       </Modal.Content>
       <Modal.Footer

@@ -8,7 +8,7 @@ import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
 import { Dropdown } from '../Dropdown';
 import { useState } from 'react';
-import { EditArtistImageModal } from '@/components/ui/Modals/EditImage/EditArtistImageModal';
+import { EditAvatarImageModal } from '@/components/ui/Modals/EditImage/EditAvatarImageModal';
 import { EditCoverImageModal } from '@/components/ui/Modals/EditImage/EditCoverImageModal';
 
 interface Props {
@@ -52,13 +52,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
   return (
     <>
-      <EditArtistImageModal
-        modalId="editAvatar"
-        title="Editar avatar"
-        image={previewAvatar}
-        onApply={(data, area) => console.log('Avatar editado:', data)}
-        onClose={closeModal}
-      />
+      <EditAvatarImageModal modalId="editAvatar" title="Editar avatar" image={previewAvatar} onClose={closeModal} />
 
       <EditCoverImageModal
         modalId="editCover"

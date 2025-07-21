@@ -3,7 +3,6 @@
 .cropContainer {
   position: relative;
   overflow: hidden;
-  border-radius: 50%;
 
   :global(.reactEasyCrop_Container) {
     display: flex;
@@ -20,6 +19,19 @@
     border: none;
     box-shadow: none !important;
   }
+}
+
+.rect {
+  border-radius: 0;
+}
+
+.round {
+  border-radius: 50%;
+}
+
+.square {
+  border-radius: 0;
+  aspect-ratio: 1 / 1;
 }
 
 .zoom {
