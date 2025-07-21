@@ -2,10 +2,14 @@ interface CropExportOptions {
   type: 'avatar' | 'cover';
 }
 
-export async function getCroppedImage(imageSrc: string, crop: any, options: CropExportOptions): Promise<string> {
+export async function getCroppedImage(
+  imageSrc: string,
+  croppedAreaPixels: { x: number; y: number; width: number; height: number },
+  options: { type: 'cover' | 'avatar' },
+): Promise<string> {
   const image = new Image();
   image.src = imageSrc;
-  await new Promise((resolve) => (image.onload = resolve));
+  await new Promise((r) => (image.onload = r));
 
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
@@ -20,7 +24,17 @@ export async function getCroppedImage(imageSrc: string, crop: any, options: Crop
   canvas.width = w;
   canvas.height = h;
 
-  ctx.drawImage(image, crop.x, crop.y, crop.width, crop.height, 0, 0, w, h);
+  ctx.drawImage(
+    image,
+    croppedAreaPixels.x,
+    croppedAreaPixels.y,
+    croppedAreaPixels.width,
+    croppedAreaPixels.height,
+    0,
+    0,
+    w,
+    h,
+  );
 
   return canvas.toDataURL('image/jpeg');
 }

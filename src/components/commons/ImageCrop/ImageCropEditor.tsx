@@ -31,7 +31,18 @@ export function ImageCropEditor({
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [internalZoom, setInternalZoom] = useState(initialZoom);
 
+  const handleMediaLoaded = (mediaSize: { width: number; height: number }) => {
+    const containerRatio = containerSize.width / containerSize.height;
+    const imageRatio = mediaSize.width / mediaSize.height;
+
+    const zoomForCover =
+      imageRatio > containerRatio ? containerSize.height / mediaSize.height : containerSize.width / mediaSize.width;
+
+    setInternalZoom(zoomForCover);
+  };
+
   const activeZoom = zoom ?? internalZoom;
+
   const handleZoomChange = (value: number) => {
     setInternalZoom(value);
     onZoomChange?.(value);
@@ -63,6 +74,8 @@ export function ImageCropEditor({
           onCropChange={setCrop}
           onZoomChange={handleZoomChange}
           onCropComplete={handleCropComplete}
+          onMediaLoaded={handleMediaLoaded}
+          zoomWithScroll={false}
           showGrid={false}
         />
       </div>

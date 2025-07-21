@@ -33,8 +33,7 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
       const formData = new FormData();
       formData.append('cover', blob, 'cover.jpg');
 
-      const response = await updateCustomer(customer.id, formData);
-      console.log(response);
+      await updateCustomer(customer.id, formData);
       onClose();
       navigate(0);
     } catch (err) {
@@ -46,18 +45,18 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
     <Modal.Root modal={modalId} size="lg" onClose={onClose}>
       <Modal.Header title={title} />
       <Modal.Content>
-        <ImageCropEditor
-          image={image}
-          aspect={4.77 / 1}
-          cropShape="rect"
-          initialZoom={1}
-          zoomRange={[1, 3]}
-          showZoom={true}
-          containerSize={{ width: 2480, height: 520 }}
-          onCropComplete={setCroppedAreaPixels}
-        />
-        <div className={styles.avatarPreview}>
-          <img src={buildFullUrl(customer.avatarUrl)} alt="Avatar" />
+        <div className={styles.container}>
+          <ImageCropEditor
+            image={image}
+            aspect={4.77 / 1}
+            cropShape="rect"
+            showZoom={false}
+            containerSize={{ width: 2480, height: 520 }}
+            onCropComplete={setCroppedAreaPixels}
+          />
+          <div className={styles.avatarPreview}>
+            <img src={buildFullUrl(customer.avatarUrl)} alt="Avatar" />
+          </div>
         </div>
       </Modal.Content>
       <Modal.Footer
