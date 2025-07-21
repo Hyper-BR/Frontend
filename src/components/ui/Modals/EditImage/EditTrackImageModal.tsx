@@ -44,9 +44,7 @@ export function EditTrackImageModal({ modalId, title, image, onApply, onClose }:
       <Modal.Content>
         <ImageCropEditor
           image={image}
-          aspect={1}
-          cropShape="rect"
-          initialZoom={1.3}
+          cropShape="square"
           zoomRange={[1, 3]}
           showZoom={true}
           containerSize={{ width: 300, height: 300 }}

@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import { ImageCropEditor } from '@/components/commons/ImageCrop/ImageCropEditor';
-import { getCroppedImage } from '@/utils/getCroppedImage';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { updateCustomer } from '@/services/customer';
 
 interface Props {
@@ -15,27 +13,23 @@ interface Props {
 }
 
 export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
-  const [autoZoom, setAutoZoom] = useState<number>(1);
-  const navigate = useNavigate();
+  const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
   const { customer } = useAuth();
 
   const handleApply = async () => {
-    if (!image || !croppedAreaPixels) return;
+    if (!canvas) return;
 
-    try {
-      const imageData = await getCroppedImage(image, croppedAreaPixels, { type: 'cover' });
-      const blob = await (await fetch(imageData)).blob();
-
-      const formData = new FormData();
-      formData.append('cover', blob, 'cover.jpg');
-
-      await updateCustomer(customer.id, formData);
-      onClose();
-      navigate(0);
-    } catch (err) {
-      console.error('Erro ao enviar capa:', err);
-    }
+    canvas.toBlob(
+      async (blob) => {
+        if (!blob) return;
+        const formData = new FormData();
+        formData.append('cover', blob, 'cover.jpg');
+        await updateCustomer(customer.id, formData);
+        onClose();
+      },
+      'image/jpeg',
+      0.9,
+    );
   };
 
   return (
@@ -44,14 +38,12 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
       <Modal.Content>
         <ImageCropEditor
           image={image}
-          aspect={4.77}
           cropShape="rect"
-          showZoom={false}
-          containerSize={{ width: 2480, height: 520 }}
-          initialZoom={autoZoom}
-          zoomRange={[1, 3]}
-          onZoomChange={(value) => setAutoZoom(value)}
-          onCropComplete={setCroppedAreaPixels}
+          showZoom={true}
+          zoomRange={[1, 10]}
+          containerSize={{ width: 500, height: 100 }}
+          outputSize={{ width: 1000, height: 200 }}
+          onCropComplete={setCanvas}
         />
       </Modal.Content>
       <Modal.Footer
@@ -61,7 +53,7 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
           </Button>
         }
         submitButton={
-          <Button onClick={handleApply} disabled={!image}>
+          <Button onClick={handleApply} disabled={!canvas}>
             Aplicar
           </Button>
         }

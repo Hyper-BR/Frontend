@@ -1,65 +1,53 @@
-import Cropper from 'react-easy-crop';
-import { useState, useCallback, useEffect } from 'react';
-import styles from './ImageCropEditor.module.scss';
+import AvatarEditor from 'react-avatar-editor';
+import { useRef, useState, useEffect } from 'react';
 import { Slider } from '../Slider/Slider';
+import styles from './ImageCropEditor.module.scss';
 
 interface Props {
   image: string;
-  aspect?: number;
-  cropShape?: 'rect' | 'round';
-  initialZoom?: number;
+  cropShape?: 'rect' | 'round' | 'square';
   zoom?: number;
   zoomRange?: [number, number];
   showZoom?: boolean;
   containerSize?: { width: number; height: number };
+  outputSize?: { width: number; height: number };
   onZoomChange?: (zoom: number) => void;
-  onCropComplete: (croppedAreaPixels: any) => void;
+  onCropComplete?: (canvas: HTMLCanvasElement) => void;
 }
 
 export function ImageCropEditor({
   image,
-  aspect = 1,
   cropShape = 'rect',
-  initialZoom = 1,
   zoom,
   zoomRange = [1, 3],
   showZoom = true,
   containerSize = { width: 360, height: 320 },
+  outputSize,
   onZoomChange,
   onCropComplete,
 }: Props) {
-  const [crop, setCrop] = useState({ x: 0, y: 0 });
-  const [internalZoom, setInternalZoom] = useState(initialZoom);
-  const [mediaLoaded, setMediaLoaded] = useState(false);
+  const editorRef = useRef<AvatarEditor>(null);
+  const [scale, setScale] = useState(zoom ?? 1);
 
-  const activeZoom = zoom ?? internalZoom;
+  useEffect(() => {
+    if (zoom !== undefined) setScale(zoom);
+  }, [zoom]);
+
+  useEffect(() => {
+    if (!editorRef.current || !onCropComplete) return;
+    const canvas = editorRef.current.getImageScaledToCanvas();
+    onCropComplete(canvas);
+  }, [scale, onCropComplete]);
 
   const handleZoomChange = (value: number) => {
-    setInternalZoom(value);
+    setScale(value);
     onZoomChange?.(value);
   };
 
-  const handleCropComplete = useCallback(
-    (_: any, croppedAreaPixels: any) => {
-      onCropComplete(croppedAreaPixels);
-    },
-    [onCropComplete],
-  );
-
-  const handleMediaLoaded = (mediaSize: { width: number; height: number }) => {
-    if (mediaLoaded || zoom !== undefined) return;
-
-    const containerRatio = containerSize.width / containerSize.height;
-    const imageRatio = mediaSize.width / mediaSize.height;
-
-    const zoomForCover =
-      imageRatio > containerRatio ? containerSize.height / mediaSize.height : containerSize.width / mediaSize.width;
-
-    const safeZoom = Math.max(zoomRange[0], Math.min(zoomRange[1], zoomForCover));
-
-    setInternalZoom(safeZoom);
-    setMediaLoaded(true);
-  };
+  const dpr = window.devicePixelRatio || 1;
+  const finalSize = outputSize ?? containerSize;
+  const internalWidth = finalSize.width * dpr;
+  const internalHeight = finalSize.height * dpr;
 
   return (
     <>
@@ -71,27 +59,28 @@ export function ImageCropEditor({
           margin: '0 auto',
         }}
       >
-        <Cropper
+        <AvatarEditor
+          ref={editorRef}
           image={image}
-          crop={crop}
-          zoom={activeZoom}
-          aspect={aspect}
-          cropShape={cropShape}
-          onCropChange={setCrop}
-          onZoomChange={handleZoomChange}
-          onCropComplete={handleCropComplete}
-          onMediaLoaded={handleMediaLoaded}
-          zoomWithScroll={false}
-          showGrid={false}
+          width={internalWidth}
+          height={internalHeight}
+          border={0}
+          borderRadius={cropShape === 'round' ? internalWidth / 2 : 0}
+          scale={scale}
+          style={{
+            width: containerSize.width,
+            height: containerSize.height,
+          }}
         />
       </div>
+
       {showZoom && (
         <div className={styles.zoom}>
           <Slider
             min={zoomRange[0]}
             max={zoomRange[1]}
             step={0.01}
-            value={activeZoom}
+            value={scale}
             onChange={(e) => handleZoomChange(Number(e))}
           />
         </div>
