@@ -4,6 +4,8 @@
   position: relative;
   overflow: hidden;
 
+  background-color: blue;
+
   :global(.reactEasyCrop_Container) {
     display: flex;
     justify-content: center;
@@ -23,15 +25,20 @@
 
 .rect {
   border-radius: 0;
+  max-width: 860px;
+  max-height: 240px;
 }
 
 .round {
   border-radius: 50%;
+  max-width: 320px;
+  max-height: 320px;
 }
 
 .square {
   border-radius: 0;
-  aspect-ratio: 1 / 1;
+  max-width: 320px;
+  max-height: 320px;
 }
 
 .zoom {

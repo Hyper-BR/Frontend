@@ -18,7 +18,7 @@ export function EditTrackImageModal({ modalId, title, image, onApply, onClose }:
   const handleApply = async () => {
     if (!image || !crop) return;
     try {
-      const imageData = await getCroppedImage(image, crop);
+      const imageData = await getCroppedImage(image, crop, { type: 'avatar' });
       const blob = await (await fetch(imageData)).blob();
       const formData = new FormData();
       formData.append('file', blob);

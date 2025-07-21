@@ -6,6 +6,7 @@ import { getCroppedImage } from '@/utils/getCroppedImage';
 import { updateCustomer } from '@/services/customer';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import styles from './EditImageModal.module.scss';
 
 interface Props {
   modalId: string;
@@ -24,7 +25,7 @@ export function EditAvatarImageModal({ modalId, title, image, onClose }: Props) 
     if (!image || !croppedAreaPixels) return;
 
     try {
-      const imageData = await getCroppedImage(image, croppedAreaPixels);
+      const imageData = await getCroppedImage(image, croppedAreaPixels, { type: 'avatar' });
 
       const blob = await (await fetch(imageData)).blob();
 
@@ -40,19 +41,21 @@ export function EditAvatarImageModal({ modalId, title, image, onClose }: Props) 
   };
 
   return (
-    <Modal.Root modal={modalId} size="xs" onClose={onClose}>
+    <Modal.Root modal={modalId} size="md" onClose={onClose}>
       <Modal.Header title={title} />
       <Modal.Content>
-        <ImageCropEditor
-          image={image}
-          aspect={1}
-          cropShape="round"
-          initialZoom={1.4}
-          zoomRange={[1, 3]}
-          showZoom={true}
-          containerSize={{ width: 320, height: 320 }}
-          onCropComplete={setCroppedAreaPixels}
-        />
+        <div className={styles.container}>
+          <ImageCropEditor
+            image={image}
+            aspect={1 / 1}
+            cropShape="round"
+            initialZoom={1}
+            zoomRange={[1, 3]}
+            showZoom={true}
+            containerSize={{ width: 1000, height: 1000 }}
+            onCropComplete={setCroppedAreaPixels}
+          />
+        </div>
       </Modal.Content>
       <Modal.Footer
         cancelButton={

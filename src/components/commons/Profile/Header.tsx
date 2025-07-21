@@ -64,7 +64,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
       <div className={styles.cover}>
         <div className={styles.coverImageWrapper}>
-          <img src={coverUrl} alt="Capa" className={styles.coverImage} />
+          <img src={buildFullUrl(coverUrl)} alt="cover" className={styles.coverImage} />
 
           {onEdit && (
             <div className={styles.editCoverBtn}>
@@ -87,7 +87,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
         <header className={styles.header}>
           <div className={styles.userInfo}>
             <div className={styles.avatarWrapper}>
-              <img src={buildFullUrl(customer?.avatarUrl)} alt="avatar" className={styles.avatar} />
+              <img src={buildFullUrl(avatarUrl)} alt="avatar" className={styles.avatar} />
 
               {onEdit && (
                 <div className={styles.editAvatarBtn}>
