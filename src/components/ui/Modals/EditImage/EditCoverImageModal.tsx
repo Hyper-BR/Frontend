@@ -39,7 +39,7 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
         <ImageCropEditor
           image={image}
           cropShape="rect"
-          showZoom={true}
+          showZoom={false}
           zoomRange={[1, 10]}
           containerSize={{ width: 500, height: 100 }}
           outputSize={{ width: 1000, height: 200 }}
