@@ -6,8 +6,6 @@ import { getCroppedImage } from '@/utils/getCroppedImage';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { updateCustomer } from '@/services/customer';
-import { buildFullUrl } from '@/utils/buildFullUrl';
-import styles from './EditImageModal.module.scss';
 
 interface Props {
   modalId: string;
@@ -18,8 +16,8 @@ interface Props {
 
 export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [autoZoom, setAutoZoom] = useState<number>(1);
   const navigate = useNavigate();
-
   const { customer } = useAuth();
 
   const handleApply = async () => {
@@ -27,7 +25,6 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
 
     try {
       const imageData = await getCroppedImage(image, croppedAreaPixels, { type: 'cover' });
-
       const blob = await (await fetch(imageData)).blob();
 
       const formData = new FormData();
@@ -47,10 +44,13 @@ export function EditCoverImageModal({ modalId, title, image, onClose }: Props) {
       <Modal.Content>
         <ImageCropEditor
           image={image}
-          aspect={4.77 / 1}
+          aspect={4.77}
           cropShape="rect"
           showZoom={false}
           containerSize={{ width: 2480, height: 520 }}
+          initialZoom={autoZoom}
+          zoomRange={[1, 3]}
+          onZoomChange={(value) => setAutoZoom(value)}
           onCropComplete={setCroppedAreaPixels}
         />
       </Modal.Content>

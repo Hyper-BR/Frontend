@@ -20,7 +20,7 @@ export function ImageCropEditor({
   image,
   aspect = 1,
   cropShape = 'rect',
-  initialZoom = 1.2,
+  initialZoom = 1,
   zoom,
   zoomRange = [1, 3],
   showZoom = true,
@@ -30,16 +30,7 @@ export function ImageCropEditor({
 }: Props) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [internalZoom, setInternalZoom] = useState(initialZoom);
-
-  const handleMediaLoaded = (mediaSize: { width: number; height: number }) => {
-    const containerRatio = containerSize.width / containerSize.height;
-    const imageRatio = mediaSize.width / mediaSize.height;
-
-    const zoomForCover =
-      imageRatio > containerRatio ? containerSize.height / mediaSize.height : containerSize.width / mediaSize.width;
-
-    setInternalZoom(zoomForCover);
-  };
+  const [mediaLoaded, setMediaLoaded] = useState(false);
 
   const activeZoom = zoom ?? internalZoom;
 
@@ -54,6 +45,21 @@ export function ImageCropEditor({
     },
     [onCropComplete],
   );
+
+  const handleMediaLoaded = (mediaSize: { width: number; height: number }) => {
+    if (mediaLoaded || zoom !== undefined) return;
+
+    const containerRatio = containerSize.width / containerSize.height;
+    const imageRatio = mediaSize.width / mediaSize.height;
+
+    const zoomForCover =
+      imageRatio > containerRatio ? containerSize.height / mediaSize.height : containerSize.width / mediaSize.width;
+
+    const safeZoom = Math.max(zoomRange[0], Math.min(zoomRange[1], zoomForCover));
+
+    setInternalZoom(safeZoom);
+    setMediaLoaded(true);
+  };
 
   return (
     <>
@@ -79,8 +85,8 @@ export function ImageCropEditor({
           showGrid={false}
         />
       </div>
-      <div className={styles.zoom}>
-        {showZoom && (
+      {showZoom && (
+        <div className={styles.zoom}>
           <Slider
             min={zoomRange[0]}
             max={zoomRange[1]}
@@ -88,8 +94,8 @@ export function ImageCropEditor({
             value={activeZoom}
             onChange={(e) => handleZoomChange(Number(e))}
           />
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }
