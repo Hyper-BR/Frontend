@@ -64,17 +64,6 @@ export function ImageCropEditor({
           onZoomChange={handleZoomChange}
           onCropComplete={handleCropComplete}
           showGrid={false}
-          style={{
-            containerStyle: {
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: '#000',
-            },
-            mediaStyle: {
-              objectFit: 'cover',
-            },
-          }}
         />
       </div>
       <div className={styles.zoom}>

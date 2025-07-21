@@ -10,6 +10,7 @@ export type CustomerDTO = {
   birthDate: string;
   subscription?: SubscriptionDTO;
   avatarUrl?: string;
+  avatar?: File;
   bio?: string;
   artistProfile?: ArtistDTO;
   artist?: boolean;
