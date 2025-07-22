@@ -36,7 +36,7 @@ export function EditAvatarImageModal({ modalId, title, image, onClose }: Props) 
   };
 
   return (
-    <Modal.Root modal={modalId} size="md" onClose={onClose}>
+    <Modal.Root modal={modalId} size="fit" onClose={onClose}>
       <Modal.Header title={title} />
       <Modal.Content>
         <ImageCropEditor

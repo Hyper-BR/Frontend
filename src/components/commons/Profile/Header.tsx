@@ -10,6 +10,7 @@ import { Dropdown } from '../Dropdown';
 import { useState } from 'react';
 import { EditAvatarImageModal } from '@/components/ui/Modals/EditImage/EditAvatarImageModal';
 import { EditCoverImageModal } from '@/components/ui/Modals/EditImage/EditCoverImageModal';
+import { Avatar } from '../Avatar/Avatar';
 
 interface Props {
   avatarUrl: string;
@@ -78,26 +79,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
             <header className={styles.header}>
               <div className={styles.userInfo}>
-                <div className={styles.avatarWrapper}>
-                  <img src={buildFullUrl(avatarUrl)} alt="avatar" className={styles.avatar} />
-
-                  {onEdit && (
-                    <div className={styles.editAvatarBtn}>
-                      <Dropdown.Root key="avatar">
-                        <Dropdown.Trigger>
-                          <Button size="sm" variant="black">
-                            Editar imagem
-                          </Button>
-                        </Dropdown.Trigger>
-
-                        <Dropdown.Content size="xs">
-                          <Dropdown.Item onClick={() => handleSelectImage('avatar')}>Substituir</Dropdown.Item>
-                          <Dropdown.Item onClick={() => alert('excluir')}>Excluir</Dropdown.Item>
-                        </Dropdown.Content>
-                      </Dropdown.Root>
-                    </div>
-                  )}
-                </div>
+                <Avatar src={avatarUrl} alt="avatar" size={150} />
 
                 <div className={styles.details}>
                   <h2>{name}</h2>

@@ -1,0 +1,10 @@
+@use '@/styles/theme.scss' as *;
+
+.avatar {
+  border-radius: 50%;
+  border: 2px solid $color-primary;
+  background-image: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

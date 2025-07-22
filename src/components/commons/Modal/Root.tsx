@@ -6,7 +6,7 @@ import { Button } from '../Button/Button';
 interface Props {
   children: ReactNode;
   modal: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'fit';
   onClose: () => void;
 }
 

@@ -76,6 +76,11 @@
   height: 100%;
 }
 
+.fit {
+  width: fit-content;
+  height: fit-content;
+}
+
 .close {
   position: absolute;
   top: 12px;
