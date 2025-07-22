@@ -36,10 +36,7 @@ export function Root({
       onClick={clickable ? onClick : undefined}
     >
       <div className={clsx(styles.imageWrapper, styles[size], styles[shape])}>
-        <div
-          className={styles.image}
-          style={{ backgroundImage: `url(${buildFullUrl(imageUrl)})` }}
-        />
+        <img className={styles.image} src={buildFullUrl(imageUrl)} />
       </div>
 
       <div className={styles.info}>{children}</div>

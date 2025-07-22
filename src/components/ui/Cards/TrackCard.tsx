@@ -49,7 +49,7 @@ export function TrackCard({
       align={align}
     >
       <Card.Title>
-        <TrackLink title={track.title} id={track.id} onClick={() => {}} size={firstLinkSize} color="white" />
+        <TrackLink title={track.title} id={track.id} size={firstLinkSize} color="white" />
       </Card.Title>
       <Card.Subtitle>
         <ArtistLinkGroup artists={track.artists} color="muted" />

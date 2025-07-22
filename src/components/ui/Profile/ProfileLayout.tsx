@@ -34,7 +34,7 @@ export default function ProfileLayout({
   playlists,
   owner,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<Tab>('Faixas');
+  const [activeTab, setActiveTab] = useState<Tab>('Playlists');
 
   return (
     <>
