@@ -7,6 +7,7 @@ import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { TrackCard } from './TrackCard';
 import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
+import { TrackPrivacy } from './TrackPrivacy';
 
 type Props = {
   tracks: TrackDTO[];
@@ -56,7 +57,9 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
             <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
             <Table.Cell>{formatSecondsTime(track.duration) ?? '—'}</Table.Cell>
             <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
-            <Table.Cell>{track.privacy ?? '—'}</Table.Cell>
+            <Table.Cell>
+              <TrackPrivacy value={track.privacy} size="md" color="muted" />
+            </Table.Cell>
             <Table.Cell>
               <Button size="md">R$ {track.price}</Button>
             </Table.Cell>

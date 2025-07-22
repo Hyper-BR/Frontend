@@ -1,0 +1,46 @@
+@use '@/styles/theme.scss' as *;
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+}
+
+.xs {
+  width: $spacing-xs;
+  height: $spacing-xs;
+}
+
+.sm {
+  width: $spacing-sm;
+  height: $spacing-sm;
+}
+
+.md {
+  width: $spacing-md;
+  height: $spacing-md;
+}
+
+.size-lg {
+  width: $spacing-lg;
+  height: $spacing-lg;
+}
+
+.size-xl {
+  width: $spacing-xl;
+  height: $spacing-xl;
+}
+
+.muted {
+  color: $color-muted;
+}
+
+.white {
+  color: $color-white;
+}
+
+.placeholder {
+  font-size: 0.85rem;
+  color: $color-muted;
+}
