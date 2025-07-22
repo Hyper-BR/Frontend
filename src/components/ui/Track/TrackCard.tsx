@@ -11,8 +11,8 @@ interface Props {
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
-  firstLinkSize?: 'sm' | 'md' | 'lg';
-  secondLinkSize?: 'sm' | 'md' | 'lg';
+  firstLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  secondLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
 export function TrackCard({
@@ -49,10 +49,10 @@ export function TrackCard({
       align={align}
     >
       <Card.Title>
-        <TrackLink title={track.title} id={track.id} size={firstLinkSize} color="white" />
+        <TrackLink track={track} size={firstLinkSize} color="white" />
       </Card.Title>
       <Card.Subtitle>
-        <ArtistLinkGroup artists={track.artists} color="muted" />
+        <ArtistLinkGroup artists={track.artists} color="muted" size={secondLinkSize} />
       </Card.Subtitle>
     </Card.Root>
   );

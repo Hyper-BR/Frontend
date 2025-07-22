@@ -4,7 +4,7 @@ import styles from './Link.module.scss';
 
 interface Props {
   artists: ArtistDTO[];
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   color?: 'white' | 'muted';
   onClick?: (id: string) => void;
 }

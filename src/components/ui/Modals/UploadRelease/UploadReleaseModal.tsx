@@ -1,8 +1,8 @@
 import { Modal } from '@/components/commons/Modal';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
 import { Button } from '@/components/commons/Button/Button';
-import TrackForm from '@/components/ui/Tracks/TrackForm';
-import TrackList from '../../Tracks/TrackList';
+import TrackForm from '@/components/ui/Track/TrackForm';
+import TrackList from '../../Track/TrackList';
 import { Accordion } from '@/components/commons/Accordion';
 import { useUploadRelease } from './useUploadRelease';
 import styles from './UploadReleaseModal.module.scss';

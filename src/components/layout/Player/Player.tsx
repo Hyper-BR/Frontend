@@ -101,7 +101,7 @@ const Player = () => {
         {currentTrack && <img src={buildFullUrl(currentTrack?.coverUrl)} alt="Cover" className={styles.image} />}
         <div>
           <div>
-            <TrackLink title={currentTrack?.title} id={currentTrack?.id} size="lg" />
+            <TrackLink track={currentTrack} size="lg" />
           </div>
           <div>
             <ArtistLinkGroup artists={currentTrack?.artists} size="sm" color="muted" />

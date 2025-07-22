@@ -4,8 +4,8 @@ import { getTracks } from '@/services/track';
 import { getArtists } from '@/services/artist';
 import { TrackDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
-import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
-import { TrackCard } from '@/components/ui/Cards/TrackCard';
+import { ArtistCard } from '@/components/ui/Artist/ArtistCard';
+import { TrackCard } from '@/components/ui/Track/TrackCard';
 import { usePlayer } from '@/contexts/PlayerContext';
 
 const Home = () => {

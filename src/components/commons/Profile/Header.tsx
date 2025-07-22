@@ -1,7 +1,7 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
-import { PlanCard } from '@/components/ui/Cards/PlanCard';
+import { PlanCard } from '@/components/ui/Plan/PlanCard';
 import { Profile } from '.';
 import { useAuth } from '@/hooks/useAuth';
 import { buildFullUrl } from '@/utils/buildFullUrl';

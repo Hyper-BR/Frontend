@@ -5,7 +5,7 @@ import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
-import { TrackCard } from '../Cards/TrackCard';
+import { TrackCard } from './TrackCard';
 import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
 
 type Props = {
@@ -43,7 +43,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
 
   return (
     <Table.Root>
-      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']} />
+      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', 'Privacidade', '', '']} />
 
       <Table.Body>
         {tracks.map((track) => (
@@ -56,6 +56,10 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
             <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
             <Table.Cell>{formatSecondsTime(track.duration) ?? '—'}</Table.Cell>
             <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
+            <Table.Cell>{track.privacy ?? '—'}</Table.Cell>
+            <Table.Cell>
+              <Button size="md">R$ {track.price}</Button>
+            </Table.Cell>
 
             <Table.Cell>
               <Dropdown.Root>

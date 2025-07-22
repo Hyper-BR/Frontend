@@ -5,7 +5,7 @@ import styles from './Link.module.scss';
 interface Props {
   name: string;
   id: string;
-  size?: 'xs' | 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   color?: 'white' | 'muted';
   onClick?: () => void;
 }
