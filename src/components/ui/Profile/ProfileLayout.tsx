@@ -51,7 +51,7 @@ export default function ProfileLayout({
           coverUrl={coverUrl}
         />
         <Tabs active={activeTab} setActive={setActiveTab} />
-        <Content tab={activeTab} tracks={tracks?.content} />
+        <Content tab={activeTab} tracks={tracks?.content} playlists={playlists} />
       </Root>
     </>
   );

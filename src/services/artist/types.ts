@@ -11,9 +11,10 @@ export type ArtistPageDTO = {
 
 export type ArtistDTO = {
   id: string;
+  username: string;
   avatarUrl?: string;
   coverUrl?: string;
-  username: string;
-  email?: string;
+  followers?: string;
+  following?: string;
   carts?: [];
 };

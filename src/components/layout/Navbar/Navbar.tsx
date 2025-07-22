@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
@@ -7,7 +6,6 @@ import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import UploadReleaseModal from '@/components/ui/Modals/UploadRelease/UploadReleaseModal';
 import { Dropdown } from '@/components/commons/Dropdown';
-import { buildFullUrl } from '@/utils/buildFullUrl';
 import { Avatar } from '@/components/commons/Avatar/Avatar';
 
 const Navbar = () => {

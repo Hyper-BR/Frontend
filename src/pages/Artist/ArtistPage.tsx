@@ -28,7 +28,7 @@ export default function ArtistPage() {
     <ProfileLayout
       avatarUrl={artist?.avatarUrl}
       coverUrl={artist?.coverUrl}
-      stats={{ followers: '120', following: '87' }}
+      stats={{ followers: artist?.followers, following: artist?.following }}
       name={artist?.username}
       tracks={tracks}
       playlists={null}

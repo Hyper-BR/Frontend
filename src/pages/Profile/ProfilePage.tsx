@@ -33,7 +33,7 @@ export default function ProfilePage() {
       coverUrl={customer?.coverUrl}
       name={customer.artistProfile != null ? customer?.artistProfile?.username : customer.name}
       email={customer.email}
-      stats={{ followers: '120', following: '87' }}
+      stats={{ followers: customer?.followers, following: customer?.following }}
       analytics={null}
       onEdit
       tracks={tracks}
