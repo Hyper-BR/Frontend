@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import EditProfileModal from '@/components/ui/Modals/EditProfile/EditProfileModal';
+import EditProfileModal from '@/components/ui/Profile/EditProfile/EditProfileModal';
 import { Root } from '../../commons/Profile/Root';
 import { Header } from '../../commons/Profile/Header';
 import { Stats } from '../../commons/Profile/Stats';

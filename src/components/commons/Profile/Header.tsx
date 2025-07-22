@@ -8,8 +8,8 @@ import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
 import { Dropdown } from '../Dropdown';
 import { useState } from 'react';
-import { EditAvatarImageModal } from '@/components/ui/Modals/EditImage/EditAvatarImageModal';
-import { EditCoverImageModal } from '@/components/ui/Modals/EditImage/EditCoverImageModal';
+import { EditAvatarImageModal } from '@/components/ui/Profile/EditImage/EditAvatarImageModal';
+import { EditCoverImageModal } from '@/components/ui/Profile/EditImage/EditCoverImageModal';
 import { Avatar } from '../Avatar/Avatar';
 
 interface Props {
