@@ -1,0 +1,46 @@
+@use '@/styles/theme.scss' as *;
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  background: transparent;
+  width: fit-content;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &[role='button'] {
+    cursor: pointer;
+  }
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-primary;
+  font-size: 1rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-size: 0.875rem;
+  color: $color-muted;
+}
+
+.value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $color-white;
+}

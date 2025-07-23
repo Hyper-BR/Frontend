@@ -4,8 +4,9 @@
 .insights {
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: $spacing-md;
   width: 100%;
+  margin: $spacing-lg $spacing-md;
 }
 
 .summaryRow {

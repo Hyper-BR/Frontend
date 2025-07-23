@@ -3,6 +3,8 @@ import styles from './Insights.module.scss';
 import { SummaryCard } from '@/components/Insights/Summary';
 import { ArtistCard } from '../Artist/ArtistCard';
 import { ArtistDTO } from '@/services/artist/types';
+import { Activity, DollarSign, Library, Music } from 'lucide-react';
+import TrackTableInsights from '../Table/TrackTableInsights';
 
 interface Props {
   summary: {
@@ -15,45 +17,19 @@ interface Props {
 }
 
 export function Insights({ summary, topListeners }: Props) {
-  const handleSummaryClick = useCallback((key: keyof Props['summary']) => {
-    alert(`Clicked summary: ${key}`);
-  }, []);
-
-  const handleUserClick = useCallback((userId: string) => {
-    alert(`Clicked user: ${userId}`);
-  }, []);
-
   return (
     <div className={styles.insights}>
-      {/* Row superior com 4 summary cards */}
       <div className={styles.summaryRow}>
-        <SummaryCard
-          title="Total de Plays"
-          value={summary.totalPlays}
-          onClick={() => handleSummaryClick('totalPlays')}
-        />
-        <SummaryCard
-          title="Total Receita"
-          value={`R$ ${summary.totalRevenue}`}
-          onClick={() => handleSummaryClick('totalRevenue')}
-        />
-        <SummaryCard
-          title="Total Faixas"
-          value={summary.totalTracks}
-          onClick={() => handleSummaryClick('totalTracks')}
-        />
-        <SummaryCard
-          title="Total Álbuns"
-          value={summary.totalAlbums}
-          onClick={() => handleSummaryClick('totalAlbums')}
-        />
+        <SummaryCard title="Total de Plays" value={summary.totalPlays} icon={<Activity />} />
+        <SummaryCard title="Receita" value={`R$ ${summary.totalRevenue}`} icon={<DollarSign />} />
+        <SummaryCard title="Total Faixas" value={summary.totalTracks} icon={<Music />} />
+        <SummaryCard title="Total Álbuns" value={summary.totalAlbums} icon={<Library />} />
       </div>
 
       <div className={styles.contentGrid}>
         <div className={styles.tracksSection}>
-          <h3 className={styles.sectionTitle}>Tracks</h3>
           <div className={styles.tracksPlaceholder}>
-            <p>Tabela de faixas vai aqui</p>
+            <TrackTableInsights tracks={[]} />
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import { ReactNode, KeyboardEvent } from 'react';
-import styles from './Insights.module.scss';
+import styles from './Summary.module.scss';
 
 interface Props {
   title: string;
@@ -26,8 +26,10 @@ export function SummaryCard({ title, value, icon, className, onClick }: Props) {
       tabIndex={onClick ? 0 : undefined}
     >
       {icon && <div className={styles.icon}>{icon}</div>}
-      <div className={styles.title}>{title}</div>
-      <div className={styles.value}>{value}</div>
+      <div className={styles.content}>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.value}>{value}</div>
+      </div>
     </div>
   );
 }
