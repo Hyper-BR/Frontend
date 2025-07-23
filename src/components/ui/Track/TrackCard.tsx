@@ -13,8 +13,6 @@ interface Props {
   direction?: 'row' | 'column';
   firstLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   secondLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  enableHoverEffect?: boolean;
-  hovered?: boolean;
 }
 
 export function TrackCard({
@@ -25,8 +23,6 @@ export function TrackCard({
   align,
   firstLinkSize = 'md',
   secondLinkSize,
-  enableHoverEffect,
-  hovered,
 }: Props) {
   const { currentTrack, setTrackList, trackList, play } = usePlayer();
 
@@ -52,8 +48,6 @@ export function TrackCard({
         clickable
         onClick={handlePlayClick}
         align={align}
-        enableHoverEffect={enableHoverEffect}
-        hovered={hovered}
       >
         <Card.Title>
           <TrackLink track={track} size={firstLinkSize} color="white" />

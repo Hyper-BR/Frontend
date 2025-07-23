@@ -9,9 +9,7 @@ interface Props {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   direction?: 'row' | 'column';
   linkSize?: 'sm' | 'md' | 'lg';
-
   enableHoverEffect?: boolean;
-  hovered?: boolean;
 }
 
 export function PlaylistCard({ playlist, size = 'md', direction = 'row', linkSize = 'md', enableHoverEffect }: Props) {
@@ -24,7 +22,7 @@ export function PlaylistCard({ playlist, size = 'md', direction = 'row', linkSiz
         size={size}
         direction={direction}
         clickable
-        enableHoverEffect={enableHoverEffect}
+        enableBackground={enableHoverEffect}
         onClick={() => navigate(`/playlist/${playlist.id}`)}
       >
         <Card.Title>

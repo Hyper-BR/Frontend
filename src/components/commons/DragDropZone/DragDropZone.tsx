@@ -10,8 +10,11 @@ interface Props {
 }
 
 export function DragDropZone({ children, entityId, draggable = false, droppable = false, className }: Props) {
-  const { hoveredTargetId, setHoveredTargetId, handleDrop } = useDragDrop();
+  const { hoveredTargetId, setHoveredTargetId, handleDrop, draggedType, setDraggedType } = useDragDrop();
+
   const isHovered = hoveredTargetId === entityId;
+
+  const isDropEnabled = droppable && draggedType === 'track';
 
   return (
     <div
@@ -21,20 +24,22 @@ export function DragDropZone({ children, entityId, draggable = false, droppable 
         draggable
           ? (e) => {
               e.dataTransfer.setData('application/x-track-id', entityId);
+              setDraggedType('track');
             }
           : undefined
       }
+      onDragEnd={draggable ? () => setDraggedType(null) : undefined}
       onDragOver={
-        droppable
+        isDropEnabled
           ? (e) => {
               e.preventDefault();
               setHoveredTargetId(entityId);
             }
           : undefined
       }
-      onDragLeave={droppable ? () => setHoveredTargetId(null) : undefined}
+      onDragLeave={isDropEnabled ? () => setHoveredTargetId(null) : undefined}
       onDrop={
-        droppable
+        isDropEnabled
           ? (e) => {
               e.preventDefault();
               const draggedId = e.dataTransfer.getData('application/x-track-id');
@@ -44,9 +49,11 @@ export function DragDropZone({ children, entityId, draggable = false, droppable 
           : undefined
       }
       style={{
-        outline: isHovered ? 'dashed red' : undefined,
+        outline: isHovered ? '1px dashed red' : undefined,
         borderRadius: '6px',
-        transition: 'ease-in-out',
+        transition: 'all 0s ease-in-out',
+        opacity: droppable && draggedType && draggedType !== 'track' ? 0.4 : 1,
+        pointerEvents: droppable && draggedType && draggedType !== 'track' ? 'none' : 'auto',
       }}
     >
       {children}

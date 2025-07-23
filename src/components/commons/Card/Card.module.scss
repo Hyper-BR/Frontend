@@ -99,12 +99,7 @@
   gap: $spacing-xs;
 }
 
-.droppableHover {
-  outline: 2px dashed $color-primary;
-  background-color: rgba($color-primary, 0.08);
-}
-
-.hoveredCard {
+.enableBackground {
   &:hover {
     background: color.adjust($color-gray-dark, $lightness: 5%);
     border-radius: $spacing-sm;

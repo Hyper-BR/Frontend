@@ -9,10 +9,9 @@ interface Props {
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
-  enableHoverEffect?: boolean;
+  enableBackground?: boolean;
   clickable?: boolean;
   onClick?: () => void;
-  hovered?: boolean;
 }
 
 export function Root({
@@ -24,8 +23,7 @@ export function Root({
   direction = 'row',
   clickable = false,
   onClick,
-  enableHoverEffect = false,
-  hovered = false,
+  enableBackground = false,
 }: Props) {
   return (
     <div
@@ -35,9 +33,8 @@ export function Root({
         styles[shape],
         styles[align],
         styles[direction],
-        enableHoverEffect && styles.hoveredCard,
+        enableBackground && styles.enableBackground,
         clickable && styles.clickable,
-        hovered && styles.droppableHover,
       )}
       onClick={clickable ? onClick : undefined}
     >
