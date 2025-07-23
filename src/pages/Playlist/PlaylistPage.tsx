@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { getPlaylistById } from '@/services/playlist';
 import styles from './PlaylistPage.module.scss';
-import TrackTable from '@/components/ui/Track/TrackTable';
+import TrackTable from '@/components/ui/Table/TrackTable';
 
 const PlaylistPage = () => {
   const { id } = useParams();

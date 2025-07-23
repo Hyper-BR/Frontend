@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
-import EditProfileModal from '@/components/ui/Profile/EditProfile/EditProfileModal';
+import EditProfileModal from '@/components/ui/Modals/EditProfile/EditProfileModal';
 import { Root } from '../../commons/Profile/Root';
 import { Header } from '../../commons/Profile/Header';
 import { Stats } from '../../commons/Profile/Stats';
@@ -19,6 +19,10 @@ interface Props {
   onEdit?: boolean;
   tracks: TrackPageDTO;
   playlists: PlaylistDTO[];
+  albums: Object[];
+  feed: Object[];
+  following: Object[];
+  relatedArtists: Object[];
   owner?: boolean;
 }
 
@@ -32,6 +36,10 @@ export default function ProfileLayout({
   onEdit,
   tracks,
   playlists,
+  albums,
+  feed,
+  following,
+  relatedArtists,
   owner,
 }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('Faixas');

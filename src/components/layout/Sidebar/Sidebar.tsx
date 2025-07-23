@@ -7,7 +7,7 @@ import { Button } from '@/components/commons/Button/Button';
 import { Modal } from '@/components/commons/Modal';
 import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylist/CreatePlaylistModal';
 import { PlusIcon } from 'lucide-react';
-import { PlaylistCard } from '@/components/ui/Playlist/PlaylistCard';
+import { PlaylistCard } from '@/components/ui/Cards/PlaylistCard';
 import { useDragDrop } from '@/contexts/DragDropProvider';
 
 const Sidebar = () => {

@@ -1,16 +1,7 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 
-export const tabs = [
-  'Faixas',
-  'Playlists',
-  'Álbuns',
-  'Feed',
-  'Seguidores',
-  'Artistas relacionados',
-  'Mencionado',
-  'Insights',
-] as const;
+export const tabs = ['Faixas', 'Playlists', 'Álbuns', 'Feed', 'Seguindo', 'Artistas relacionados', 'Insights'] as const;
 export type Tab = (typeof tabs)[number];
 
 interface Props {

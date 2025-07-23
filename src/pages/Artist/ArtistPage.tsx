@@ -32,6 +32,10 @@ export default function ArtistPage() {
       name={artist?.username}
       tracks={tracks}
       playlists={null}
+      albums={[]}
+      feed={[]}
+      following={[]}
+      relatedArtists={[]}
     />
   );
 }

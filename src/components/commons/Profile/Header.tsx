@@ -1,15 +1,15 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal';
-import { PlanCard } from '@/components/ui/Plan/PlanCard';
+import { PlanCard } from '@/components/ui/Cards/PlanCard';
 import { Profile } from '.';
 import { useAuth } from '@/hooks/useAuth';
 import { buildFullUrl } from '@/utils/buildFullUrl';
 import { useModal } from '@/contexts/ModalContext';
 import { Dropdown } from '../Dropdown';
 import { useState } from 'react';
-import { EditAvatarImageModal } from '@/components/ui/Profile/EditImage/EditAvatarImageModal';
-import { EditCoverImageModal } from '@/components/ui/Profile/EditImage/EditCoverImageModal';
+import { EditAvatarImageModal } from '@/components/ui/Modals/EditImage/EditAvatarImageModal';
+import { EditCoverImageModal } from '@/components/ui/Modals/EditImage/EditCoverImageModal';
 import { Avatar } from '../Avatar/Avatar';
 
 interface Props {

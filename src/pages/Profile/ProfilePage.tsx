@@ -1,5 +1,4 @@
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getPlaylistsCustomer } from '@/services/playlist';
 import { getTracksByArtist } from '@/services/track';
@@ -38,6 +37,10 @@ export default function ProfilePage() {
       onEdit
       tracks={tracks}
       playlists={playlists}
+      albums={[]}
+      feed={[]}
+      following={[]}
+      relatedArtists={[]}
       owner
     />
   );

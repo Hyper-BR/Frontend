@@ -5,7 +5,7 @@ import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
-import { TrackCard } from '@/components/ui/Track/TrackCard';
+import { TrackCard } from '@/components/ui/Cards/TrackCard';
 import { ArtistCard } from '@/components/ui/Artist/ArtistCard';
 import { Button } from '@/components/commons/Button/Button';
 

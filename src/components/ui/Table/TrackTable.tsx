@@ -5,9 +5,9 @@ import { TrackDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
-import { TrackCard } from './TrackCard';
+import { TrackCard } from '../Cards/TrackCard';
 import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
-import { TrackPrivacy } from './TrackPrivacy';
+import { TrackPrivacy } from '../Track/TrackPrivacy';
 
 type Props = {
   tracks: TrackDTO[];

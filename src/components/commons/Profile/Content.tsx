@@ -1,10 +1,10 @@
-import TrackTable from '@/components/ui/Track/TrackTable';
+import TrackTable from '@/components/ui/Table/TrackTable';
 import { Tab } from './Tabs';
 import { TrackDTO } from '@/services/track/types';
 import styles from './Profile.module.scss';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Card } from '../Card';
-import { PlaylistCard } from '@/components/ui/Playlist/PlaylistCard';
+import { PlaylistCard } from '@/components/ui/Cards/PlaylistCard';
 
 interface Props {
   tab: Tab;
@@ -24,7 +24,10 @@ export function Content({ tab, tracks, playlists }: Props) {
         </Card.Grid>
       )}
       {tab === 'Álbuns' && 'Álbuns'}
+      {tab === 'Feed' && 'Feed'}
+      {tab === 'Seguindo' && 'Seguindo'}
       {tab === 'Artistas relacionados' && 'Artistas relacionados'}
+      {tab === 'Insights' && 'Insights'}
     </div>
   );
 }
