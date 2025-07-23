@@ -25,7 +25,7 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
   const handleDrop = (draggedId: string, targetId: string) => {
     dropHandler?.(draggedId, targetId);
     setHoveredTargetId(null);
-    setDraggedType(null); // limpa após drop
+    setDraggedType(null);
   };
 
   return (

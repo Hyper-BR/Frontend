@@ -48,7 +48,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
 
       <Table.Body>
         {tracks.map((track) => (
-          <Table.DraggableRow key={track.id} id={track.id} title={track.title}>
+          <Table.DraggableRow key={track.id} id={track.id} title={track.title} dragType="track">
             <Table.Cell>
               <TrackCard track={track} size="xs" direction="row" align="left" firstLinkSize="lg" secondLinkSize="md" />
             </Table.Cell>

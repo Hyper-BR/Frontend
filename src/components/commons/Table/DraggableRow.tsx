@@ -1,13 +1,17 @@
 import styles from './Table.module.scss';
 import { ReactNode, HTMLAttributes } from 'react';
+import { useDragDrop } from '@/contexts/DragDropProvider';
 
 type Props = HTMLAttributes<HTMLTableRowElement> & {
   id: string;
   title: string;
   children: ReactNode;
+  dragType?: string; // tipo opcional, padrão 'row'
 };
 
-export function DraggableRow({ children, title, id, ...rest }: Props) {
+export function DraggableRow({ id, title, children, dragType = 'row', ...rest }: Props) {
+  const { setDraggedType } = useDragDrop();
+
   return (
     <tr
       className={styles.row}
@@ -30,8 +34,14 @@ export function DraggableRow({ children, title, id, ...rest }: Props) {
         document.body.appendChild(ghost);
         e.dataTransfer.setDragImage(ghost, 0, 0);
         setTimeout(() => document.body.removeChild(ghost), 0);
-        e.dataTransfer.setData('text/plain', id);
+
+        e.dataTransfer.setData(`application/x-${dragType}-id`, id);
         e.dataTransfer.effectAllowed = 'move';
+
+        setDraggedType(dragType);
+      }}
+      onDragEnd={() => {
+        setDraggedType(null);
       }}
     >
       {children}
