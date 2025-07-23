@@ -98,10 +98,16 @@
   padding: $spacing-sm;
 }
 
+.avatarWrapper {
+  position: relative;
+  display: inline-block;
+}
+
 .editAvatarBtn {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 18px;
+  right: 28px;
+  z-index: 10;
 }
 
 .tab {

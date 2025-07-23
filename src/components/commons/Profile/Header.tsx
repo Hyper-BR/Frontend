@@ -79,7 +79,24 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
             <header className={styles.header}>
               <div className={styles.userInfo}>
-                <Avatar src={avatarUrl} alt="avatar" size={150} />
+                <div className={styles.avatarWrapper}>
+                  <Avatar src={avatarUrl} alt="avatar" size={150} />
+                  {onEdit && (
+                    <div className={styles.editAvatarBtn}>
+                      <Dropdown.Root>
+                        <Dropdown.Trigger>
+                          <Button size="sm" variant="muted">
+                            Editar imagem
+                          </Button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Content size="xs">
+                          <Dropdown.Item onClick={() => handleSelectImage('avatar')}>Substituir</Dropdown.Item>
+                          <Dropdown.Item onClick={() => alert('Excluir avatar')}>Excluir</Dropdown.Item>
+                        </Dropdown.Content>
+                      </Dropdown.Root>
+                    </div>
+                  )}
+                </div>
 
                 <div className={styles.details}>
                   <h2>{name}</h2>
