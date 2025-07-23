@@ -5,6 +5,7 @@ import styles from './Profile.module.scss';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { Card } from '../Card';
 import { PlaylistCard } from '@/components/ui/Cards/PlaylistCard';
+import Insights from '@/components/ui/Insights/Insights';
 
 interface Props {
   tab: Tab;
@@ -27,7 +28,7 @@ export function Content({ tab, tracks, playlists }: Props) {
       {tab === 'Feed' && 'Feed'}
       {tab === 'Seguindo' && 'Seguindo'}
       {tab === 'Artistas relacionados' && 'Artistas relacionados'}
-      {tab === 'Insights' && 'Insights'}
+      {tab === 'Insights' && <Insights />}
     </div>
   );
 }

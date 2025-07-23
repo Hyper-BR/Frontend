@@ -13,6 +13,7 @@ import SubscriptionPage from '@/pages/Subscription/SubscriptionPage';
 import Cancel from '@/pages/Subscription/Cancel';
 import Success from '@/pages/Subscription/Success';
 import TrackPage from '@/pages/Track/TrackPage';
+import InsightsPage from '@/pages/Insights/InsightsPage';
 
 export const Routes = createBrowserRouter([
   {
@@ -44,6 +45,14 @@ export const Routes = createBrowserRouter([
         element: (
           <PrivateRoute>
             <ProfilePage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/insights',
+        element: (
+          <PrivateRoute>
+            <InsightsPage />
           </PrivateRoute>
         ),
       },

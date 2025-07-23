@@ -32,6 +32,7 @@
     "react-router-dom": "^6.21.3",
     "react-select": "^5.10.2",
     "react-zoom-pan-pinch": "^3.7.0",
+    "recharts": "^3.1.0",
     "wavesurfer.js": "^7.9.9",
     "zustand": "^4.5.2"
   },
