@@ -1,3 +1,4 @@
+import { getTracks } from '@/services/track';
 import { useEffect, useState } from 'react';
 
 export function useInsightsData() {
@@ -6,9 +7,13 @@ export function useInsightsData() {
   const [albums, setAlbums] = useState([]);
 
   const fetchAll = async () => {
-    // const [sumRes, tracksRes, albumsRes] = await Promise.all([getSummary(), getTrackInsights(), getAlbumInsights()]);
+    try {
+      const { data } = await getTracks();
+      setTracks(data.content);
+    } catch (error) {
+      console.error('Erro ao buscar tracks:', error);
+    }
     //   setSummary(sumRes.data);
-    //   setTracks(tracksRes.data);
     //   setAlbums(albumsRes.data);
   };
 

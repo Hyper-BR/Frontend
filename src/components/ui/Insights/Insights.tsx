@@ -1,38 +1,69 @@
-import { AlbumInsights } from '@/components/Insights/AlbumInsights';
+import React, { useCallback } from 'react';
+import styles from './Insights.module.scss';
 import { SummaryCard } from '@/components/Insights/Summary';
-import { TrackInsights } from '@/components/Insights/TrackInsights';
-import { useInsightsData } from '@/components/Insights/useInsightsData';
+import { ArtistCard } from '../Artist/ArtistCard';
+import { ArtistDTO } from '@/services/artist/types';
 
-const Insights = () => {
-  const { summary, tracks, albums } = useInsightsData();
+interface Props {
+  summary: {
+    totalPlays: number;
+    totalRevenue: number;
+    totalTracks: number;
+    totalAlbums: number;
+  };
+  topListeners: ArtistDTO[];
+}
+
+export function Insights({ summary, topListeners }: Props) {
+  const handleSummaryClick = useCallback((key: keyof Props['summary']) => {
+    alert(`Clicked summary: ${key}`);
+  }, []);
+
+  const handleUserClick = useCallback((userId: string) => {
+    alert(`Clicked user: ${userId}`);
+  }, []);
 
   return (
-    <div className="insights-page">
-      <div className="summary-grid">
-        <SummaryCard title="Total de Plays" value={123} />
-        <SummaryCard title="Receita" value={`R$ ${123}`} />
-        <SummaryCard title="Usuários Ativos" value={123} />
+    <div className={styles.insights}>
+      {/* Row superior com 4 summary cards */}
+      <div className={styles.summaryRow}>
+        <SummaryCard
+          title="Total de Plays"
+          value={summary.totalPlays}
+          onClick={() => handleSummaryClick('totalPlays')}
+        />
+        <SummaryCard
+          title="Total Receita"
+          value={`R$ ${summary.totalRevenue}`}
+          onClick={() => handleSummaryClick('totalRevenue')}
+        />
+        <SummaryCard
+          title="Total Faixas"
+          value={summary.totalTracks}
+          onClick={() => handleSummaryClick('totalTracks')}
+        />
+        <SummaryCard
+          title="Total Álbuns"
+          value={summary.totalAlbums}
+          onClick={() => handleSummaryClick('totalAlbums')}
+        />
       </div>
 
-      <section className="details-section">
-        <h2>Insights por Faixa</h2>
-        <div className="cards-grid">
-          {tracks.map((t) => (
-            <TrackInsights key={t.id} track={t} />
-          ))}
+      <div className={styles.contentGrid}>
+        <div className={styles.tracksSection}>
+          <h3 className={styles.sectionTitle}>Tracks</h3>
+          <div className={styles.tracksPlaceholder}>
+            <p>Tabela de faixas vai aqui</p>
+          </div>
         </div>
-      </section>
 
-      <section className="details-section">
-        <h2>Insights por Álbum</h2>
-        <div className="cards-grid">
-          {albums.map((a) => (
-            <AlbumInsights key={a.id} />
+        <aside className={styles.usersSection}>
+          <h3 className={styles.sectionTitle}>Top 5 ouvintes</h3>
+          {topListeners.map((user) => (
+            <ArtistCard artist={user} direction="row" />
           ))}
-        </div>
-      </section>
+        </aside>
+      </div>
     </div>
   );
-};
-
-export default Insights;
+}
