@@ -2,9 +2,7 @@ import { AxiosPromise } from 'axios';
 import { useService } from '../hooks/useService';
 import { PlaylistDTO } from './types';
 
-export const createPlaylist = (
-  data: PlaylistDTO,
-): AxiosPromise<PlaylistDTO> => {
+export const createPlaylist = (data: PlaylistDTO): AxiosPromise<PlaylistDTO> => {
   const { post } = useService();
 
   return post(`/playlists`, data);
@@ -16,9 +14,7 @@ export const getPlaylistsCustomer = (): AxiosPromise<PlaylistDTO[]> => {
   return get<PlaylistDTO[]>(`/playlists/customer`);
 };
 
-export const getTrackPlaylists = (
-  trackId: string,
-): AxiosPromise<PlaylistDTO[]> => {
+export const getTrackPlaylists = (trackId: string): AxiosPromise<PlaylistDTO[]> => {
   const { get } = useService();
 
   return get(`/playlists/track/${trackId}`);
@@ -30,20 +26,14 @@ export const getPlaylistById = (id: string): AxiosPromise<PlaylistDTO> => {
   return get(`/playlists/${id}`);
 };
 
-export const addTrackToPlaylist = (
-  playlistId: string,
-  trackId: string,
-): AxiosPromise<PlaylistDTO> => {
+export const addTrackToPlaylist = (playlistId: string, trackId: string): AxiosPromise<PlaylistDTO> => {
   const { post } = useService();
 
-  return post(`/playlists/${playlistId}/tracks/${trackId}`, '');
+  return post(`/playlist/${playlistId}/track/${trackId}`, '');
 };
 
-export const removeTrackFromPlaylist = async (
-  playlistId: string,
-  trackId: string,
-) => {
+export const removeTrackFromPlaylist = async (playlistId: string, trackId: string) => {
   const { remove } = useService();
 
-  return remove(`/playlists/${playlistId}/tracks/${trackId}`);
+  return remove(`/playlist/${playlistId}/track/${trackId}`);
 };

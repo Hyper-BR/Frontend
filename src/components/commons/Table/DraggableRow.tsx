@@ -6,7 +6,7 @@ type Props = HTMLAttributes<HTMLTableRowElement> & {
   id: string;
   title: string;
   children: ReactNode;
-  dragType?: string; // tipo opcional, padrão 'row'
+  dragType?: string;
 };
 
 export function DraggableRow({ id, title, children, dragType = 'row', ...rest }: Props) {
