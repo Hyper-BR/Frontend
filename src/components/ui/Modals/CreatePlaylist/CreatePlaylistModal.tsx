@@ -6,11 +6,13 @@ import { Modal } from '@/components/commons/Modal';
 import { Input } from '@/components/commons/Input/Input';
 import { Button } from '@/components/commons/Button/Button';
 import styles from './CreatePlaylistModal.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePlaylistModal = () => {
   const [name, setName] = useState('');
 
   const { closeModal } = useModal();
+  const navigate = useNavigate();
 
   const addNewPlaylist = async () => {
     try {
@@ -25,7 +27,8 @@ const CreatePlaylistModal = () => {
 
       await createPlaylist(playlist);
       setName('');
-      closeModal;
+      closeModal();
+      navigate(0);
     } catch (error) {
       console.error('Erro ao criar playlist:', error);
     }
@@ -53,12 +56,7 @@ const CreatePlaylistModal = () => {
           </Button>
         }
         submitButton={
-          <Button
-            type="submit"
-            onClick={addNewPlaylist}
-            className={styles.submitButton}
-            disabled={!name.trim()}
-          >
+          <Button type="submit" onClick={addNewPlaylist} className={styles.submitButton} disabled={!name.trim()}>
             Criar
           </Button>
         }

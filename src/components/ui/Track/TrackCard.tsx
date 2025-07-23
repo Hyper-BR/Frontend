@@ -2,8 +2,8 @@ import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackDTO } from '@/services/track/types';
 import { Card } from '@/components/commons/Card';
 import { TrackLink } from '@/components/commons/Link/TrackLink';
-import { ArtistLink } from '@/components/commons/Link/ArtistLink';
 import { ArtistLinkGroup } from '@/components/commons/Link/ArtistLinkGroup';
+import { DragDropZone } from '@/components/commons/DragDropZone/DragDropZone';
 
 interface Props {
   track: TrackDTO;
@@ -13,6 +13,8 @@ interface Props {
   direction?: 'row' | 'column';
   firstLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   secondLinkSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  enableHoverEffect?: boolean;
+  hovered?: boolean;
 }
 
 export function TrackCard({
@@ -23,6 +25,8 @@ export function TrackCard({
   align,
   firstLinkSize = 'md',
   secondLinkSize,
+  enableHoverEffect,
+  hovered,
 }: Props) {
   const { currentTrack, setTrackList, trackList, play } = usePlayer();
 
@@ -39,21 +43,25 @@ export function TrackCard({
   };
 
   return (
-    <Card.Root
-      direction={direction}
-      imageUrl={track.coverUrl}
-      shape={shape}
-      size={size}
-      clickable
-      onClick={handlePlayClick}
-      align={align}
-    >
-      <Card.Title>
-        <TrackLink track={track} size={firstLinkSize} color="white" />
-      </Card.Title>
-      <Card.Subtitle>
-        <ArtistLinkGroup artists={track.artists} color="muted" size={secondLinkSize} />
-      </Card.Subtitle>
-    </Card.Root>
+    <DragDropZone entityId={track.id} draggable>
+      <Card.Root
+        direction={direction}
+        imageUrl={track.coverUrl}
+        shape={shape}
+        size={size}
+        clickable
+        onClick={handlePlayClick}
+        align={align}
+        enableHoverEffect={enableHoverEffect}
+        hovered={hovered}
+      >
+        <Card.Title>
+          <TrackLink track={track} size={firstLinkSize} color="white" />
+        </Card.Title>
+        <Card.Subtitle>
+          <ArtistLinkGroup artists={track.artists} color="muted" size={secondLinkSize} />
+        </Card.Subtitle>
+      </Card.Root>
+    </DragDropZone>
   );
 }

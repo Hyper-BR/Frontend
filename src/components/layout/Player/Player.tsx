@@ -154,16 +154,14 @@ const Player = () => {
                   {playlists.map((playlist) => {
                     const isMember = playlist.tracks.some((track) => track.id === currentTrack.id);
                     return (
-                      <>
-                        <Dropdown.Item
-                          key={playlist.id}
-                          onClick={() => toggleInPlaylist(currentTrack.id, playlist, isMember)}
-                          rightIcon={isMember ? <Check size={12} /> : <Plus size={12} />}
-                          className={styles.playlistItem}
-                        >
-                          <ScrollingSpan text={playlist.name} />
-                        </Dropdown.Item>
-                      </>
+                      <Dropdown.Item
+                        key={playlist.id}
+                        onClick={() => toggleInPlaylist(currentTrack.id, playlist, isMember)}
+                        rightIcon={isMember ? <Check size={12} /> : <Plus size={12} />}
+                        className={styles.playlistItem}
+                      >
+                        <ScrollingSpan text={playlist.name} />
+                      </Dropdown.Item>
                     );
                   })}
                 </Dropdown.Content>
@@ -213,6 +211,7 @@ const Player = () => {
                 <Dropdown.Content side="top" size="lg">
                   {trackList.map((track) => (
                     <Dropdown.Item
+                      key={track.id}
                       leftImage={track.coverUrl}
                       onClick={() => setTrackPlayer(track)}
                       className={styles.queueItem}

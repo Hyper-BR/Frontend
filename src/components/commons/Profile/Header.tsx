@@ -58,7 +58,7 @@ export function Header({ avatarUrl, name, email, onEdit, owner, stats, analytics
 
       <div className={styles.cover}>
         <div className={styles.coverImageWrapper}>
-          <img src={buildFullUrl(coverUrl)} alt="cover" className={styles.coverImage} />
+          {coverUrl && <img src={buildFullUrl(coverUrl)} alt="cover" className={styles.coverImage} />}
           <div className={styles.overlayContent}>
             {onEdit && (
               <div className={styles.editCoverBtn}>

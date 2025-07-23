@@ -8,6 +8,7 @@ import { Modal } from '@/components/commons/Modal';
 import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylist/CreatePlaylistModal';
 import { PlusIcon } from 'lucide-react';
 import { PlaylistCard } from '@/components/ui/Playlist/PlaylistCard';
+import { DragDropZone } from '@/components/commons/DragDropZone/DragDropZone';
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
@@ -39,7 +40,7 @@ const Sidebar = () => {
         </Modal.Trigger>
 
         {playlists.map((playlist) => (
-          <PlaylistCard playlist={playlist} size="xs" enableHoverEffect />
+          <PlaylistCard key={playlist.id} playlist={playlist} size="xs" enableHoverEffect />
         ))}
       </aside>
     </>
