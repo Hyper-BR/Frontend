@@ -4,7 +4,7 @@ import { TrackDTO } from '@/services/track/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { TrackCard } from '../Cards/TrackCard';
-import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
+import { formatZonedDate } from '@/utils/formatTime';
 import { TrackPrivacy } from '../Track/TrackPrivacy';
 
 type Props = {
@@ -23,13 +23,13 @@ const TrackTableInsights: React.FC<Props> = ({ tracks }) => {
               <TrackCard track={track} size="xs" direction="row" align="left" firstLinkSize="lg" secondLinkSize="md" />
             </Table.Cell>
 
-            <Table.Cell>{123}</Table.Cell>
-            <Table.Cell>{123}</Table.Cell>
-            <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
+            <Table.Cell>{track.purchases}</Table.Cell>
+            <Table.Cell>{track.downloads}</Table.Cell>
+            <Table.Cell>{formatZonedDate(track.createdDate)}</Table.Cell>
             <Table.Cell>
               <TrackPrivacy value={track.privacy} size="md" color="muted" />
             </Table.Cell>
-            <Table.Cell>{123}</Table.Cell>
+            <Table.Cell>{track.plays}</Table.Cell>
 
             <Table.Cell>
               <Dropdown.Root>

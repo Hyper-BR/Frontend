@@ -16,15 +16,16 @@ type Props = {
 const TrackTable: React.FC<Props> = ({ tracks }) => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
 
-  useEffect(() => {
-    async function fetchPlaylists() {
-      try {
-        const resp = await getPlaylistsCustomer();
-        setPlaylists(resp.data);
-      } catch (err) {
-        console.error(err);
-      }
+  async function fetchPlaylists() {
+    try {
+      const resp = await getPlaylistsCustomer();
+      setPlaylists(resp.data);
+    } catch (err) {
+      console.error(err);
     }
+  }
+
+  useEffect(() => {
     fetchPlaylists();
   }, []);
 

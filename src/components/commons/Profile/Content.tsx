@@ -28,12 +28,7 @@ export function Content({ tab, tracks, playlists }: Props) {
       {tab === 'Feed' && 'Feed'}
       {tab === 'Seguindo' && 'Seguindo'}
       {tab === 'Artistas relacionados' && 'Artistas relacionados'}
-      {tab === 'Insights' && (
-        <Insights
-          summary={{ totalAlbums: 123, totalPlays: 123, totalRevenue: 123, totalTracks: 123 }}
-          topListeners={[]}
-        />
-      )}
+      {tab === 'Insights' && <Insights />}
     </div>
   );
 }
