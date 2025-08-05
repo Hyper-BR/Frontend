@@ -6,22 +6,16 @@ import { Activity, DollarSign, Library, Music } from 'lucide-react';
 import TrackTableInsights from '../Table/TrackTableInsights';
 import { getInsights } from '@/services/insights';
 import { InsightsDTO } from '@/services/insights/types';
+import { TrackDTO } from '@/services/track/types';
 
 export function Insights() {
-  const [insights, setInsights] = useState<InsightsDTO>({
-    totalPlays: 0,
-    totalPurchases: 0,
-    totalDownloads: 0,
-    totalRevenue: 0,
-    totalTracks: 0,
-    totalAlbums: 0,
-    tracks: [],
-    topListeners: [],
-  });
+  const [insights, setInsights] = useState<InsightsDTO>(null);
+  const [tracks, setTracks] = useState<TrackDTO[]>(null);
 
   async function fetchInsights() {
     try {
       const resp = await getInsights();
+      setTracks(resp.data.releases.flatMap((release) => release.tracks));
       setInsights(resp.data);
     } catch (err) {
       console.error(err);
@@ -53,7 +47,7 @@ export function Insights() {
       <div className={styles.contentGrid}>
         <div className={styles.tracksSection}>
           <div className={styles.tracksPlaceholder}>
-            <TrackTableInsights tracks={insights.tracks} />
+            <TrackTableInsights tracks={tracks} />
           </div>
         </div>
 

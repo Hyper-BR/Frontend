@@ -1,5 +1,5 @@
 import { ArtistDTO } from '../artist/types';
-import { TrackDTO } from '../track/types';
+import { ReleaseDTO } from '../release/types';
 
 export type InsightsDTO = {
   totalPlays: number;
@@ -8,6 +8,6 @@ export type InsightsDTO = {
   totalRevenue: number;
   totalTracks: number;
   totalAlbums: number;
-  tracks: TrackDTO[];
+  releases: ReleaseDTO[];
   topListeners: ArtistDTO[];
 };
