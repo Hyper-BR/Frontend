@@ -11,9 +11,10 @@ interface Props {
   tab: Tab;
   tracks: TrackDTO[];
   playlists: PlaylistDTO[];
+  owner?: boolean;
 }
 
-export function Content({ tab, tracks, playlists }: Props) {
+export function Content({ tab, tracks, playlists, owner }: Props) {
   return (
     <div className={styles.tabContent}>
       {tab === 'Faixas' && <TrackTable tracks={tracks ?? []} />}
@@ -25,10 +26,9 @@ export function Content({ tab, tracks, playlists }: Props) {
         </Card.Grid>
       )}
       {tab === 'Álbuns' && 'Álbuns'}
-      {tab === 'Feed' && 'Feed'}
       {tab === 'Seguindo' && 'Seguindo'}
       {tab === 'Artistas relacionados' && 'Artistas relacionados'}
-      {tab === 'Insights' && <Insights />}
+      {tab === 'Insights' && owner && <Insights />}
     </div>
   );
 }

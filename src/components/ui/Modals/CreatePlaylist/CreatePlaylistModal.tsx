@@ -7,9 +7,11 @@ import { Input } from '@/components/commons/Input/Input';
 import { Button } from '@/components/commons/Button/Button';
 import styles from './CreatePlaylistModal.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { Radio } from '@/components/commons/Radio/Radio';
 
 const CreatePlaylistModal = () => {
   const [name, setName] = useState('');
+  const [privacy, setPrivacy] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
 
   const { closeModal } = useModal();
   const navigate = useNavigate();
@@ -21,12 +23,14 @@ const CreatePlaylistModal = () => {
       const playlist: PlaylistDTO = {
         id: null,
         name: name.trim(),
+        privacy,
         description: 'Nova playlist',
         coverUrl: '',
       };
 
       await createPlaylist(playlist);
       setName('');
+      setPrivacy('PUBLIC');
       closeModal();
       navigate(0);
     } catch (error) {
@@ -45,6 +49,17 @@ const CreatePlaylistModal = () => {
             placeholder="Digite o nome da playlist"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className={styles.privacy}>
+          Privacidade
+          <Radio value="PUBLIC" checked={privacy === 'PUBLIC'} onChange={() => setPrivacy('PUBLIC')} label="Público" />
+          <Radio
+            value="PRIVATE"
+            checked={privacy === 'PRIVATE'}
+            onChange={() => setPrivacy('PRIVATE')}
+            label="Privado"
           />
         </div>
       </Modal.Content>

@@ -1,11 +1,9 @@
 import { useState } from 'react';
-
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import EditProfileModal from '@/components/ui/Modals/EditProfile/EditProfileModal';
 import { Root } from '../../commons/Profile/Root';
 import { Header } from '../../commons/Profile/Header';
-import { Stats } from '../../commons/Profile/Stats';
 import { Tabs, Tab } from '../../commons/Profile/Tabs';
 import { Content } from '../../commons/Profile/Content';
 
@@ -17,12 +15,12 @@ interface Props {
   stats: { followers: string; following: string };
   analytics?: { plays: string };
   onEdit?: boolean;
-  tracks: TrackPageDTO;
-  playlists: PlaylistDTO[];
   albums: Object[];
   feed: Object[];
   relatedArtists: Object[];
   owner?: boolean;
+  tracks: TrackPageDTO;
+  playlists: PlaylistDTO[];
 }
 
 export default function ProfileLayout({
@@ -56,8 +54,8 @@ export default function ProfileLayout({
           analytics={analytics}
           coverUrl={coverUrl}
         />
-        <Tabs active={activeTab} setActive={setActiveTab} />
-        <Content tab={activeTab} tracks={tracks?.content} playlists={playlists} />
+        <Tabs active={activeTab} setActive={setActiveTab} owner={owner} />
+        <Content tab={activeTab} tracks={tracks?.content} playlists={playlists} owner={owner} />
       </Root>
     </>
   );
