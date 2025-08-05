@@ -1,10 +1,10 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useEffect, useState } from 'react';
 import { getPlaylistsCustomer } from '@/services/playlist';
-import { getTracksByArtist } from '@/services/track';
 import ProfileLayout from '@/components/ui/Profile/ProfileLayout';
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
+import { getCustomerTracks } from '@/services/track';
 
 export default function ProfilePage() {
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
@@ -17,7 +17,7 @@ export default function ProfilePage() {
     setPlaylists(response.data);
 
     if (isArtist) {
-      const trackPage = await getTracksByArtist(customer?.artistProfile?.id);
+      const trackPage = await getCustomerTracks();
       setTracks(trackPage.data);
     }
   };
@@ -39,7 +39,6 @@ export default function ProfilePage() {
       playlists={playlists}
       albums={[]}
       feed={[]}
-      following={[]}
       relatedArtists={[]}
       owner
     />

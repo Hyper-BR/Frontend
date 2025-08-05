@@ -21,7 +21,6 @@ interface Props {
   playlists: PlaylistDTO[];
   albums: Object[];
   feed: Object[];
-  following: Object[];
   relatedArtists: Object[];
   owner?: boolean;
 }
@@ -38,7 +37,6 @@ export default function ProfileLayout({
   playlists,
   albums,
   feed,
-  following,
   relatedArtists,
   owner,
 }: Props) {

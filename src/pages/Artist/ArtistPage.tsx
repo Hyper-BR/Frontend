@@ -34,7 +34,6 @@ export default function ArtistPage() {
       playlists={null}
       albums={[]}
       feed={[]}
-      following={[]}
       relatedArtists={[]}
     />
   );
