@@ -65,15 +65,6 @@
   }
 }
 
-.title {
-  font-size: 0.95rem;
-}
-
-.artist {
-  font-size: $font-size-sm;
-  color: $color-muted;
-}
-
 .controls {
   display: flex;
   padding: $spacing-sm;
@@ -103,7 +94,6 @@
 .trackInfo {
   display: flex;
   gap: $spacing-md;
-  height: 100%;
   align-items: center;
   justify-content: center;
 }

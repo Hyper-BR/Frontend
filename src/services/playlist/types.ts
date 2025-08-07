@@ -14,6 +14,7 @@ export type PlaylistPageDTO = {
 export type PlaylistDTO = {
   id: string;
   name: string;
+  privacy: string;
   description: string;
   coverUrl: string;
   tracks?: TrackDTO[];

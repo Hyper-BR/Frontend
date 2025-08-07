@@ -41,7 +41,7 @@ export default function TrackPage() {
     <main className={styles.page}>
       <section className={styles.playerWrapper}>
         <div className={styles.coverContainer}>
-          <img src={track.coverUrl} alt={track.title} className={styles.cover} />
+          <img src={buildFullUrl(track.coverUrl)} alt={track.title} className={styles.cover} />
         </div>
         <div className={styles.waveformContainer}>
           <WavesurferPlayer

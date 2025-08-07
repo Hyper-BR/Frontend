@@ -3,19 +3,17 @@ import styles from './Sidebar.module.scss';
 import { addTrackToPlaylist, getPlaylistsCustomer } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/commons/Button/Button';
 import { Modal } from '@/components/commons/Modal';
 import CreatePlaylistModal from '@/components/ui/Modals/CreatePlaylist/CreatePlaylistModal';
+import { PlusIcon } from 'lucide-react';
+import { PlaylistCard } from '@/components/ui/Cards/PlaylistCard';
+import { useDragDrop } from '@/contexts/DragDropProvider';
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
-  const [hoveredPlaylistId, setHoveredPlaylistId] = useState<string | null>(
-    null,
-  );
-
   const { userSigned } = useAuth();
-  const navigate = useNavigate();
+  const { setDropHandler } = useDragDrop();
 
   const fetchPlaylists = async () => {
     try {
@@ -26,53 +24,50 @@ const Sidebar = () => {
     }
   };
 
-  const handleAddToPlaylist = async (trackId: string, playlistId: string) => {
-    await addTrackToPlaylist(playlistId, trackId);
+  const addTrackInPlaylist = async (trackId: string, playlistId: string) => {
+    try {
+      console.log(trackId);
+      console.log(playlistId);
+      await addTrackToPlaylist(trackId, playlistId);
+    } catch (error) {
+      console.error('Erro ao adicionar track na playlist:', error);
+    }
   };
 
   useEffect(() => {
     fetchPlaylists();
   }, []);
 
+  useEffect(() => {
+    setDropHandler((trackId, playlistId) => {
+      const playlist = playlists.find((p) => p.id === playlistId);
+      if (!playlist) return;
+
+      const isAlreadyAdded = playlist.tracks?.some((t) => t.id === trackId);
+
+      if (isAlreadyAdded) {
+        alert('track ja está na playlist');
+        return;
+      }
+
+      addTrackInPlaylist(playlist.id, trackId);
+    });
+  }, [playlists]);
+
   if (!userSigned) return;
   return (
     <>
       <CreatePlaylistModal />
       <aside className={styles.sidebar}>
-        <div className={styles.playlistList}>
-          <Modal.Trigger modal="createPlaylist">
-            <Button variant="ghost">Nova Playlist</Button>
-          </Modal.Trigger>
+        <Modal.Trigger modal="createPlaylist">
+          <Button variant="ghost" icon={<PlusIcon size={15} />} className={styles.newPlaylistButton}>
+            Nova Playlist
+          </Button>
+        </Modal.Trigger>
 
-          {playlists.map((playlist) => (
-            <div
-              key={playlist.id}
-              className={`${styles.item} ${
-                hoveredPlaylistId === playlist.id
-                  ? styles['droppable-hover']
-                  : ''
-              }`}
-              onDragOver={(e) => {
-                e.preventDefault();
-                setHoveredPlaylistId(playlist.id);
-              }}
-              onDragLeave={() => setHoveredPlaylistId(null)}
-              onDrop={(e) => {
-                const trackId = e.dataTransfer.getData('text/plain');
-                handleAddToPlaylist(trackId, playlist.id);
-                setHoveredPlaylistId(null);
-              }}
-              onClick={() => navigate(`/playlist/${playlist.id}`)}
-            >
-              <img
-                src={playlist.coverUrl}
-                alt={playlist.name}
-                className={styles.cover}
-              />
-              <span className={styles.name}>{playlist.name}</span>
-            </div>
-          ))}
-        </div>
+        {playlists.map((playlist) => (
+          <PlaylistCard key={playlist.id} playlist={playlist} size="xs" enableHoverEffect />
+        ))}
       </aside>
     </>
   );

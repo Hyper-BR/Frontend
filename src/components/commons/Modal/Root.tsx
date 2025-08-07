@@ -1,18 +1,17 @@
 import styles from './Modal.module.scss';
 import { ReactNode } from 'react';
-import { ModalSize } from './types';
 import { useModal } from '@/contexts/ModalContext';
 import { Button } from '../Button/Button';
 
 interface Props {
   children: ReactNode;
   modal: string;
-  size?: ModalSize;
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'fit';
   onClose: () => void;
 }
 
 export function Root({ children, modal, size = 'md', onClose }: Props) {
-  const { isOpen, closeModal } = useModal();
+  const { isOpen } = useModal();
   if (!isOpen(modal)) return null;
 
   return (

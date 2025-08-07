@@ -6,6 +6,8 @@ import { PlaylistDTO } from '@/services/playlist/types';
 import { Table } from '@/components/commons/Table';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { TrackCard } from '../Cards/TrackCard';
+import { formatSecondsTime, formatZonedDate } from '@/utils/formatTime';
+import { TrackPrivacy } from '../Track/TrackPrivacy';
 
 type Props = {
   tracks: TrackDTO[];
@@ -14,15 +16,16 @@ type Props = {
 const TrackTable: React.FC<Props> = ({ tracks }) => {
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
 
-  useEffect(() => {
-    async function fetchPlaylists() {
-      try {
-        const resp = await getPlaylistsCustomer();
-        setPlaylists(resp.data);
-      } catch (err) {
-        console.error(err);
-      }
+  async function fetchPlaylists() {
+    try {
+      const resp = await getPlaylistsCustomer();
+      setPlaylists(resp.data);
+    } catch (err) {
+      console.error(err);
     }
+  }
+
+  useEffect(() => {
     fetchPlaylists();
   }, []);
 
@@ -42,29 +45,43 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
 
   return (
     <Table.Root>
-      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', '']} />
+      <Table.Header columns={['Faixa', 'Nota', 'BPM', 'Duração', 'Adicionado em', 'Privacidade', '', '']} />
 
       <Table.Body>
         {tracks.map((track) => (
-          <Table.DraggableRow key={track.id} id={track.id} title={track.title}>
+          <Table.DraggableRow key={track.id} id={track.id} title={track.title} dragType="track">
             <Table.Cell>
-              <TrackCard track={track} size="xs" direction="row" align="left" />
+              <TrackCard track={track} size="xs" direction="row" align="left" firstLinkSize="lg" secondLinkSize="md" />
             </Table.Cell>
 
-            <Table.Cell>{track.bpm ?? '--'}</Table.Cell>
+            <Table.Cell>{track.key ?? '-'}</Table.Cell>
             <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
-            <Table.Cell>{track.duration ?? '—'}</Table.Cell>
-            <Table.Cell>{track.createdDate ?? '—'}</Table.Cell>
+            <Table.Cell>{formatSecondsTime(track.duration) ?? '—'}</Table.Cell>
+            <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
+            <Table.Cell>
+              <TrackPrivacy value={track.privacy} size="md" color="muted" />
+            </Table.Cell>
+            <Table.Cell>
+              {track.privacy === 'PRIVATE' ? (
+                <Button size="md" disabled>
+                  R$ {track.price}
+                </Button>
+              ) : (
+                <Button size="md" onClick={() => {}}>
+                  R$ {track.price}
+                </Button>
+              )}
+            </Table.Cell>
 
             <Table.Cell>
               <Dropdown.Root>
                 <Dropdown.Trigger>
-                  <Button variant="transparent" icon="⋯" />
+                  <Button variant="muted" icon="⋯" />
                 </Dropdown.Trigger>
 
                 <Dropdown.Content size="md">
-                  <Dropdown.Item onSelect={() => {}}>Editar</Dropdown.Item>
-                  <Dropdown.Item onSelect={() => {}}>Compartilhar</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {}}>Editar</Dropdown.Item>
+                  <Dropdown.Item onClick={() => {}}>Compartilhar</Dropdown.Item>
 
                   <Dropdown.Submenu label="Adicionar à playlist +">
                     {playlists.map((pl) => {
@@ -72,7 +89,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
                       return (
                         <Dropdown.Item
                           key={pl.id}
-                          onSelect={() => toggleInPlaylist(track.id, pl, isMember)}
+                          onClick={() => toggleInPlaylist(track.id, pl, isMember)}
                           rightIcon={isMember ? '✓' : '+'}
                         >
                           {pl.name}

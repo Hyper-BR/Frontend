@@ -1,6 +1,7 @@
 import { Card } from '@/components/commons/Card';
-import { useAuth } from '@/hooks/useAuth';
+import { ArtistLink } from '@/components/commons/Link/ArtistLink';
 import { ArtistDTO } from '@/services/artist/types';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   artist: ArtistDTO;
@@ -8,15 +9,12 @@ interface Props {
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
+  linkSize?: 'sm' | 'md' | 'lg';
 }
 
-export function ArtistCard({
-  artist,
-  size = 'md',
-  direction = 'row',
-  shape = 'square',
-  align,
-}: Props) {
+export function ArtistCard({ artist, size = 'md', direction = 'row', linkSize = 'md' }: Props) {
+  const navigate = useNavigate();
+
   return (
     <Card.Root
       imageUrl={artist.avatarUrl}
@@ -25,12 +23,11 @@ export function ArtistCard({
       clickable
       align="center"
       direction={direction}
+      onClick={() => navigate(`/artist/${artist.id}`)}
     >
-      <Card.Title
-        text={artist.username}
-        href={`/artist/${artist.id}`}
-        color="primary"
-      />
+      <Card.Title>
+        <ArtistLink name={artist.username} id={artist.id} size={linkSize} />
+      </Card.Title>
     </Card.Root>
   );
 }

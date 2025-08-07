@@ -4,18 +4,31 @@ import { getArtistById } from '@/services/artist';
 import { getTracksByArtist } from '@/services/track';
 import ProfileLayout from '@/components/ui/Profile/ProfileLayout';
 import { TrackPageDTO } from '@/services/track/types';
+import { ArtistDTO } from '@/services/artist/types';
+import { getArtistPlaylists } from '@/services/playlist';
+import { PlaylistDTO } from '@/services/playlist/types';
+import { ReleaseDTO } from '@/services/release/types';
+import { getArtistReleases } from '@/services/release';
 
 export default function ArtistPage() {
   const { id } = useParams();
-  const [artist, setArtist] = useState(null);
+  const [artist, setArtist] = useState<ArtistDTO>(null);
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [releases, setReleases] = useState<ReleaseDTO[]>([]);
 
-  const fetchData = () => {
-    const response = getArtistById(id);
-    response.then((r) => setArtist(r.data));
+  const fetchData = async () => {
+    const response = await getArtistById(id);
+    setArtist(response.data);
 
-    const trackPage = getTracksByArtist(id);
-    trackPage.then((r) => setTracks(r.data));
+    const trackPage = await getTracksByArtist(id);
+    setTracks(trackPage.data);
+
+    const playlistResponse = await getArtistPlaylists(id);
+    setPlaylists(playlistResponse.data);
+
+    const releasesResponse = await getArtistReleases(id);
+    setReleases(releasesResponse.data.content);
   };
 
   useEffect(() => {
@@ -26,10 +39,12 @@ export default function ArtistPage() {
   return (
     <ProfileLayout
       avatarUrl={artist?.avatarUrl}
-      stats={{ followers: '120', following: '87' }}
+      coverUrl={artist?.coverUrl}
+      stats={{ followers: artist?.followers, following: artist?.following }}
       name={artist?.username}
       tracks={tracks}
-      playlists={null}
+      playlists={playlists}
+      releases={releases}
     />
   );
 }

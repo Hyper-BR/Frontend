@@ -10,8 +10,11 @@ export type CustomerDTO = {
   birthDate: string;
   subscription?: SubscriptionDTO;
   avatarUrl?: string;
+  followers?: string;
+  following?: string;
   bio?: string;
   artistProfile?: ArtistDTO;
   artist?: boolean;
   label?: boolean;
+  coverUrl?: string;
 };

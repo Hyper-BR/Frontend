@@ -10,10 +10,10 @@ export function Stats({ stats, analytics }: Props) {
     <>
       <div className={styles.stats}>
         <span>
-          <strong>{stats.followers}</strong> seguidores
+          <strong>{stats.followers || '0'}</strong> seguidores
         </span>
         <span>
-          <strong>{stats.following}</strong> seguindo
+          <strong>{stats.following || '0'}</strong> seguindo
         </span>
       </div>
       {analytics && (

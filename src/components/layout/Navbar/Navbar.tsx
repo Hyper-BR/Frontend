@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import styles from './Navbar.module.scss';
@@ -7,7 +6,7 @@ import { Modal } from '@/components/commons/Modal';
 import { Button } from '@/components/commons/Button/Button';
 import UploadReleaseModal from '@/components/ui/Modals/UploadRelease/UploadReleaseModal';
 import { Dropdown } from '@/components/commons/Dropdown';
-import { buildFullUrl } from '@/utils/buildFullUrl';
+import { Avatar } from '@/components/commons/Avatar/Avatar';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ const Navbar = () => {
                 </Modal.Trigger>
               )}
 
-              {!isArtist && (
+              {!isArtist && customer.subscription.type == 'FREE' && (
                 <Button className={styles.loginButton} onClick={() => navigate('/plans')} variant="ghost">
                   Ver planos
                 </Button>
@@ -55,12 +54,14 @@ const Navbar = () => {
               <div className={styles.avatarDropdown}>
                 <Dropdown.Root>
                   <Dropdown.Trigger>
-                    <img src={buildFullUrl(customer?.avatarUrl)} alt="avatar" className={styles.avatar} />
+                    <Button variant="muted">
+                      <Avatar src={customer?.avatarUrl} alt="avatar" />
+                    </Button>
                   </Dropdown.Trigger>
 
                   <Dropdown.Content size="sm">
-                    <Dropdown.Item onSelect={() => navigate('/profile')}>Perfil</Dropdown.Item>
-                    <Dropdown.Item onSelect={signOut}>Sair</Dropdown.Item>
+                    <Dropdown.Item onClick={() => navigate('/profile')}>Perfil</Dropdown.Item>
+                    <Dropdown.Item onClick={signOut}>Sair</Dropdown.Item>
                   </Dropdown.Content>
                 </Dropdown.Root>
               </div>

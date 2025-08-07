@@ -1,59 +1,13 @@
 @use '@/styles/theme.scss' as *;
-@use 'sass:color';
-
-.playlistList {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  padding: $spacing-md;
-  color: $color-white;
-}
-
-.heading {
-  font-size: $font-size-sm;
-  color: $color-white;
-  margin-bottom: $spacing-sm;
-  text-shadow: 0 0 6px $color-primary-dark;
-  border-bottom: 1px solid color.adjust($color-gray-dark, $lightness: -5%);
-  padding-bottom: $spacing-sm;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  border-radius: $radius-md;
-  transition: background $transition;
-
-  &:hover {
-    background: color.adjust($color-gray-dark, $lightness: 5%);
-  }
-
-  &.droppable-hover {
-    background-color: rgba(255, 0, 0, 0.08);
-    outline: 1px dashed $color-primary;
-  }
-}
-
-.cover {
-  width: 40px;
-  height: 40px;
-  border-radius: calc($radius-md / 2);
-  object-fit: cover;
-  box-shadow: 0 0 4px $color-primary-dark;
-}
-
-.name {
-  font-size: 0.95rem;
-  color: $color-white;
-  text-shadow: 0 0 3px $color-primary-dark;
-  font-weight: $font-weight-bold;
-}
 
 .sidebar {
   background-color: $color-gray-dark;
-  padding: $spacing-sm;
+  padding: $spacing-md;
   border-radius: $radius-md;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  color: $color-white;
+  max-width: 200px;
 }

@@ -6,11 +6,15 @@ import { Modal } from '@/components/commons/Modal';
 import { Input } from '@/components/commons/Input/Input';
 import { Button } from '@/components/commons/Button/Button';
 import styles from './CreatePlaylistModal.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { Radio } from '@/components/commons/Radio/Radio';
 
 const CreatePlaylistModal = () => {
   const [name, setName] = useState('');
+  const [privacy, setPrivacy] = useState<'PUBLIC' | 'PRIVATE'>('PUBLIC');
 
   const { closeModal } = useModal();
+  const navigate = useNavigate();
 
   const addNewPlaylist = async () => {
     try {
@@ -19,13 +23,16 @@ const CreatePlaylistModal = () => {
       const playlist: PlaylistDTO = {
         id: null,
         name: name.trim(),
+        privacy,
         description: 'Nova playlist',
         coverUrl: '',
       };
 
       await createPlaylist(playlist);
       setName('');
-      closeModal;
+      setPrivacy('PUBLIC');
+      closeModal();
+      navigate(0);
     } catch (error) {
       console.error('Erro ao criar playlist:', error);
     }
@@ -44,6 +51,17 @@ const CreatePlaylistModal = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
+
+        <div className={styles.privacy}>
+          Privacidade
+          <Radio value="PUBLIC" checked={privacy === 'PUBLIC'} onChange={() => setPrivacy('PUBLIC')} label="Público" />
+          <Radio
+            value="PRIVATE"
+            checked={privacy === 'PRIVATE'}
+            onChange={() => setPrivacy('PRIVATE')}
+            label="Privado"
+          />
+        </div>
       </Modal.Content>
 
       <Modal.Footer
@@ -53,12 +71,7 @@ const CreatePlaylistModal = () => {
           </Button>
         }
         submitButton={
-          <Button
-            type="submit"
-            onClick={addNewPlaylist}
-            className={styles.submitButton}
-            disabled={!name.trim()}
-          >
+          <Button type="submit" onClick={addNewPlaylist} className={styles.submitButton} disabled={!name.trim()}>
             Criar
           </Button>
         }

@@ -14,6 +14,7 @@
   padding: $spacing-lg;
   box-sizing: border-box;
 
+  overflow-x: hidden;
   z-index: 9999999;
 
   @media (max-width: 768px) {
@@ -35,6 +36,8 @@
   width: 100%;
   max-height: calc(100dvh - ($spacing-lg * 2));
   overflow-y: auto;
+  overflow-x: hidden;
+
   padding: $spacing-lg;
   padding-bottom: 64px;
   box-sizing: border-box;
@@ -48,19 +51,34 @@
   }
 }
 
+.xs {
+  width: fit-content;
+  height: fit-content;
+}
+
 .sm {
-  width: 35%;
-  height: 40%;
+  width: 40%;
+  height: 50%;
 }
 
 .md {
-  width: 60%;
-  height: 80%;
+  width: 50%;
+  height: 90%;
 }
 
 .lg {
+  width: 70%;
+  height: 90%;
+}
+
+.xl {
   width: 100%;
   height: 100%;
+}
+
+.fit {
+  width: fit-content;
+  height: fit-content;
 }
 
 .close {
@@ -91,6 +109,7 @@
   box-sizing: border-box;
   padding-bottom: $spacing-lg;
 
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 6px;
   }

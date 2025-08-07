@@ -3,7 +3,7 @@ import styles from './Dropdown.module.scss';
 
 interface Props {
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   align?: 'start' | 'center' | 'end';
   side?: 'bottom' | 'left' | 'right' | 'top';
 }

@@ -1,8 +1,8 @@
 import { Modal } from '@/components/commons/Modal';
 import { Droppable } from '@/components/commons/Droppable/Droppable';
 import { Button } from '@/components/commons/Button/Button';
-import TrackForm from '@/components/ui/Tracks/TrackForm';
-import TrackList from '../../Tracks/TrackList';
+import TrackForm from '@/components/ui/Forms/TrackForm';
+import TrackList from '../../Lists/TrackList';
 import { Accordion } from '@/components/commons/Accordion';
 import { useUploadRelease } from './useUploadRelease';
 import styles from './UploadReleaseModal.module.scss';
@@ -30,14 +30,8 @@ const UploadReleaseModal = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Modal.Root modal="upload" size="lg" onClose={resetAndClose}>
-        <Modal.Header
-          title={
-            releaseType === 'SINGLE'
-              ? 'Upload de Faixa'
-              : 'Upload de EP / Álbum'
-          }
-        />
+      <Modal.Root modal="upload" size="xl" onClose={resetAndClose}>
+        <Modal.Header title={releaseType === 'SINGLE' ? 'Upload de Faixa' : 'Upload de EP / Álbum'} />
 
         <Modal.Content>
           {!uploadStarted && (
@@ -114,9 +108,7 @@ const UploadReleaseModal = () => {
                     })
                   }
                   searchArtistName={artistSearch.name}
-                  onSearchInput={(name) =>
-                    setArtistSearch((prev) => ({ ...prev, name }))
-                  }
+                  onSearchInput={(name) => setArtistSearch((prev) => ({ ...prev, name }))}
                 />
               </div>
 

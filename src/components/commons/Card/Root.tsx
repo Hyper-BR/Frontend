@@ -9,6 +9,7 @@ interface Props {
   shape?: 'square' | 'round';
   align?: 'left' | 'center';
   direction?: 'row' | 'column';
+  enableBackground?: boolean;
   clickable?: boolean;
   onClick?: () => void;
 }
@@ -19,9 +20,10 @@ export function Root({
   size = 'md',
   shape = 'square',
   align = 'center',
-  clickable = false,
   direction = 'row',
+  clickable = false,
   onClick,
+  enableBackground = false,
 }: Props) {
   return (
     <div
@@ -31,15 +33,13 @@ export function Root({
         styles[shape],
         styles[align],
         styles[direction],
+        enableBackground && styles.enableBackground,
         clickable && styles.clickable,
       )}
       onClick={clickable ? onClick : undefined}
     >
       <div className={clsx(styles.imageWrapper, styles[size], styles[shape])}>
-        <div
-          className={styles.image}
-          style={{ backgroundImage: `url(${buildFullUrl(imageUrl)})` }}
-        />
+        <img className={styles.image} src={buildFullUrl(imageUrl)} />
       </div>
 
       <div className={styles.info}>{children}</div>

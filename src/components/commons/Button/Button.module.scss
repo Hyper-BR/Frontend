@@ -11,28 +11,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: color $transition, background-color $transition,
-    border-color $transition;
-}
-
-.action {
-  color: $color-white;
-  font-size: 0.95rem;
-  padding: 0.5rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    color: $color-primary;
-  }
-}
-
-.infos {
-  display: flex;
-  gap: $spacing-sm;
-  align-items: center;
-  font-size: $font-size-sm;
-  color: $color-muted;
+  transition: color $transition, background-color $transition, border-color $transition;
 }
 
 .primary {
@@ -41,6 +20,11 @@
 
   &:hover {
     background-color: color.adjust($color-primary, $lightness: 5%);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 
@@ -59,12 +43,33 @@
   }
 }
 
-.transparent {
+.muted {
   color: $color-muted;
   font-weight: $font-weight-regular;
 
   &:hover {
     color: $color-white;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.black {
+  color: $color-white;
+  background-color: $color-black;
+  font-weight: $font-weight-regular;
+
+  &:hover {
+    color: $color-black;
+    background-color: $color-white;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 

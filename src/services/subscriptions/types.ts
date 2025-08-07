@@ -3,5 +3,5 @@ export type SubscriptionDTO = {
   type: string;
   name: string;
   description: string;
-  monthlyPrice: string;
+  price: string;
 };

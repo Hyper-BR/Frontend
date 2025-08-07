@@ -30,17 +30,17 @@
 }
 
 .cell {
-  padding: 16px 24px;
-  font-size: 0.9rem;
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-sm;
   color: $color-white;
   text-align: center;
 
   &:first-child {
-    padding-left: 24px;
+    padding-left: $spacing-md;
   }
 
   &:last-child {
-    padding-right: 24px;
+    padding-right: $spacing-md;
   }
 
   &.truncate {
@@ -52,7 +52,7 @@
 
 .footer {
   padding: $spacing-md $spacing-lg;
-  font-size: 0.8rem;
+  font-size: $font-size-sm;
   color: $color-muted;
   text-align: right;
 }

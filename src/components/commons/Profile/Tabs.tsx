@@ -1,26 +1,27 @@
 import styles from './Profile.module.scss';
 import { Button } from '../Button/Button';
 
-export const tabs = [
-  'Faixas',
-  'Playlists',
-  'Álbuns',
-  'Artistas relacionados',
-] as const;
-export type Tab = (typeof tabs)[number];
+export const tabsOwner = ['Faixas', 'Playlists', 'Álbuns', 'Seguindo', 'Artistas relacionados', 'Insights'] as const;
+
+export const tabs = ['Faixas', 'Playlists', 'Álbuns', 'Seguindo', 'Artistas relacionados'] as const;
+
+export type Tab = (typeof tabs)[number] | (typeof tabsOwner)[number];
 
 interface Props {
   active: Tab;
   setActive: (tab: Tab) => void;
+  owner?: boolean;
 }
 
-export function Tabs({ active, setActive }: Props) {
+export function Tabs({ active, setActive, owner }: Props) {
+  const currentTabs = owner ? tabsOwner : tabs;
+
   return (
     <nav className={styles.tabNav}>
-      {tabs.map((tab) => (
+      {currentTabs.map((tab) => (
         <Button
           key={tab}
-          variant="transparent"
+          variant="muted"
           onClick={() => setActive(tab)}
           className={tab === active ? styles.activeTab : styles.tab}
         >

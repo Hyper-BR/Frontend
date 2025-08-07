@@ -6,7 +6,7 @@ import { TrackDTO } from '@/services/track/types';
 import styles from './SearchPage.module.scss';
 import { usePlayer } from '@/contexts/PlayerContext';
 import { TrackCard } from '@/components/ui/Cards/TrackCard';
-import { ArtistCard } from '@/components/ui/Cards/ArtistCard';
+import { ArtistCard } from '@/components/ui/Artist/ArtistCard';
 import { Button } from '@/components/commons/Button/Button';
 
 function useQuery() {

@@ -21,11 +21,10 @@ const EditProfileModal = () => {
     avatarUrl: customer?.avatarUrl,
   });
 
-  const handleChange =
-    (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setForm((prev) => ({ ...prev, [field]: value }));
-    };
+  const handleChange = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setForm((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleDrop = (files: File[]) => {
     const image = files[0];
@@ -53,29 +52,8 @@ const EditProfileModal = () => {
       <Modal.Content>
         <form onSubmit={handleSubmit} className={styles.editForm}>
           <div className={styles.topSection}>
-            <Droppable
-              label="Upload do avatar"
-              onDrop={handleDrop}
-              shape="round"
-              size="md"
-              accept="image/*"
-            />
-            {form?.avatarUrl && (
-              <img
-                src={form?.avatarUrl}
-                alt="Avatar"
-                className={styles.coverPreview}
-              />
-            )}
-
             <div className={styles.metadata}>
-              <Input
-                label="Nome"
-                placeholder="Seu nome"
-                value={form.name}
-                onChange={handleChange('name')}
-                width="md"
-              />
+              <Input label="Nome" placeholder="Seu nome" value={form.name} onChange={handleChange('name')} width="md" />
               <Input
                 label="Email"
                 type="email"

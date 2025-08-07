@@ -1,0 +1,55 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.link {
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  font-size: 0.85rem;
+  color: $color-white;
+  transition: color 0.2s ease;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:hover {
+    color: $color-white;
+    text-decoration: underline;
+  }
+
+  &.white {
+    color: $color-white;
+
+    &:hover {
+      color: color.adjust(#fff, $lightness: 10%);
+    }
+  }
+
+  &.muted {
+    color: $color-muted;
+  }
+
+  &.xs {
+    font-size: 0.65rem;
+  }
+
+  &.sm {
+    font-size: 0.75rem;
+  }
+
+  &.md {
+    font-size: 0.85rem;
+  }
+
+  &.lg {
+    font-size: 0.925rem;
+  }
+
+  &.xl {
+    font-size: 1.05rem;
+  }
+}
+
+.artistLinkGroup {
+  color: $color-muted;
+}

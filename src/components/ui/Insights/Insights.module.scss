@@ -1,0 +1,55 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.insights {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  width: 100%;
+  margin: $spacing-lg $spacing-md;
+}
+
+.summaryRow {
+  display: flex;
+  gap: $spacing-md;
+  flex-wrap: wrap;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: $spacing-xl;
+  align-items: start;
+}
+
+.tracksSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .sectionTitle {
+    margin: 0;
+    font-size: 1.125rem;
+    color: $color-white;
+  }
+
+  .tracksPlaceholder {
+    padding: $spacing-md;
+    background: color.scale($color-gray-dark, $lightness: 5%);
+    border-radius: $radius-sm;
+    color: $color-muted;
+    text-align: center;
+  }
+}
+
+.usersSection {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  .sectionTitle {
+    margin: 0;
+    font-size: 1.125rem;
+    color: $color-white;
+  }
+}

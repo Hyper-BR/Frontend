@@ -1,7 +1,7 @@
 import { Input } from '@/components/commons/Input/Input';
 import { ArtistDTO } from '@/services/artist/types';
 import { TrackDTO } from '@/services/track/types';
-import SelectArtist from '@/components/ui/Select/SelectArtist';
+import SelectArtist from '@/components/commons/Select/SelectArtist';
 import Select from '@/components/commons/Select/Select';
 import { Radio } from '@/components/commons/Radio/Radio';
 
@@ -37,12 +37,7 @@ const TrackForm: React.FC<TrackFormProps> = ({
 
       <div className={styles.releaseType}>
         <div className={styles.genre}>
-          <Input
-            type="text"
-            label="Gênero"
-            value={track.genre}
-            onChange={(e) => onChange('genre', e.target.value)}
-          />
+          <Input type="text" label="Gênero" value={track.genre} onChange={(e) => onChange('genre', e.target.value)} />
         </div>
       </div>
 
