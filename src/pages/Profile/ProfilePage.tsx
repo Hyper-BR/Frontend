@@ -5,21 +5,27 @@ import ProfileLayout from '@/components/ui/Profile/ProfileLayout';
 import { TrackPageDTO } from '@/services/track/types';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { getCustomerTracks } from '@/services/track';
+import { ReleaseDTO } from '@/services/release/types';
+import { getCustomerRelease } from '@/services/release';
 
 export default function ProfilePage() {
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
   const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [releases, setReleases] = useState<ReleaseDTO[]>([]);
 
   const { customer, isArtist } = useAuth();
 
   const fetchData = async () => {
-    const response = await getPlaylistsCustomer();
-    setPlaylists(response.data);
+    const playlistResponse = await getPlaylistsCustomer();
+    setPlaylists(playlistResponse.data);
 
     if (isArtist) {
       const trackPage = await getCustomerTracks();
       setTracks(trackPage.data);
     }
+
+    const releaseResponse = await getCustomerRelease();
+    setReleases(releaseResponse.data.content);
   };
 
   useEffect(() => {
@@ -37,9 +43,7 @@ export default function ProfilePage() {
       onEdit
       tracks={tracks}
       playlists={playlists}
-      albums={[]}
-      feed={[]}
-      relatedArtists={[]}
+      releases={releases}
       owner
     />
   );

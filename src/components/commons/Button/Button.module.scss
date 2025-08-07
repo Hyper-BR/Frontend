@@ -21,6 +21,11 @@
   &:hover {
     background-color: color.adjust($color-primary, $lightness: 5%);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .ghost {
@@ -45,6 +50,11 @@
   &:hover {
     color: $color-white;
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .black {
@@ -55,6 +65,11 @@
   &:hover {
     color: $color-black;
     background-color: $color-white;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 }
 

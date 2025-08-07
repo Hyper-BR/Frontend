@@ -7,12 +7,15 @@ import { TrackPageDTO } from '@/services/track/types';
 import { ArtistDTO } from '@/services/artist/types';
 import { getArtistPlaylists } from '@/services/playlist';
 import { PlaylistDTO } from '@/services/playlist/types';
+import { ReleaseDTO } from '@/services/release/types';
+import { getArtistReleases } from '@/services/release';
 
 export default function ArtistPage() {
   const { id } = useParams();
   const [artist, setArtist] = useState<ArtistDTO>(null);
   const [tracks, setTracks] = useState<TrackPageDTO>(null);
-  const [playlists, setPlaylists] = useState<PlaylistDTO[]>(null);
+  const [playlists, setPlaylists] = useState<PlaylistDTO[]>([]);
+  const [releases, setReleases] = useState<ReleaseDTO[]>([]);
 
   const fetchData = async () => {
     const response = await getArtistById(id);
@@ -22,8 +25,10 @@ export default function ArtistPage() {
     setTracks(trackPage.data);
 
     const playlistResponse = await getArtistPlaylists(id);
-    console.log(playlistResponse.data);
     setPlaylists(playlistResponse.data);
+
+    const releasesResponse = await getArtistReleases(id);
+    setReleases(releasesResponse.data.content);
   };
 
   useEffect(() => {
@@ -39,9 +44,7 @@ export default function ArtistPage() {
       name={artist?.username}
       tracks={tracks}
       playlists={playlists}
-      albums={[]}
-      feed={[]}
-      relatedArtists={[]}
+      releases={releases}
     />
   );
 }

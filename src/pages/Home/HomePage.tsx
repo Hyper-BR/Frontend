@@ -14,18 +14,18 @@ const Home = () => {
 
   const { setTrackList } = usePlayer();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [tracksResponse, artistsResponse] = await Promise.all([getTracks(), getArtists()]);
-        setTrackList(tracksResponse.data.content);
-        setTracks(tracksResponse.data.content);
-        setArtists(artistsResponse.data.content);
-      } catch (error) {
-        console.error('Erro ao carregar dados iniciais:', error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const [tracksResponse, artistsResponse] = await Promise.all([getTracks(), getArtists()]);
+      setTrackList(tracksResponse.data.content);
+      setTracks(tracksResponse.data.content);
+      setArtists(artistsResponse.data.content);
+    } catch (error) {
+      console.error('Erro ao carregar dados iniciais:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 

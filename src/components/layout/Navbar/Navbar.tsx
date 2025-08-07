@@ -37,7 +37,7 @@ const Navbar = () => {
                 </Modal.Trigger>
               )}
 
-              {!isArtist && (
+              {!isArtist && customer.subscription.type == 'FREE' && (
                 <Button className={styles.loginButton} onClick={() => navigate('/plans')} variant="ghost">
                   Ver planos
                 </Button>

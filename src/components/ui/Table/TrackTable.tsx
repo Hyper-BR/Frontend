@@ -54,7 +54,7 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
               <TrackCard track={track} size="xs" direction="row" align="left" firstLinkSize="lg" secondLinkSize="md" />
             </Table.Cell>
 
-            <Table.Cell>{track.key ?? '--'}</Table.Cell>
+            <Table.Cell>{track.key ?? '-'}</Table.Cell>
             <Table.Cell>{track.bpm ?? '—'}</Table.Cell>
             <Table.Cell>{formatSecondsTime(track.duration) ?? '—'}</Table.Cell>
             <Table.Cell>{formatZonedDate(track.createdDate) ?? '—'}</Table.Cell>
@@ -62,7 +62,15 @@ const TrackTable: React.FC<Props> = ({ tracks }) => {
               <TrackPrivacy value={track.privacy} size="md" color="muted" />
             </Table.Cell>
             <Table.Cell>
-              <Button size="md">R$ {track.price}</Button>
+              {track.privacy === 'PRIVATE' ? (
+                <Button size="md" disabled>
+                  R$ {track.price}
+                </Button>
+              ) : (
+                <Button size="md" onClick={() => {}}>
+                  R$ {track.price}
+                </Button>
+              )}
             </Table.Cell>
 
             <Table.Cell>

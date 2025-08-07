@@ -6,6 +6,7 @@ import { Root } from '../../commons/Profile/Root';
 import { Header } from '../../commons/Profile/Header';
 import { Tabs, Tab } from '../../commons/Profile/Tabs';
 import { Content } from '../../commons/Profile/Content';
+import { ReleaseDTO } from '@/services/release/types';
 
 interface Props {
   avatarUrl: string;
@@ -15,9 +16,7 @@ interface Props {
   stats: { followers: string; following: string };
   analytics?: { plays: string };
   onEdit?: boolean;
-  albums: Object[];
-  feed: Object[];
-  relatedArtists: Object[];
+  releases: ReleaseDTO[];
   owner?: boolean;
   tracks: TrackPageDTO;
   playlists: PlaylistDTO[];
@@ -33,9 +32,7 @@ export default function ProfileLayout({
   onEdit,
   tracks,
   playlists,
-  albums,
-  feed,
-  relatedArtists,
+  releases,
   owner,
 }: Props) {
   const [activeTab, setActiveTab] = useState<Tab>('Faixas');
@@ -55,7 +52,7 @@ export default function ProfileLayout({
           coverUrl={coverUrl}
         />
         <Tabs active={activeTab} setActive={setActiveTab} owner={owner} />
-        <Content tab={activeTab} tracks={tracks?.content} playlists={playlists} owner={owner} />
+        <Content tab={activeTab} tracks={tracks?.content} playlists={playlists} owner={owner} releases={releases} />
       </Root>
     </>
   );

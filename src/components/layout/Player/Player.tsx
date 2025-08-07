@@ -27,6 +27,7 @@ import { TrackLink } from '@/components/commons/Link/TrackLink';
 import { ArtistLinkGroup } from '@/components/commons/Link/ArtistLinkGroup';
 import { PlaylistDTO } from '@/services/playlist/types';
 import { addTrackToPlaylist, getPlaylistsCustomer, removeTrackFromPlaylist } from '@/services/playlist';
+import { useAuth } from '@/hooks/useAuth';
 
 const Player = () => {
   const [duration, setDuration] = useState(0);
@@ -37,6 +38,7 @@ const Player = () => {
   const wavesurferRef = useRef<any>(null);
 
   const { currentTrack, isPlaying, togglePlay, next, prev, trackList, setTrackPlayer } = usePlayer();
+  const { customer } = useAuth();
 
   const handleReady = (ws: any) => {
     wavesurferRef.current = ws;
@@ -144,37 +146,40 @@ const Player = () => {
               {currentTrack?.key && <span>{currentTrack.key}</span>}
             </div>
 
-            <div className={styles.trackInfo}>
-              <Dropdown.Root key={'playlists'}>
-                <Dropdown.Trigger>
-                  <Button variant="ghost">+</Button>
-                </Dropdown.Trigger>
+            {customer?.artist && (
+              <>
+                <div className={styles.trackInfo}>
+                  <Dropdown.Root key={'playlists'}>
+                    <Dropdown.Trigger>
+                      <Button variant="ghost">+</Button>
+                    </Dropdown.Trigger>
 
-                <Dropdown.Content size="md" side="top">
-                  {playlists.map((playlist) => {
-                    const isMember = playlist.tracks.some((track) => track.id === currentTrack.id);
-                    return (
-                      <Dropdown.Item
-                        key={playlist.id}
-                        onClick={() => toggleInPlaylist(currentTrack.id, playlist, isMember)}
-                        rightIcon={isMember ? <Check size={12} /> : <Plus size={12} />}
-                        className={styles.playlistItem}
-                      >
-                        <ScrollingSpan text={playlist.name} />
-                      </Dropdown.Item>
-                    );
-                  })}
-                </Dropdown.Content>
-              </Dropdown.Root>
-
-              <Button
-                onClick={() => {
-                  window.open(`/track/${currentTrack.id}/buy`, '_blank');
-                }}
-              >
-                {currentTrack.price ? `R$ ${currentTrack.price}` : 'Comprar'}
-              </Button>
-            </div>
+                    <Dropdown.Content size="md" side="top">
+                      {playlists.map((playlist) => {
+                        const isMember = playlist.tracks.some((track) => track.id === currentTrack.id);
+                        return (
+                          <Dropdown.Item
+                            key={playlist.id}
+                            onClick={() => toggleInPlaylist(currentTrack.id, playlist, isMember)}
+                            rightIcon={isMember ? <Check size={12} /> : <Plus size={12} />}
+                            className={styles.playlistItem}
+                          >
+                            <ScrollingSpan text={playlist.name} />
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </Dropdown.Content>
+                  </Dropdown.Root>
+                  <Button
+                    onClick={() => {
+                      window.open(`/track/${currentTrack.id}/buy`, '_blank');
+                    }}
+                  >
+                    R$ {currentTrack.price}
+                  </Button>
+                </div>
+              </>
+            )}
 
             <div>
               <Dropdown.Root key={'keyboard'}>

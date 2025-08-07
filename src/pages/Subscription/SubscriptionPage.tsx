@@ -38,10 +38,7 @@ export default function SubscriptionPage() {
     <section className={styles.page}>
       <header className={styles.hero}>
         <h1>Seja Premium. Transforme sua experiência.</h1>
-        <p>
-          Escolha o plano ideal para ouvir, criar ou gerenciar artistas com
-          estilo e controle.
-        </p>
+        <p>Escolha o plano ideal para ouvir, criar ou gerenciar artistas com estilo e controle.</p>
       </header>
 
       <div className={styles.grid}>
@@ -51,13 +48,11 @@ export default function SubscriptionPage() {
 
           return (
             <div key={plan.id} className={styles.card}>
-              {plan.type === 'FAMILY' && (
-                <span className={styles.badge}>Mais popular</span>
-              )}
+              {plan.type === 'FAMILY' && <span className={styles.badge}>Mais popular</span>}
               <div className={styles.header}>
                 <span className={styles.icon}>{detail.icon}</span>
                 <h2>{plan.name}</h2>
-                <p className={styles.price}>R$ {plan.monthlyPrice}/mês</p>
+                <p className={styles.price}>R$ {plan.price}/mês</p>
                 <p className={styles.audience}>{detail.audience}</p>
               </div>
               <ul className={styles.features}>
