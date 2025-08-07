@@ -7,11 +7,26 @@ import { Button } from '@/components/commons/Button/Button';
 import UploadReleaseModal from '@/components/ui/Modals/UploadRelease/UploadReleaseModal';
 import { Dropdown } from '@/components/commons/Dropdown';
 import { Avatar } from '@/components/commons/Avatar/Avatar';
+import { useEffect, useState } from 'react';
+import { CartDTO } from '@/services/cart/types';
+import { getCustomerCarts } from '@/services/cart';
+import { ShoppingCart } from 'lucide-react';
 
 const Navbar = () => {
+  const [carts, setCarts] = useState<CartDTO[]>([]);
+
   const navigate = useNavigate();
 
   const { userSigned, signOut, isArtist, customer } = useAuth();
+
+  const fetchCarts = async () => {
+    const response = await getCustomerCarts();
+    setCarts(response.data);
+  };
+
+  useEffect(() => {
+    fetchCarts();
+  }, [customer]);
 
   return (
     <>
@@ -44,12 +59,26 @@ const Navbar = () => {
               )}
 
               {customer?.artistProfile == null && (
-                <>
-                  <Button className={styles.loginButton} onClick={() => navigate('/becomeArtist')} variant="ghost">
-                    Sou artista
-                  </Button>
-                </>
+                <Button className={styles.loginButton} onClick={() => navigate('/becomeArtist')} variant="ghost">
+                  Sou artista
+                </Button>
               )}
+
+              <Dropdown.Root>
+                <Dropdown.Trigger>
+                  <Button variant="ghost">
+                    <ShoppingCart />
+                  </Button>
+                </Dropdown.Trigger>
+
+                <Dropdown.Content size="sm">
+                  {carts.map((cart) => (
+                    <Dropdown.Item key={cart.id} onClick={() => navigate(`/cart/${cart.id}`)}>
+                      {cart.name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Content>
+              </Dropdown.Root>
 
               <div className={styles.avatarDropdown}>
                 <Dropdown.Root>

@@ -16,5 +16,4 @@ export type ArtistDTO = {
   coverUrl?: string;
   followers?: string;
   following?: string;
-  carts?: [];
 };

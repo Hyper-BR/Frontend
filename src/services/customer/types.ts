@@ -1,4 +1,5 @@
 import { ArtistDTO } from '../artist/types';
+import { CartDTO } from '../cart/types';
 import { SubscriptionDTO } from '../subscriptions/types';
 
 export type CustomerDTO = {
@@ -17,4 +18,5 @@ export type CustomerDTO = {
   artist?: boolean;
   label?: boolean;
   coverUrl?: string;
+  carts?: CartDTO[];
 };

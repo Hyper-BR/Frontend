@@ -13,6 +13,7 @@ import SubscriptionPage from '@/pages/Subscription/SubscriptionPage';
 import Cancel from '@/pages/Subscription/Cancel';
 import Success from '@/pages/Subscription/Success';
 import TrackPage from '@/pages/Track/TrackPage';
+import CartPage from '@/pages/Cart/CartPage';
 
 export const Routes = createBrowserRouter([
   {
@@ -38,6 +39,14 @@ export const Routes = createBrowserRouter([
       {
         path: '/playlist/:id',
         element: <PlaylistPage />,
+      },
+      {
+        path: '/cart/:id',
+        element: (
+          <PrivateRoute>
+            <CartPage />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/profile',

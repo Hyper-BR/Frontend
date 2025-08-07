@@ -1,0 +1,57 @@
+@use '@/styles/theme.scss' as *;
+@use 'sass:color';
+
+.cart {
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .summary {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    button {
+      background-color: #000;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: red;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+  }
+}
